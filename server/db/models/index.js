@@ -7,10 +7,12 @@ const ProductOrder = require('./productOrder')
 const ProductCategory = require('./productCategory')
 
 //Associations
+
  Product.belongsToMany(Category, {through: ProductCategory})
  Category.belongsToMany(Product, {through: ProductCategory})
  Product.belongsToMany(Order, {through: ProductOrder})
  Order.belongsToMany(Product, {through: ProductOrder})
+
  Product.hasMany(Review)
  Review.belongsTo(Product)
  User.hasMany(Order)
