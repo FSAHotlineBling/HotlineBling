@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
 import {me} from './store'
+import Navbar from './Navbar'
 
 /**
  * COMPONENT
@@ -21,6 +22,7 @@ class Routes extends Component {
     return (
       <Router history={history}>
         <Main>
+          <Navbar />
           <Switch>
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
