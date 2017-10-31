@@ -7,6 +7,8 @@ import history from './history'
 import {Main, Login, Signup, UserHome, Phones} from './components'
 import {me} from './store'
 import { fetchProducts } from './store/Product';
+import Navbar from './Navbar'
+
 
 /**
  * COMPONENT
@@ -22,6 +24,7 @@ class Routes extends Component {
     return (
       <Router history={history}>
         <Main>
+          <Navbar />
           <Switch>
             {/* Routes placed here are available to all visitors */}
             <Route exact path="/" component={Phones} />
