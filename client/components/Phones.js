@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store from '../store/index';
-import { fetchProducts } from '../store/Product';
+import { fetchProducts } from '../store';
 import Product from './Product';
 
 /**
@@ -10,7 +10,6 @@ import Product from './Product';
 class PhonesHome extends React.Component {
   constructor(props) {
     super(props);
-    this.state = store.getState()
   }
 
   render() {

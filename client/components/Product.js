@@ -6,15 +6,42 @@ import { connect } from 'react-redux';
 
 class Product extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
   }
 
-  render () {
-    console.log(this.props)
+  render() {
+    console.log('in product file', this.props.product)
+    let product = this.props.product
     return (
       <div >
-        <h1>Phones</h1>
+        <div className="media">
+          <NavLink
+            className="media-body"
+            activeClassName="active"
+            to={`/phones/${product.id}`}>
+            <h4 className="media-heading tucked">
+              <span placeholder="Jean Doe">{product.name}</span>
+            </h4>
+            <h5 className="tucked">
+              <span>{product.description}</span>
+            </h5>
+            <h5 className="tucked">
+              <span>{product.price}</span>
+            </h5>
+            <h5 className="tucked">
+              <span>{product.quantity}</span>
+            </h5>
+          </NavLink>
+          <div className="media-right media-middle">
+          <button
+              className="btn btn-default"
+              >
+            <span className="glyphicon glyphicon-remove" />
+            Add to Cart!
+          </button>
+        </div>
+        </div>
       </div>
     );
   }
