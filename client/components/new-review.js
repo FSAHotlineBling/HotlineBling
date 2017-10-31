@@ -1,8 +1,9 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { postReview } from '../store'
 
-//Props will need to be passed to new review: productId
+//Props will need to be passed: product, orderId
 //can get user from session
 export function NewReview(props) {
 
@@ -55,9 +56,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       const reviewText = event.target.reviewText.value
       const stars = event.target.stars.value
       dispatch(postReview({ title, reviewText, stars }))
+        .then(() => {
+          alert('Thank you for your feedback!')
+          ownProps.history.push(`/orders/${ownProps.orderId}`)})
     }
   }
 }
 
-const newReviewContainer = connect(mapStateToProps, mapDispatchToProps)(NewReview)
+const newReviewContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(NewReview))
 export default newReviewContainer
