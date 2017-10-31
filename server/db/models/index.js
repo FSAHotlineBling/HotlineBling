@@ -5,10 +5,10 @@ const Review = require('./review')
 const Order = require('./order')
 
 //Associations
- Product.belongsToMany(Category, {through: ‘ProductCategory’}) //Will create join table Product-Category
- Category.belongsToMany(Product, {through: ‘ProductCategory’})
- Product.belongsToMany(Order, {through: ‘ProductOrder’}) //Will create join table Product-Order
- Order.belongsToMany(Product, {through: ‘ProductOrder’})
+ Product.belongsToMany(Category, {through: 'ProductCategory'}) //Will create join table Product-Category
+ Category.belongsToMany(Product, {through: 'ProductCategory'})
+ Product.belongsToMany(Order, {through: 'ProductOrder'}) //Will create join table Product-Order
+ Order.belongsToMany(Product, {through: 'ProductOrder'})
  Product.hasMany(Review)
  Review.belongsTo(Product)
  User.hasMany(Order)
