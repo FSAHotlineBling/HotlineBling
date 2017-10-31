@@ -1,21 +1,25 @@
 import React from 'react'
 import axios from 'axios'
 
-
-export default function NewReview() {
+//Props will need to be passed to new review: userId & productId
+export default function NewReview(props) {
 
   function handleReviewSubmit(event) {
     event.preventDefault();
     const title = event.target.title.value
     const reviewText = event.target.reviewText.value
     const stars = event.target.stars.value
-    axios.post('/api/reviews', {title, reviewText, stars})
-
+    // const userId = props.userId ? props.userId : 1
+    // const productId = props.productId ? props.productId : 1
+    axios.post('/api/reviews', { title, reviewText, stars })
+      .then(() => alert('Thank you for your review!'))
+      .catch(err => console.error(err))
+    //NEED TO CONNECT TO USER ID & PRODUCT ID
   }
 
   return (
-      <div id="new-review">
-        <form onSubmit = {handleReviewSubmit}>
+      <div id="new-review-form">
+        <form onSubmit={handleReviewSubmit}>
           <h3>Review this product</h3>
           <div className="form-group">
             <label>Review Title</label>
@@ -46,6 +50,5 @@ export default function NewReview() {
         </form>
       </div>
     )
-
-}
+  }
 
