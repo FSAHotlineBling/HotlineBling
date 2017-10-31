@@ -11,7 +11,6 @@ class Product extends React.Component {
   }
 
   render() {
-    console.log('in product file', this.props.product)
     let product = this.props.product
     return (
       <div >
