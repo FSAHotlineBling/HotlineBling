@@ -1,25 +1,14 @@
 import React from 'react'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import { postReview } from '../store'
 
-//Props will need to be passed to new review: userId & productId
-export default function NewReview(props) {
-
-  function handleReviewSubmit(event) {
-    event.preventDefault();
-    const title = event.target.title.value
-    const reviewText = event.target.reviewText.value
-    const stars = event.target.stars.value
-    // const userId = props.userId ? props.userId : 1
-    // const productId = props.productId ? props.productId : 1
-    axios.post('/api/reviews', { title, reviewText, stars })
-      .then(() => alert('Thank you for your review!'))
-      .catch(err => console.error(err))
-    //NEED TO CONNECT TO USER ID & PRODUCT ID
-  }
+//Props will need to be passed to new review: productId
+//can get user from session
+export function NewReview(props) {
 
   return (
       <div id="new-review-form">
-        <form onSubmit={handleReviewSubmit}>
+        <form onSubmit={props.postReview}>
           <h3>Review this product</h3>
           <div className="form-group">
             <label>Review Title</label>
@@ -52,3 +41,23 @@ export default function NewReview(props) {
     )
   }
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    reviews: state.reviews
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    postReview(event) {
+      event.preventDefault();
+      const title = event.target.title.value
+      const reviewText = event.target.reviewText.value
+      const stars = event.target.stars.value
+      dispatch(postReview({ title, reviewText, stars }))
+    }
+  }
+}
+
+const newReviewContainer = connect(mapStateToProps, mapDispatchToProps)(NewReview)
+export default newReviewContainer
