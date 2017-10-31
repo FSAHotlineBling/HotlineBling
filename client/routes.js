@@ -4,8 +4,9 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome} from './components'
+import {Main, Login, Signup, UserHome, Phones} from './components'
 import {me} from './store'
+import { fetchProducts } from './store/Product';
 
 /**
  * COMPONENT
@@ -23,6 +24,7 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
+            <Route exact path="/" component={Phones} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             {
@@ -56,6 +58,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchProducts())
     }
   }
 }
