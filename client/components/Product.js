@@ -6,12 +6,7 @@ import { putCart } from '../store'
 /* -----------------    COMPONENT     ------------------ */
 
 function Product (props){
-
-  // constructor(props) {
-  //   super(props);
-  //   // this.addProductToCart = this.addProductToCart.bind(this)
-  // }
-
+    
     let product = props.product
     return (
       <div >
