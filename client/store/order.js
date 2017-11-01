@@ -22,6 +22,7 @@ export const postOrder = () => dispatch => {
       dispatch(createOrder(res.data))
     })
     .catch(err => dispatch(createOrder(err)))
+  //!!!!!!! do we want to dispatch this to our store? 
 }
 
 export const fetchCreatedOrder = userid => dispatch => {
@@ -31,6 +32,8 @@ export const fetchCreatedOrder = userid => dispatch => {
       dispatch(getCreatedOrder(res.data))
     })
     .catch(err => dispatch(getCreatedOrder(err)))
+  
+  //!!!!!!! do we want to dispatch this to our store? 
 }
 
 /**
@@ -40,6 +43,7 @@ export default function (order = {}, action){
   switch (action.type){
     case CREATE_ORDER:
       return order
+      //won't this return an empty object or last created object?
     case GET_CREATED_ORDER:
       return action.order
     default:
