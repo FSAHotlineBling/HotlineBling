@@ -31,28 +31,39 @@ export class PastOrders extends Component {
   // }
 
   componentDidMount() {
-    const userId = 1;
-    // const userId = req.session.user.id
+    const userId = this.props.userId
+    console.log('userID is', userId)
     this.props.fetchUserOrders(userId)
   }
 
   render() {
     const pastOrders = this.props.pastOrders
+    const currentUser = this.props.user //user on state
+    const userId = this.props.userId //accessed from URL
+    //checking that user on state also matches user ID in URL bar (only users that are logged in can see their own order history)
+    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === userId)
+    console.log('authorized is', authorized)
     return (
-      <div id="past-orders">
-        <h2>Your Order History</h2>
-        <ul>
-          {pastOrders.map(order => {
-            return (
-              <li key={order.id}>
-                <Link to={`/api/orders/${order.id}`}>
-                  <h4>Order {order.id}</h4>
-                </Link>
+      <div id="past-orders-component">
+        { authorized &&
+          (
+            <div id="past-orders">
+              <h2>Your Order History</h2>
+              <ul>
+                {pastOrders.map(order => {
+                  return (
+                    <li key={order.id}>
+                      <Link to={`/users/${userId}/orders/${order.id}`}>
+                        <h4>Order {order.id}</h4>
+                      </Link>
 
-              </li>
-            )
-          })}
-        </ul>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        }
       </div>
     )
   }
@@ -65,9 +76,11 @@ export class PastOrders extends Component {
 //   };
 // };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    pastOrders: state.order.currentUserOrders
+    pastOrders: state.order.currentUserOrders,
+    userId: Number(ownProps.match.params.userId),
+    user: state.user
   }
 }
 

@@ -7,6 +7,7 @@ import history from './history'
 import {Main, Login, Signup, UserHome, Phones} from './components'
 import {me, fetchProducts, store} from './store'
 import PastOrders from './components/past-orders'
+import OrderDetail from './components/past-order-detail'
 import Navbar from './Navbar'
 
 /**
@@ -22,7 +23,7 @@ class Routes extends Component {
     return (
       <Router history={history}>
         <Main>
-          <PastOrders />
+
           <div>
           <Navbar />
           <Switch>
@@ -35,6 +36,8 @@ class Routes extends Component {
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
                   <Route path="/home" component={UserHome} />
+                  <Route path="/users/:userId/orders" component={PastOrders} />
+                  <Route path="/users/:userId/orders/:orderId" component={OrderDetail} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
