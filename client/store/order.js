@@ -1,44 +1,52 @@
 import axios from 'axios'
+import history from '../history'
 
-//INITIAL STATE
+/**
+ * ACTION TYPES
+ */
+const CREATE_ORDER = 'CREATE_ORDER'
+const GET_CREATED_ORDER = 'GET_CREATED_ORDER'
 
-const orderState = {
-  currentUserOrders: []
+/**
+ * ACTION CREATORS
+ */
+const createOrder = order => ({type: CREATE_ORDER, order})
+const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
+
+/**
+ * THUNK CREATORS
+ */
+export const postOrder = () => dispatch => {
+  return axios.post('/api/orders')
+    .then(res => {
+      dispatch(createOrder(res.data))
+    })
+    .catch(err => dispatch(createOrder(err)))
+  //!!!!!!! do we want to dispatch this to our store?
 }
 
-//ACTION TYPES
+export const fetchCreatedOrder = userid => dispatch => {
+  console.log('REDUCER USER ID', userid)
+  return axios.get(`/api/orders/${userid}`)
+    .then(res => {
+      dispatch(getCreatedOrder(res.data))
+    })
+    .catch(err => dispatch(getCreatedOrder(err)))
 
-const GET_USER_ORDERS = 'GET_USER_ORDERS'
+  //!!!!!!! do we want to dispatch this to our store?
+}
 
-//ACTION CREATORS
-
-const getUserOrders = (userOrders) => ({
-  type: GET_USER_ORDERS,
-  userOrders
-})
-
-//THUNKS
-
-export const fetchUserOrders = (userId) => {
-  return function thunk(dispatch) {
-    axios.get(`/api/orders/${userId}`)
-      .then(res => res.data)
-      .then(fetchedUserOrders => {
-        const action = getUserOrders(fetchedUserOrders)
-        dispatch(action)
-      })
+/**
+ * REDUCER
+ */
+export default function (order = {}, action){
+  switch (action.type){
+    case CREATE_ORDER:
+      return order
+      //won't this return an empty object or last created object?
+    case GET_CREATED_ORDER:
+      return action.order
+    default:
+      return order
   }
 }
-
-//REDUCER
-
-const orderReducer = (state = orderState, action) => {
-  switch (action.type) {
-    case GET_USER_ORDERS:
-      return {...state, currentUserOrders: action.userOrders}
-    default: return state;
-  }
-}
-
-export default orderReducer
-

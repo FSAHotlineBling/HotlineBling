@@ -3,15 +3,15 @@ const Category = require('./category')
 const Product = require('./product')
 const Review = require('./review')
 const Order = require('./order')
-const ProductOrder = require('./productOrder')
+const ProductOrders = require('./productOrder')
 const ProductCategory = require('./productCategory')
 
 //Associations
 
  Product.belongsToMany(Category, {through: ProductCategory})
  Category.belongsToMany(Product, {through: ProductCategory})
- Product.belongsToMany(Order, {through: ProductOrder})
- Order.belongsToMany(Product, {through: ProductOrder})
+ Product.belongsToMany(Order, {through: ProductOrders})
+ Order.belongsToMany(Product, {through: ProductOrders})
 
  Product.hasMany(Review)
  Review.belongsTo(Product)
@@ -34,5 +34,5 @@ module.exports = {
   Review,
   Category,
   ProductCategory,
-  ProductOrder
+  ProductOrders
 }
