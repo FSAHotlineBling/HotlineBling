@@ -10,10 +10,22 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
+    console.log('now fetching');
   let id = req.params.id
-  Product.findById({id, 
-    include: [Review]
-  })
+  Product.findById(id)
     .then(phone => res.json(phone))
     .catch(next)
 })
+
+router.put('/:id', (req, res, next) => {
+    console.log('hitting backend', req.body)
+    Product.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(() => {
+        res.sendStatus(201);
+    })
+    .catch(next);
+});
