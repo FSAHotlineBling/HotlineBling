@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { putCart } from '../store'
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -8,6 +9,7 @@ class Product extends React.Component {
 
   constructor(props) {
     super(props);
+    this.addProductToCart = this.addProductToCart.bind(this)
   }
 
   render() {
@@ -35,6 +37,7 @@ class Product extends React.Component {
           <div className="media-right media-middle">
           <button
               className="btn btn-default"
+              onClick={this.addProductToCart}
               >
             <span className="glyphicon glyphicon-remove" />
             Add to Cart!
@@ -45,11 +48,17 @@ class Product extends React.Component {
     );
   }
 
+  addProductToCart(event){
+    console.log('props',this.props, this.state)
+    const productId = this.props.product.id
+    event.stopPropagation();
+    // putCart();
+  }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ products }) => ({ products });
+const mapState = ({ products, orders }) => ({ products, orders });
 
 
 export default connect(mapState)(Product);

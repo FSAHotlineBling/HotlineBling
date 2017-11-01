@@ -24,6 +24,6 @@ class PhonesHome extends React.Component {
 
 const mapState = ({ products }) => ({ products });
 
-const mapDispatch = { fetchProducts };
+const mapDispatch = { fetchProducts};
 
 export default connect(mapState, mapDispatch)(PhonesHome);
