@@ -42,7 +42,7 @@ export function NewReview(props) {
     )
   }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     reviews: state.reviews
   }
