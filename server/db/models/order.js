@@ -17,7 +17,6 @@ const Order = db.define('order', {
   },
   zip: {
     type: Sequelize.STRING,
-    allowNull: false
   },
   email: {
     type: Sequelize.STRING
