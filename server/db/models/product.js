@@ -15,7 +15,10 @@ const Product = db.define('product', {
   },
   quantityAvailable: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isInt: true
+    }
   },
   imageUrl: {
     type: Sequelize.STRING
