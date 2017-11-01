@@ -58,14 +58,6 @@ export class SingleProduct extends Component {
             return productFilter.id === Number(this.props.match.params.phoneid)
         })
         const product = filteredProducts[0];
-        // const toShow = () => {
-        //     if (!this.props.loggedInUser){
-        //         return true
-        //     } else if (this.props.loggedInUser.isAdmin){
-        //         return false
-        //     } return true
-        // }
-        // const control = toShow(this.props);
         const control  = false;
         return (
             <div>
