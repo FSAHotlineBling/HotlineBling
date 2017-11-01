@@ -5,15 +5,14 @@ import { putCart } from '../store'
 
 /* -----------------    COMPONENT     ------------------ */
 
-class Product extends React.Component {
+function Product (props){
 
-  constructor(props) {
-    super(props);
-    this.addProductToCart = this.addProductToCart.bind(this)
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.addProductToCart = this.addProductToCart.bind(this)
+  // }
 
-  render() {
-    let product = this.props.product
+    let product = props.product
     return (
       <div >
         <div className="media">
@@ -35,31 +34,34 @@ class Product extends React.Component {
             </h5>
           </NavLink>
           <div className="media-right media-middle">
-          <button
+            <button
               className="btn btn-default"
-              onClick={this.addProductToCart}
-              >
-            <span className="glyphicon glyphicon-remove" />
-            Add to Cart!
+              onClick={() => props.addProductToCart(event, props)}
+            >
+              <span className="glyphicon glyphicon-remove" />
+              Add to Cart!
           </button>
-        </div>
+          </div>
         </div>
       </div>
     );
-  }
 
-  addProductToCart(event){
-    console.log('props',this.props, 'state', this.state)
-    const productId = this.props.product.id
-    // const orderId
-    event.stopPropagation();
-    // putCart();
-  }
+
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
 const mapState = ({ products, order }) => ({ products, order });
 
+const mapDispatch = dispatch => {
+  return {
+    addProductToCart(event, props) {
+      const productId = props.product.id
+      const orderId = props.order.id
+      event.stopPropagation();
+      dispatch(putCart(productId, orderId));
+    }
+  }
+}
 
-export default connect(mapState)(Product);
+export default connect(mapState, mapDispatch)(Product);

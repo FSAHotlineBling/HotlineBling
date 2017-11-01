@@ -17,7 +17,6 @@ class Routes extends Component {
     this.props.loadInitialData(this.props.userId)
   }
   componentWillReceiveProps(nextProps) {
-    console.log('NEXT', nextProps)
     this.props.loadInitialData(nextProps.userId)
   }
 
@@ -55,7 +54,7 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  let userId = 1;
+  let userId = null;
   if (Object.keys(state.user).length !== 0) {
     userId = state.user.id
   }
@@ -66,13 +65,11 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
-  // console.log('state in routes')
   return {
     loadInitialData(userId) {
-      console.log('USERID in ROUTES', userId)
       dispatch(fetchProducts())
       dispatch(me())
-      dispatch(fetchCreatedOrder(userId))
+      if (userId) dispatch(fetchCreatedOrder(userId))
     }
   }
 }
