@@ -6,13 +6,10 @@ import user from './user'
 import review from './review'
 import order from './order'
 import products from './Product'
-<<<<<<< HEAD
 
-const reducer = combineReducers({user, review, products, order})
-=======
 import singleProduct from './singleProduct'
-const reducer = combineReducers({user, review, products, singleProduct})
->>>>>>> master
+const reducer = combineReducers({user, review, products, singleProduct, order})
+
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,

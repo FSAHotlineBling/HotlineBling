@@ -1,13 +1,6 @@
 // Story: As a logged-in user, I want to view my list of previous orders, so that I can find an individual order I made in the past and review it.
 
-// Implementation:
-// BACKEND:
-// Express route on the backend (GET) should serve up orders with matching user ID from database.
-// Special access control needed - can only obtain information if user is logged in.
-// Logged in user info stored on session
-
 // FRONTEND:
-// Create react component called (PastOrders?).
 // List of all orders (sort by date).
 // Each order should be a link to single order details.
 
@@ -54,7 +47,11 @@ export class PastOrders extends Component {
                   return (
                     <li key={order.id}>
                       <Link to={`/users/${userId}/orders/${order.id}`}>
-                        <h4>Order {order.id}</h4>
+                        <ul>
+                          <li><h4>Order {order.id}</h4></li>
+                          <li>Ordered on {order.dateCreated}></li>
+                          <li>Status: {order.status}</li>
+                        </ul>
                       </Link>
 
                     </li>
