@@ -49,8 +49,9 @@ class Product extends React.Component {
   }
 
   addProductToCart(event){
-    console.log('props',this.props, this.state)
+    console.log('props',this.props, 'state', this.state)
     const productId = this.props.product.id
+    // const orderId
     event.stopPropagation();
     // putCart();
   }
@@ -58,7 +59,7 @@ class Product extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ products, orders }) => ({ products, orders });
+const mapState = ({ products, order }) => ({ products, order });
 
 
 export default connect(mapState)(Product);
