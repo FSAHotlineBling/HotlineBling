@@ -18,15 +18,6 @@ export class SingleProduct extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // componentDidMount(){
-    //     axios.get(`/api/phones/${Number(this.props.match.params.phoneid)}`)
-    //         .then(res => res.data)
-    //         .then(product => {
-    //         this.setState({ product });
-    //     });
-        
-    // }
-
     handleProductNameChange(event) {
         this.setState({
             product : {...this.state.product, name: event.target.value}
@@ -40,7 +31,7 @@ export class SingleProduct extends Component {
     }
     handleQuantityChange(event) {
         this.setState({
-            product: {...this.state.product, qunatityAvailable: event.target.value}
+            product: {...this.state.product, quantityAvailable: event.target.value}
         })
 
     }
@@ -182,7 +173,6 @@ const mapStateToProps = (state, ownProps) => {
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    console.log(ownProps.state)
     return {
         handleDispatch(id, product) {
             const thunk = putProduct(id, product, ownProps.history);
