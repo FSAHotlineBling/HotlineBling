@@ -17,7 +17,6 @@ const addProductToCart = product => ({type: ADD_PRODUCT_TO_CART, product})
 export const putCart = (productId, orderId) => dispatch => {
   return axios.post('/api/productorders', { productId, orderId })
     .then(res => {
-      console.log('res', res.data)
       dispatch(addProductToCart(res.data))
     })
     .catch(err => dispatch(addProductToCart(err)))
@@ -27,7 +26,6 @@ export const putCart = (productId, orderId) => dispatch => {
  * REDUCER
  */
 export default function (cart = {}, action){
-  console.log('CART ACTION', cart, action)
   switch (action.type){
     case ADD_PRODUCT_TO_CART:
       return Object.assign({}, cart, {cartId: action.orderId})
