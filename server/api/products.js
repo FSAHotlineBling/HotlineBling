@@ -27,3 +27,20 @@ router.put('/:id', (req, res, next) => {
     })
     .catch(next);
 });
+
+router.delete('/:id', (req, res, next) => {
+    Product.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .catch(next);
+})
+
+router.post('/', (req, res, next) => {
+    Product.create(req.body)
+        .then((product) => {
+            res.status(201).json(product);
+        })
+        .catch(next);
+});
