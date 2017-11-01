@@ -3,10 +3,10 @@ const { Order, Product } = require('../db/models')
 
 module.exports = orderRouter
 
-orderRouter.get('/', (req, res, next) => {
-  console.log('inside orders route')
-  res.send('here')
-})
+// orderRouter.get('/', (req, res, next) => {
+//   console.log('inside orders route')
+//   res.send('here')
+// })
 
 // GET '/api/orders/:userId => will fetch all orders from db matching userId
 orderRouter.get('/:userId', (req, res, next) => {
@@ -16,4 +16,12 @@ orderRouter.get('/:userId', (req, res, next) => {
   })
     .then(orders => res.json(orders))
     .catch(next);
+})
+
+orderRouter.get('/:orderId', (req, res, next) => {
+  Order.findById(req.params.userId, {
+    include: [ Product]
+  })
+    .then(order => res.json(order))
+    .catch(next)
 })

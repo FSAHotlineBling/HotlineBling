@@ -12,6 +12,7 @@
 // Each order should be a link to single order details.
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchUserOrders } from '../store'
 
@@ -19,7 +20,6 @@ import { fetchUserOrders } from '../store'
 /* Rather than loading all orders ever onto state, make axios request to /api/orders/:userId (URL route will be /users/:userId/orders) and fetch relevant orders from database.
 
 (side note: will we need some sort of security in place to make sure that just anybody can't go to /api/orders/userId & see all past orders? how to implement that?)
-
 
 This axios request will return a json-formatted list of user's past orders, pastOrders = [{}, {}, ...], accessed as prop from dispatch.
 
@@ -31,13 +31,13 @@ export class PastOrders extends Component {
   // }
 
   componentDidMount() {
-
+    const userId = 1;
     // const userId = req.session.user.id
     this.props.fetchUserOrders(userId)
   }
 
   render() {
-    const { pastOrders } = this.props
+    const pastOrders = this.props.pastOrders
     return (
       <div id="past-orders">
         <h2>Your Order History</h2>
@@ -45,7 +45,10 @@ export class PastOrders extends Component {
           {pastOrders.map(order => {
             return (
               <li key={order.id}>
-                <h4>Order {order.id}</h4>
+                <Link to={`/api/orders/${order.id}`}>
+                  <h4>Order {order.id}</h4>
+                </Link>
+
               </li>
             )
           })}
@@ -55,12 +58,18 @@ export class PastOrders extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const paramId = Number(ownProps.match.params.id);
+// const mapStateToProps = (state, ownProps) => {
+//   const paramId = Number(ownProps.match.params.id);
+//   return {
+//     user: state.users.find(user => user.id === paramId)
+//   };
+// };
+
+const mapStateToProps = state => {
   return {
-    user: state.users.find(user => user.id === paramId)
-  };
-};
+    pastOrders: state.order.currentUserOrders
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {

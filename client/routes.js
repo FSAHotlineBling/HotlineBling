@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, Phones} from './components'
 import {me, fetchProducts, store} from './store'
-import NewReview from './components/new-review'
+import PastOrders from './components/past-orders'
 import Navbar from './Navbar'
 
 /**
@@ -22,7 +22,7 @@ class Routes extends Component {
     return (
       <Router history={history}>
         <Main>
-          <NewReview />
+          <PastOrders />
           <div>
           <Navbar />
           <Switch>
