@@ -12,13 +12,11 @@ export const updateProduct = (product) => {
 
 //THUNKS
 export const putProduct = (productid, productObj, history) => (dispatch) => {
-    console.log('productid', productid);
     axios.put(`/api/phones/${productid}`, productObj)
     .then(() => {
         axios.get(`/api/phones/${productid}`)
         .then(res => res.data)
         .then((product) => {
-            console.log('product', product)
             const action = updateProduct(product);
             dispatch(action);
             history.push(`/`);
