@@ -11,9 +11,23 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   let id = req.params.id
+
   Product.findById(id,
     { include: [Review]
   })
     .then(phone => res.json(phone))
     .catch(next)
 })
+
+router.put('/:id', (req, res, next) => {
+    Product.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(() => {
+        res.sendStatus(201);
+    })
+    .catch(next);
+});
+

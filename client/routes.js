@@ -4,7 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, Phones} from './components'
+import {Main, Login, Signup, UserHome, Phones, SingleProduct} from './components'
 import {me, fetchProducts, store} from './store'
 import PastOrders from './components/past-orders'
 import OrderDetail from './components/past-order-detail'
@@ -29,6 +29,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are available to all visitors */}
             <Route exact path="/" component={Phones} />
+            <Route path="/phones/:phoneid" component={SingleProduct} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             {
