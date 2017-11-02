@@ -16,8 +16,8 @@ const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
 /**
  * THUNK CREATORS
  */
-export const postOrder = () => dispatch => {
-  return axios.post('/api/orders')
+export const postOrder = (productId) => dispatch => {
+  return axios.post('/api/orders', {productId})
     .then(res => {
       dispatch(createOrder(res.data))
     })
@@ -41,7 +41,7 @@ export const fetchCreatedOrder = userid => dispatch => {
 export default function (order = {}, action){
   switch (action.type){
     case CREATE_ORDER:
-      return order
+      return action.order
       //won't this return an empty object or last created object?
     case GET_CREATED_ORDER:
       return action.order
