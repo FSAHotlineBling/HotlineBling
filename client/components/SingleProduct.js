@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { putProduct } from '../store/index';
+import { putProduct, destroyProduct } from '../store/index';
 import { withRouter, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios'
@@ -57,8 +57,9 @@ export class SingleProduct extends Component {
         const filteredProducts = products.filter((productFilter) => {
             return productFilter.id === Number(this.props.match.params.phoneid)
         })
-        const product = filteredProducts[0];
-        const control  = false;
+        const product = filteredProducts[0]
+        const control = this.props.user.isAdmin === undefined || this.props.user.isAdmin === false
+        console.log(control)
         return (
             <div>
                 <div className="container">
@@ -124,6 +125,7 @@ export class SingleProduct extends Component {
                                         <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
                                     </span>
                                 </form>
+                                <button hidden={control} type="button" className="btn btn-danger" onClick={(e) => this.props.handleDelete(e, product.id)}>Delete</button>
                                 </div>
                         </div>
                         <div className="col-sm-8">
@@ -144,6 +146,12 @@ export class SingleProduct extends Component {
                                         {
                                         product !== undefined && <p>{product.description}</p>
                                         }
+                                        <button
+                                            className="btn btn-default"
+                                            >
+                                            <span className="glyphicon glyphicon-remove" />
+                                            Add to Cart!
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +167,8 @@ export class SingleProduct extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        products: state.products
+        products: state.products,
+        user: state.user
     };
 };
 
@@ -169,6 +178,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleDispatch(id, product) {
             const thunk = putProduct(id, product, ownProps.history);
             dispatch(thunk);
+        },
+        handleDelete(event, id) {
+            dispatch(destroyProduct(id));
         }
     }
 }
