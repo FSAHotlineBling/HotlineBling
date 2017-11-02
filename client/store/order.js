@@ -26,7 +26,6 @@ export const postOrder = () => dispatch => {
 }
 
 export const fetchCreatedOrder = userid => dispatch => {
-  console.log('REDUCER USER ID', userid)
   return axios.get(`/api/orders/${userid}`)
     .then(res => {
       dispatch(getCreatedOrder(res.data))

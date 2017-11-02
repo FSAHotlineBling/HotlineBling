@@ -1,8 +1,4 @@
-// Story: As a logged-in user, I want to view my list of previous orders, so that I can find an individual order I made in the past and review it.
 
-// FRONTEND:
-// List of all orders (sort by date).
-// Each order should be a link to single order details.
 
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
@@ -19,9 +15,7 @@ This axios request will return a json-formatted list of user's past orders, past
 On store will need currentUserOrders to store list of orders for user, and currentOrder (?) to store single order being viewed (to be completed on another issue - note to self DO NOT TOUCH ANYTHING BESIDES 'currentUserOrders') */
 
 export class PastOrders extends Component {
-  // constructor() {
-  //   super()
-  // }
+
 
   componentDidMount() {
     const userId = this.props.userId
@@ -48,7 +42,7 @@ export class PastOrders extends Component {
                     <li key={order.id}>
                       <Link to={`/users/${userId}/orders/${order.id}`}>
                         <ul>
-                          <li><h4>Order {order.id}</h4></li>
+                          <li><h4>Order No.{order.id}</h4></li>
                           <li>Ordered on {order.dateCreated}></li>
                           <li>Status: {order.status}</li>
                         </ul>
@@ -66,16 +60,10 @@ export class PastOrders extends Component {
   }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//   const paramId = Number(ownProps.match.params.id);
-//   return {
-//     user: state.users.find(user => user.id === paramId)
-//   };
-// };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    pastOrders: state.order.currentUserOrders,
+    pastOrders: state.viewOrder,
     userId: Number(ownProps.match.params.userId),
     user: state.user
   }

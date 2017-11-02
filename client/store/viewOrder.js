@@ -1,10 +1,5 @@
 import axios from 'axios'
 
-//INITIAL STATE
-
-const orderState = {
-  currentUserOrders: []
-}
 
 //ACTION TYPES
 
@@ -21,7 +16,7 @@ const getUserOrders = (userOrders) => ({
 
 export const fetchUserOrders = (userId) => {
   return function thunk(dispatch) {
-    axios.get(`/api/orders/${userId}`)
+    axios.get(`/api/orders/view/${userId}`)
       .then(res => res.data)
       .then(fetchedUserOrders => {
         const action = getUserOrders(fetchedUserOrders)
@@ -32,10 +27,10 @@ export const fetchUserOrders = (userId) => {
 
 //REDUCER
 
-const orderReducer = (state = orderState, action) => {
+const orderReducer = (state = [], action) => {
   switch (action.type) {
     case GET_USER_ORDERS:
-      return {...state, currentUserOrders: action.userOrders}
+      return action.userOrders
     default: return state;
   }
 }
