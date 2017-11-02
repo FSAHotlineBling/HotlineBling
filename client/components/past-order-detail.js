@@ -1,10 +1,11 @@
-// import React from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 
-// export default function PastOrderDetail() {
-//   return (
-//     <div id="past-order-detail">
-//     <button>Review This Product</button>
-//     </div>
-//   )
-// }
+export default function OrderDetail() {
+  return (
+    <div id="past-order-detail">
+    <button>Review This Product</button>
+    </div>
+  )
+}
