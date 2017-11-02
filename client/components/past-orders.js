@@ -19,7 +19,6 @@ export class PastOrders extends Component {
 
   componentDidMount() {
     const userId = this.props.userId
-    console.log('userID is', userId)
     this.props.fetchUserOrders(userId)
   }
 
@@ -29,7 +28,6 @@ export class PastOrders extends Component {
     const userId = this.props.userId //accessed from URL
     //checking that user on state also matches user ID in URL bar (only users that are logged in can see their own order history)
     const authorized = currentUser && (currentUser.isAdmin || currentUser.id === userId)
-    console.log('authorized is', authorized)
     return (
       <div id="past-orders-component">
         { authorized &&

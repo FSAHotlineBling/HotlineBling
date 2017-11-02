@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { putCart } from '../store'
+import { postCart, postOrder } from '../store'
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -52,9 +52,14 @@ const mapDispatch = dispatch => {
   return {
     addProductToCart(event, props) {
       const productId = props.product.id
-      const orderId = props.order.id
+      let orderId
+      if (!props.order){
+        dispatch(postOrder(productId))
+      } else {
+        orderId = props.order.id
+        dispatch(postCart(productId, orderId));
+      }
       event.stopPropagation();
-      dispatch(putCart(productId, orderId));
     }
   }
 }

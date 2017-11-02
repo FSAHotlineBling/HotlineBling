@@ -16,9 +16,9 @@ const Main = (props) => {
   return (
     <div>
       <h1>
-        <i class="fa fa-bolt" aria-hidden="true"></i>
+        <i className="fa fa-bolt" aria-hidden="true"></i>
         HOTLINE BLING
-        <i class="fa fa-bolt" aria-hidden="true"></i></h1>
+        <i className="fa fa-bolt" aria-hidden="true"></i></h1>
       <nav>
         {
           isLoggedIn

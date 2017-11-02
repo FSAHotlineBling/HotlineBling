@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import history from './history'
 import PastOrders from './components/past-orders'
 import OrderDetail from './components/past-order-detail'
-import { Main, Login, Signup, UserHome, Phones, SingleProduct } from './components'
+import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart } from './components'
 import { me, fetchProducts, store, fetchCreatedOrder } from './store'
 import Navbar from './Navbar'
 
@@ -34,6 +34,7 @@ class Routes extends Component {
               <Route path="/phones/:phoneid" component={SingleProduct} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
+              <Route path="/cart" component={Cart} />
               {
                 isLoggedIn &&
                 <Switch>
