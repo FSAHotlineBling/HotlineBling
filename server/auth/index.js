@@ -4,6 +4,11 @@ const Order = require('../db/models/order')
 
 module.exports = router
 
+// const addUserIdToOrder = () => {
+//   console.log('LOOKING FOR REQ COOKIE ****',req.session.cookie.cartId);
+
+// }
+
 router.post('/login', (req, res, next) => {
   User.findOne({ where: { email: req.body.email } })
     .then(user => {
@@ -17,7 +22,17 @@ router.post('/login', (req, res, next) => {
             next(err)
           }
           else {
+            console.log('LOOKING FOR COOKIE***', req.session.cookie)
             req.session.userId = user.id;
+            if (req.session.cookie.cartId){
+              console.log('made it into the if block')
+              Order.findById(req.session.cookie.cartId)
+              .then((order) => {
+                order.update({
+                  userId: user.id
+                })
+              })
+            }
             res.json(user)
           }
         })
@@ -35,6 +50,7 @@ router.post('/signup', (req, res, next) => {
         }
         else {
           req.session.userId = user.id;
+          addUserIdToOrder();
           res.json(user)
         }
       })

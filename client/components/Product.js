@@ -6,11 +6,12 @@ import { postCart, postOrder } from '../store'
 /* -----------------    COMPONENT     ------------------ */
 
 function Product (props){
-    
+
     let product = props.product
     return (
       <div >
         <div className="media">
+          <div><img src={product.imageUrl} /></div>
           <NavLink
             className="media-body"
             activeClassName="active"
@@ -46,15 +47,18 @@ function Product (props){
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ products, order }) => ({ products, order });
+const mapState = ({ products, order, user }) => ({ products, order, user });
 
 const mapDispatch = dispatch => {
   return {
     addProductToCart(event, props) {
       const productId = props.product.id
+      const userId = props.user ? props.user.id : null
       let orderId
-      if (!props.order){
-        dispatch(postOrder(productId))
+      console.log("USER ID!!", userId)
+      console.log("Uprops order!!", props.order)
+      if (props.order === null || Object.keys(props.order).length === 0){
+        dispatch(postOrder(productId, userId))
       } else {
         orderId = props.order.id
         dispatch(postCart(productId, orderId));

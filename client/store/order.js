@@ -16,8 +16,8 @@ const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
 /**
  * THUNK CREATORS
  */
-export const postOrder = (productId) => dispatch => {
-  return axios.post('/api/orders', {productId})
+export const postOrder = (productId, userId) => dispatch => {
+  return axios.post('/api/orders', {productId, userId})
     .then(res => {
       dispatch(createOrder(res.data))
     })
@@ -26,6 +26,7 @@ export const postOrder = (productId) => dispatch => {
 }
 
 export const fetchCreatedOrder = userid => dispatch => {
+  console.log("USER ID!!!!", userid)
   return axios.get(`/api/orders/${userid}`)
     .then(res => {
       dispatch(getCreatedOrder(res.data))

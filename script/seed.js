@@ -162,11 +162,7 @@ Promise.all(orders.map(order =>
   Order.create(order))
 ))
 .then(() =>
-<<<<<<< HEAD
-Promise.all(productOrder.map(po =>
-=======
 Promise.all(productOrders.map(po =>
->>>>>>> master
   ProductOrders.create(po))
 ));
 
