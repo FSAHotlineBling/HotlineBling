@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order } = require('../db/models')
+const { Order, ProductOrders } = require('../db/models')
 module.exports = router
 
 router.use('/view', require('./vieworders'))
@@ -8,6 +8,7 @@ router.post('/', (req, res, next) => {
   Order.create(req.body)
     .then(order => {
       res.json(order)
+      ProductOrders.create({ productId: req.body.productId, orderId: order.id})
     })
     .catch(next)
 })
