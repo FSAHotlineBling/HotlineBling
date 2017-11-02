@@ -4,7 +4,7 @@ const Product = Models.Product;
 const Order = Models.Order;
 const User = Models.User;
 const Review = Models.Review;
-const ProductOrder = Models.ProductOrder;
+const ProductOrders = Models.ProductOrders;
 const ProductCategory = Models.ProductCategory;
 const db = require('../server/db/');
 
@@ -163,7 +163,7 @@ Promise.all(orders.map(order =>
 ))
 .then(() =>
 Promise.all(productOrder.map(po =>
-  ProductOrder.create(po))
+  ProductOrders.create(po))
 ));
 
 const runSeed = () => {
