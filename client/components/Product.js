@@ -5,7 +5,7 @@ import { putCart } from '../store'
 
 /* -----------------    COMPONENT     ------------------ */
 
-function Product (props){
+export function Product (props){
     
     let product = props.product
     return (
