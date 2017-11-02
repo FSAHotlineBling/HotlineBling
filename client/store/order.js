@@ -22,18 +22,17 @@ export const postOrder = () => dispatch => {
       dispatch(createOrder(res.data))
     })
     .catch(err => dispatch(createOrder(err)))
-  //!!!!!!! do we want to dispatch this to our store? 
+  //!!!!!!! do we want to dispatch this to our store?
 }
 
 export const fetchCreatedOrder = userid => dispatch => {
-  console.log('REDUCER USER ID', userid)
   return axios.get(`/api/orders/${userid}`)
     .then(res => {
       dispatch(getCreatedOrder(res.data))
     })
     .catch(err => dispatch(getCreatedOrder(err)))
-  
-  //!!!!!!! do we want to dispatch this to our store? 
+
+  //!!!!!!! do we want to dispatch this to our store?
 }
 
 /**

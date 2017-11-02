@@ -4,11 +4,10 @@ import { Router } from 'react-router'
 import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-
+import PastOrders from './components/past-orders'
+import OrderDetail from './components/past-order-detail'
 import { Main, Login, Signup, UserHome, Phones, SingleProduct } from './components'
 import { me, fetchProducts, store, fetchCreatedOrder } from './store'
-
-import NewReview from './components/new-review'
 import Navbar from './Navbar'
 
 /**
@@ -28,7 +27,6 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <div>
-            <NewReview />
             <Navbar />
             <Switch>
               {/* Routes placed here are available to all visitors */}
@@ -41,6 +39,8 @@ class Routes extends Component {
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
                   <Route path="/home" component={UserHome} />
+                  <Route exact path="/users/:userId/orders" component={PastOrders} />
+                  <Route exact path="/users/:userId/orders/:orderId" component={OrderDetail} />
                 </Switch>
               }
               {/* Displays our Login component as a fallback */}
