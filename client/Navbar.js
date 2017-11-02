@@ -10,7 +10,6 @@ export default function Navbar(){
                         <ul className="nav nav-tabs">
                             <li><Link to="/" className="nav-link">PHONES</Link></li>
                             <li><Link to="/cart" className="nav-link">CART</Link></li>
-                            <li><Link to="/account" className="nav-link">ACCOUNT</Link></li>
                         </ul>
                     </div>
                     <div className="col-md-3" id="nav-user-control">

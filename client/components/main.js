@@ -15,7 +15,10 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>BOILERMAKER</h1>
+      <h1>
+        <i class="fa fa-bolt" aria-hidden="true"></i>
+        HOTLINE BLING
+        <i class="fa fa-bolt" aria-hidden="true"></i></h1>
       <nav>
         {
           isLoggedIn
