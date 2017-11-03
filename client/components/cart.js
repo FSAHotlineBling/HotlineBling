@@ -4,6 +4,11 @@ import { connect } from 'react-redux'
 import { fetchCart } from '../store'
 
 export class Cart extends Component {
+  constructor(props){
+    super(props)
+    this.returnQuantityArray = this.returnQuantityArray.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
 
   // componentDidMount(){
   //   const orderId = this.props.orderId
@@ -17,6 +22,11 @@ export class Cart extends Component {
       result.push(i)
     }
     return result    
+  }
+
+  handleChange(event) {
+    event.preventDefault()
+    console.log(event)
   }
 
   render() {
@@ -38,7 +48,7 @@ export class Cart extends Component {
                   <li>{product.name}</li>
                   <li>{product.price}</li>
                   <label>Quantity:</label>
-                  <select name="quantity">
+                  <select name="quantity" onChange={this.handleChange}>
                     
                     {
                       quantity = this.returnQuantityArray(product.quantityAvailable)
