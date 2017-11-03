@@ -1,6 +1,5 @@
 // /* global describe beforeEach it */
 
-//NOT YET WORKING WILL FIX
 
 import {expect} from 'chai'
 import React from 'react'
@@ -16,12 +15,14 @@ describe('Product', () => {
     name: 'Cool phone',
     quantityAvailable: 3
   }
+  
+  let productComponent;
 
   beforeEach(() => {
-    product = shallow(<Product product={product} />)
+    productComponent = shallow(<Product product={product} />)
   })
 
   it('renders the phones name in an h4', () => {
-    expect(product.find('span').first().text()).to.be.equal('Cool phone')
+    expect(productComponent.find('span').first().text()).to.be.equal('Cool phone')
   })
 })
