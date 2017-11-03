@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import store from '../store/index';
 import { fetchProducts, createProduct } from '../store';
 import Product from './Product';
+import { Link } from 'react-router-dom';
 
 /**
  * COMPONENT
