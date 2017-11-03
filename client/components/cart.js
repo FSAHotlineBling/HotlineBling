@@ -64,6 +64,7 @@ export class Cart extends Component {
             )
           })}
         </ul>
+
       </div>
     )
   }
@@ -75,6 +76,7 @@ export class Cart extends Component {
 //     orderId: state.order.id
 //   }
 // }
+
 
 const mapDispatchToProps = dispatch => {
   return {

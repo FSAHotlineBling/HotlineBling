@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import store from '../store/index';
 import { fetchProducts, createProduct } from '../store';
 import Product from './Product';
+import { Link } from 'react-router-dom';
 
 /**
  * COMPONENT
@@ -42,6 +43,7 @@ filterHandleChange (event) {
         {products.map(product => <Product product={product} key={product.id} />)}
       </div>
       <div hidden={control}>
+         <Link to="/users"><button>View Users</button></Link>
          <h3>Add Phone </h3>
                   <form
                       id="edit-product-form"
