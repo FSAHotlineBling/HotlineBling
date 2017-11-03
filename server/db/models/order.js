@@ -4,7 +4,7 @@ const { ProductOrders, Product } = require('./index')
 
 const Order = db.define('order', {
   dateCreated: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     defaultValue: Sequelize.NOW
   },
   address: {
