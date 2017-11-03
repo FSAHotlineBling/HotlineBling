@@ -41,8 +41,6 @@ function Product (props){
         </div>
       </div>
     );
-
-
 }
 
 /* -----------------    CONTAINER     ------------------ */
@@ -55,8 +53,6 @@ const mapDispatch = dispatch => {
       const productId = props.product.id
       const userId = props.user ? props.user.id : null
       let orderId
-      console.log("USER ID!!", userId)
-      console.log("Uprops order!!", props.order)
       if (props.order === null || Object.keys(props.order).length === 0){
         dispatch(postOrder(productId, userId))
       } else {

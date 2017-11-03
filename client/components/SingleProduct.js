@@ -59,7 +59,6 @@ export class SingleProduct extends Component {
         })
         const product = filteredProducts[0]
         const control = this.props.user.isAdmin === undefined || this.props.user.isAdmin === false
-        console.log(control)
         return (
             <div>
                 <div className="container">

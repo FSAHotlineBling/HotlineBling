@@ -4,7 +4,6 @@ const {Review} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-    console.log("COOKIE???", !req.session.cookie.cartId)
   Product.findAll()
     .then(phones => res.json(phones))
     .catch(next)
