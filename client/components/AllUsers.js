@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(thunk);
         },
         handleDelete(event, id) {
-            const thunk = adminUser(id, ownProps.history);
+            const thunk = destroyUser(id, ownProps.history);
             dispatch(thunk);
         }
     }
