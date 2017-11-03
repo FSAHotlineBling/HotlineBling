@@ -5,12 +5,12 @@ import history from '../history'
  * ACTION TYPES
  */
 const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART'
-const GET_PRODUCTS = 'GET_PRODUCTS'
+const GET_PRODUCTS_IN_CART = 'GET_PRODUCTS_IN_CART'
 /**
  * ACTION CREATORS
  */
 const addProductToCart = product => ({type: ADD_PRODUCT_TO_CART, product})
-const getProducts = products => ({type: GET_PRODUCTS, products})
+const getProductsInCart = products => ({type: GET_PRODUCTS_IN_CART, products})
 /**
  * THUNK CREATORS
  */
@@ -26,7 +26,7 @@ export const postCart = (productId, orderId) => dispatch => {
 export const fetchCart = orderId => dispatch => {
   return axios.get(`/api/productorders/${orderId}`)
     .then(res => {
-      dispatch(getProducts(res.data))
+      dispatch(getProductsInCart(res.data))
     })
     .catch(err => console.error('Get unsuccessful', err))
 }
@@ -38,7 +38,7 @@ export default function (cart = { products: []}, action){
   switch (action.type){
     case ADD_PRODUCT_TO_CART:
       return Object.assign({}, cart, {product: action.products})
-    case GET_PRODUCTS:
+    case GET_PRODUCTS_IN_CART:
       return Object.assign({}, cart, {products: action.products})
     default:
       return cart
