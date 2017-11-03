@@ -38,7 +38,7 @@ export class PastOrders extends Component {
                       <Link to={`/users/${userId}/orders/${order.id}`}>
                         <ul>
                           <li><h4>Order No.{order.id}</h4></li>
-                          <li>Ordered on {order.dateCreated}></li>
+                          <li>Ordered on {order.dateCreated}</li>
                           <li>Status: {order.status}</li>
                           <li>Total: ${order.total} </li>
                         </ul>
