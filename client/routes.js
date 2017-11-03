@@ -6,8 +6,8 @@ import PropTypes from 'prop-types'
 import history from './history'
 import PastOrders from './components/past-orders'
 import OrderDetail from './components/past-order-detail'
-import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart, NewReview } from './components'
-import { me, fetchProducts, store, fetchCreatedOrder } from './store'
+import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart, AllUsers, NewReview } from './components'
+import { me, fetchProducts, store, fetchCreatedOrder, fetchUsers } from './store'
 import Navbar from './Navbar'
 
 /**
@@ -35,6 +35,7 @@ class Routes extends Component {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/cart" component={Cart} />
+              <Route path="/users" component={AllUsers} />
               {
                 isLoggedIn &&
                 <Switch>
@@ -74,6 +75,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData(userId) {
       dispatch(fetchProducts())
       dispatch(me())
+      dispatch(fetchUsers())
       if (userId) dispatch(fetchCreatedOrder(userId))
     }
   }
