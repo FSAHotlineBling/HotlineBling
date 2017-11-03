@@ -10,10 +10,11 @@ router.post('/', (req, res, next) => {
       return order
     })
     .then(order => {
-      return ProductOrders.create({ productId: req.body.productId, orderId: order.id })
+      ProductOrders.create({ productId: req.body.productId, orderId: order.id })
+      return order
     })
     .then(order => {
-      res.cookie('cartId', order.orderId).json(order)
+      res.cookie('cartId', order.id).json(order)
     })
     .catch(next)
 })
