@@ -30,7 +30,6 @@ filterHandleChange (event) {
         }
     });
     const control = this.props.user.isAdmin === undefined || this.props.user.isAdmin === false
-    console.log(this.props.user, this.props.products)
     return (
       <div>
       <div className="products-list" >
