@@ -8,7 +8,8 @@ import PastOrders from './components/past-orders'
 import OrderDetail from './components/past-order-detail'
 import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart, AllUsers, NewReview } from './components'
 import { me, fetchProducts, store, fetchCreatedOrder, fetchUsers } from './store'
-import Navbar from './Navbar'
+
+
 
 /**
  * COMPONENT
@@ -27,7 +28,6 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <div>
-            <Navbar />
             <Switch>
               {/* Routes placed here are available to all visitors */}
               <Route exact path="/" component={Phones} />
