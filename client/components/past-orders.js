@@ -6,13 +6,10 @@ import { connect } from 'react-redux'
 import { fetchUserOrders } from '../store'
 
 
-/* Rather than loading all orders ever onto state, make axios request to /api/orders/:userId (URL route will be /users/:userId/orders) and fetch relevant orders from database.
-
+/*
+STILL NEED TO DO THIS
 (side note: will we need some sort of security in place to make sure that just anybody can't go to /api/orders/userId & see all past orders? how to implement that?)
-
-This axios request will return a json-formatted list of user's past orders, pastOrders = [{}, {}, ...], accessed as prop from dispatch.
-
-On store will need currentUserOrders to store list of orders for user, and currentOrder (?) to store single order being viewed (to be completed on another issue - note to self DO NOT TOUCH ANYTHING BESIDES 'currentUserOrders') */
+ */
 
 export class PastOrders extends Component {
 
@@ -43,6 +40,7 @@ export class PastOrders extends Component {
                           <li><h4>Order No.{order.id}</h4></li>
                           <li>Ordered on {order.dateCreated}></li>
                           <li>Status: {order.status}</li>
+                          <li>Total: ${order.total} </li>
                         </ul>
                       </Link>
 
