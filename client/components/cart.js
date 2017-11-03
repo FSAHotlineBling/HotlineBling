@@ -5,28 +5,66 @@ import { fetchCart } from '../store'
 
 export class Cart extends Component {
 
-  componentDidMount(){
-    const orderId = this.props.orderId
-    console.log(this.props)
-    this.props.fetchCartOrders(orderId)
+  // componentDidMount(){
+  //   const orderId = this.props.orderId
+  //   console.log(this.props)
+  //   this.props.fetchCartOrders(orderId)
+  // }
+
+  returnQuantityArray(quantity) {
+    let result = []
+    for(let i=1; i<= quantity; i++) {
+      result.push(i)
+    }
+    return result    
   }
 
   render() {
+    const cart = {
+      products: [{id: 1, name: 'Phone', quantityAvailable: 3, price: '$100.00', description: 'a phone'}]
+    }
+
+    let quantity;
+
+  
     return (
       <div id="cart-component">
         <h2>Your Cart</h2>
-        
+        <ul>
+          {cart.products.map(product => {
+            return (
+              <li key={product.id}>
+                <ul>
+                  <li>{product.name}</li>
+                  <li>{product.price}</li>
+                  <label>Quantity:</label>
+                  <select name="quantity">
+                    
+                    {
+                      quantity = this.returnQuantityArray(product.quantityAvailable)
+                    }
+                    {
+                      quantity.map(num => {
+                        return(<option>{num}</option>)
+                       }) 
+                    }
+                  </select>
+                </ul>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log('STATE IN CART', state)
-  return {
-    orderId: state.order.id
-  }
-}
+// const mapStateToProps = (state, ownProps) => {
+//   console.log('STATE IN CART', state)
+//   return {
+//     orderId: state.order.id
+//   }
+// }
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -36,6 +74,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const CartContainer = connect(mapStateToProps, mapDispatchToProps)(Cart)
+const CartContainer = connect(null, mapDispatchToProps)(Cart)
 
 export default CartContainer

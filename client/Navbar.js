@@ -12,11 +12,6 @@ export default function Navbar(){
                             <li><Link to="/cart" className="nav-link">CART</Link></li>
                         </ul>
                     </div>
-                    <div className="col-md-3" id="nav-user-control">
-                        <Link to="/login"><button className="btn btn-outline-secondary my-2 my-sm-0" type="submit">LOGIN</button></Link>
-                        <Link to="/login"><button className="btn btn-outline-secondary my-2 my-sm-0" type="submit">SIGN UP</button></Link>
-                        <a href="/auth/logout"><button className="btn btn-outline-secondary my-2 my-sm-0">LOGOUT</button></a>
-                    </div>
                 </div>
             </div>
         </nav>

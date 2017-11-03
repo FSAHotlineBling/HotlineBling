@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
-import Routes from './Routes';
-import Navbar from './Navbar';
+import Routes from '../routes';
+import Main from './main';
 
 describe('<Routes />', () => {
     const testState = {
@@ -13,12 +13,12 @@ describe('<Routes />', () => {
         products: []
     }
     const store = createMockStore(testState)
-  it('renders one <Navbar /> component', () => {
+  it('renders one <nav /> component', () => {
     const wrapper = shallow(<Routes />, {
         context: {
             store: store
         }
     });
-    expect(wrapper.dive().find(Navbar)).to.have.length(1);
+    expect(wrapper.dive().find(Main)).to.have.length(1);
   });
 });
