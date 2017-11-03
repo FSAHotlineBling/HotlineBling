@@ -10,7 +10,6 @@ export function OrderDetail(props) {
 
   const products = props.order.products
   const order = props.order
-  console.log('PROPS ARE ', props)
 
   return (
     <div id="past-order-detail">
