@@ -56,7 +56,6 @@ const mapDispatch = dispatch => {
       if (props.order === null || Object.keys(props.order).length === 0){
         dispatch(postOrder(productId, userId))
       } else {
-        console.log('ORDER ON PROPS',props.order)
         orderId = props.order.id
         dispatch(postCart(productId, orderId));
       }
