@@ -10,23 +10,28 @@ import { adminUser } from '../store';
 export class AllUsers extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+        inputValue: ''
+    }
+    this.filterHandleChange = this.filterHandleChange.bind(this);
+}
+filterHandleChange (event) {
+    this.setState({
+        inputValue: event.target.value
+    });
 }
 
   render() {
     const regex =  new RegExp(this.state.inputValue, 'i')
-    const users = this.props.users.filter((user) => {
-        if(user.name.match(regex) || user.description.match(regex)){
-            return user
-        }
-    });
-    const control = this.props.user.isAdmin === undefined || this.props.user.isAdmin === false
+    const users = this.props.users.filter(user => user.name.match(regex));
+    const control = false
     return (
       <div>
       <div className="products-list" >
       <form className="form-group" style={{marginTop: '20px'}}>
             <input
                 className="form-control"
-                placeholder="Product Search"
+                placeholder="User Search"
                 onChange={this.filterHandleChange}
             />
      </form>
@@ -34,9 +39,9 @@ export class AllUsers extends Component {
         {
             users.map((user) => {
                 return (
-                <li key={user.id}>Name: {user.name} Email: {user.email}, Admin: {user.isAdmin} 
+                <li key={user.id}>Name: {user.name} Email: {user.email}, Admin: {user.isAdmin === true ? `True` : `False`}
                 {
-                    !user.isAdmin && <button onClick={handlePromote}>Promote</button>
+                    !user.isAdmin && <button  onClick={(event) => this.props.handlePromote(event, user.id)}>Promote</button>
                 }
                 </li>
                 )
@@ -58,9 +63,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        handlePromote(id, product) {
-            // const thunk = putProduct(id, product, ownProps.history);
-            // dispatch(thunk);
+        handlePromote(event, id) {
+            const thunk = adminUser(id, ownProps.history);
+            dispatch(thunk);
         }
     }
 }

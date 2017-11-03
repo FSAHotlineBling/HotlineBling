@@ -43,6 +43,7 @@ filterHandleChange (event) {
         {products.map(product => <Product product={product} key={product.id} />)}
       </div>
       <div hidden={control}>
+         <Link to="/users"><button>View Users</button></Link>
          <h3>Add Phone </h3>
                   <form
                       id="edit-product-form"

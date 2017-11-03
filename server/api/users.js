@@ -13,8 +13,18 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:id', (req, res, next) => {
+    let id = req.params.id
+    User.findById(id)
+      .then(user=> res.json(user))
+      .catch(next)
+  })
+
 router.put('/admin/:id', (req, res, next) => {
-  Product.update(req.body, {
+    console.log('LOOKING FOR REQ BODY*****', req.body)
+  User.update({
+    isAdmin: true
+  }, {
       where: {
           id: req.params.id
       }
