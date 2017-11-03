@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import history from './history'
 import PastOrders from './components/past-orders'
 import OrderDetail from './components/past-order-detail'
-import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart, AllUsers } from './components'
+import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart, AllUsers, NewReview } from './components'
 import { me, fetchProducts, store, fetchCreatedOrder, fetchUsers } from './store'
 import Navbar from './Navbar'
 
@@ -43,6 +43,7 @@ class Routes extends Component {
                   <Route path="/home" component={UserHome} />
                   <Route exact path="/users/:userId/orders" component={PastOrders} />
                   <Route exact path="/users/:userId/orders/:orderId" component={OrderDetail} />
+                  <Route exact path="/products/:productId/review-product" component={NewReview} />
                 </Switch>
               }
               {/* Displays our Login component as a fallback */}
