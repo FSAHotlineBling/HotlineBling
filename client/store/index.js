@@ -8,8 +8,9 @@ import order from './order'
 import viewOrder from './viewOrder'
 import products from './Product'
 import cart from './cart'
+import users from './users'
 import singleProduct from './singleProduct'
-const reducer = combineReducers({user, review, products, order, cart, singleProduct, viewOrder})
+const reducer = combineReducers({user, review, products, order, cart, singleProduct, viewOrder, users})
 
 
 const middleware = composeWithDevTools(applyMiddleware(
@@ -26,3 +27,4 @@ export * from './Product'
 export * from './order'
 export * from './cart'
 export * from './singleProduct'
+export * from './users'

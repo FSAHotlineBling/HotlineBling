@@ -7,8 +7,13 @@ router.use('/view', require('./vieworders'))
 router.post('/', (req, res, next) => {
   Order.create(req.body)
     .then(order => {
-      res.json(order)
-      ProductOrders.create({ productId: req.body.productId, orderId: order.id})
+      return order
+    })
+    .then(order => {
+      return ProductOrders.create({ productId: req.body.productId, orderId: order.id })
+    })
+    .then(order => {
+      res.cookie('cartId', order.orderId).json(order)
     })
     .catch(next)
 })

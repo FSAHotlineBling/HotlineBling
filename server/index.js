@@ -11,6 +11,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const cookieParser = require('cookie-parser')
 module.exports = app
 
 /**
@@ -41,6 +42,9 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
 
+  // cookie parser middleware that Steve added
+  app.use(cookieParser())
+
   // session middleware with passport
   app.use(session({
     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
@@ -48,6 +52,11 @@ const createApp = () => {
     resave: false,
     saveUninitialized: false
   }))
+  //session logging from steve
+  app.use((req, res, next) => {
+    console.log('session logging middleware', req.cookies);
+    next();
+  });
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(function (req, res, next) {
