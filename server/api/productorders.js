@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {ProductOrders, Product} = require('../db/models')
+const {ProductOrders, Product, Orders} = require('../db/models')
 module.exports = router
 
 router.post('/', (req, res, next) => {
@@ -12,7 +12,6 @@ router.post('/', (req, res, next) => {
 
 router.get('/:orderId', (req, res, next) => {
   let id = req.params.orderId
-  console.log('HELLO', id)
   ProductOrders.findAll({
     where: {
       orderId: id
@@ -22,3 +21,5 @@ router.get('/:orderId', (req, res, next) => {
     .then(cartOrder => res.json(cartOrder))
     .catch(next)
 })
+
+

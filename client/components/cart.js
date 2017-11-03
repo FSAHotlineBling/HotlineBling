@@ -15,14 +15,13 @@ export class Cart extends Component {
     return (
       <div id="cart-component">
         <h2>Your Cart</h2>
-        
+
       </div>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('STATE IN CART', state)
   return {
     orderId: state.order.id
   }

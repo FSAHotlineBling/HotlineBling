@@ -18,6 +18,14 @@ router.post('/login', (req, res, next) => {
           }
           else {
             req.session.userId = user.id;
+            if (req.cookies.cartId){
+              Order.findById(req.cookies.cartId)
+              .then((order) => {
+                order.update({
+                  userId: user.id
+                })
+              })
+            }
             res.json(user)
           }
         })
@@ -35,19 +43,18 @@ router.post('/signup', (req, res, next) => {
         }
         else {
           req.session.userId = user.id;
+          if (req.cookies.cartId){
+            Order.findById(req.cookies.cartId)
+            .then((order) => {
+              order.update({
+                userId: user.id
+              })
+            })
+          }
           res.json(user)
         }
       })
-      // return user
     })
-    // .then(user => {
-    //   Order.create({
-    //     userId: user.id,
-    //     status: 'created',
-    //     zip: '60067'
-    //   })
-    // })
-    // .then(order => res.json(order))
     .catch(err => {
       if (err.name === 'SequelizeUniqueConstraintError') {
         res.status(401).send('User already exists')
