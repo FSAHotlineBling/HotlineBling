@@ -4,7 +4,7 @@ const Product = Models.Product;
 const Order = Models.Order;
 const User = Models.User;
 const Review = Models.Review;
-const ProductOrder = Models.ProductOrder;
+const ProductOrders = Models.ProductOrders;
 const ProductCategory = Models.ProductCategory;
 const db = require('../server/db/');
 
@@ -117,7 +117,7 @@ const orders = [
   {address: '123 LaSalle Ave', city: 'Chicago', state: 'IL', zip: '60610', email: 'johndoe@yahoo.com', status: 'delivered', userId: '1'},
 ]
 
-const productOrder = [
+const productOrders = [
   {productId: 1, orderId: 1, quantity: 1},
   {productId: 2, orderId: 2, quantity: 1},
   {productId: 3, orderId: 2, quantity: 2},
@@ -162,8 +162,8 @@ Promise.all(orders.map(order =>
   Order.create(order))
 ))
 .then(() =>
-Promise.all(productOrder.map(po =>
-  ProductOrder.create(po))
+Promise.all(productOrders.map(po =>
+  ProductOrders.create(po))
 ));
 
 const runSeed = () => {

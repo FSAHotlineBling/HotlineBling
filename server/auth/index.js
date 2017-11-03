@@ -38,16 +38,16 @@ router.post('/signup', (req, res, next) => {
           res.json(user)
         }
       })
-      return user
+      // return user
     })
-    .then(user => {
-      Order.create({
-        userId: user.id,
-        status: 'created',
-        zip: '60067'
-      })
-    })
-    .then(order => res.json(order))
+    // .then(user => {
+    //   Order.create({
+    //     userId: user.id,
+    //     status: 'created',
+    //     zip: '60067'
+    //   })
+    // })
+    // .then(order => res.json(order))
     .catch(err => {
       if (err.name === 'SequelizeUniqueConstraintError') {
         res.status(401).send('User already exists')
