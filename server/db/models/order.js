@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const { ProductOrders, Product } = require('./index')
 
 const Order = db.define('order', {
   dateCreated: {
@@ -25,6 +26,21 @@ const Order = db.define('order', {
     type: Sequelize.ENUM('created', 'processing', 'cancelled', 'completed', 'delivered'),
     defaultValue: 'created'
   }
+// }, {
+//   hooks: {
+//     afterValidate: (order, options) => {
+//       let orderLineItems, sum;
+
+//       ProductOrders.findById(order.id)
+//         .then(orderLines => {
+//           orderLines.forEach(orderLine => sum +=)
+
+//         })
+//       user.username = 'Toni';
+//     }
+//   }
 })
+
+
 
 module.exports = Order

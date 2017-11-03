@@ -19,6 +19,7 @@ export const postCart = (productId, orderId) => dispatch => {
     .then(res => {
       dispatch(addProductToCart(res.data))
     })
+    //QUESTION ??????
     .catch(err => dispatch(addProductToCart(err)))
 }
 
