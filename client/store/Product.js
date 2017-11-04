@@ -8,7 +8,6 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
 const NEW_PRODUCT = 'NEW_PRODUCT'
-// const DECREASE_PRODUCT = 'DECREASE_PRODUCT'
 
 /**
  * ACTION CREATORS
@@ -17,7 +16,6 @@ const getProducts = products => ({type: GET_PRODUCTS, products})
 const updateProduct = product => ({type: UPDATE_PRODUCT, product})
 const deleteProduct = id => ({type: DELETE_PRODUCT, id})
 const newProduct = product => ({type: NEW_PRODUCT, product})
-// const decreaseProduct = product => ({type: DECREASE_PRODUCT, product})
 
 /**
  * THUNK CREATORS
@@ -112,9 +110,6 @@ export default function (products = [], action){
     case UPDATE_PRODUCT:
       return products.map((product) => {
               return action.product.id === product.id ? action.product : product})
-    // case DECREASE_PRODUCT:
-    //     return products.map((product) => {
-    //           return action.product.id === product.id ? action.product : product})
     case DELETE_PRODUCT:
       return products.filter(product => product.id !== action.id)
     default:
