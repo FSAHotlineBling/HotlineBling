@@ -34,3 +34,12 @@ router.put('/admin/:id', (req, res, next) => {
   })
   .catch(next);
 });
+
+router.delete('/:id', (req, res, next) => {
+  User.destroy({
+      where: {
+          id: req.params.id
+      }
+  })
+      .catch(next);
+})

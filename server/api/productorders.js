@@ -21,5 +21,3 @@ router.get('/:orderId', (req, res, next) => {
     .then(cartOrder => res.json(cartOrder))
     .catch(next)
 })
-
-

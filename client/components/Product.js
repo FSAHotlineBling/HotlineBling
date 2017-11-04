@@ -56,7 +56,8 @@ const mapDispatch = dispatch => {
       if (props.order === null || Object.keys(props.order).length === 0){
         dispatch(postOrder(productId, userId))
       } else {
-        orderId = props.order.id
+        console.log('PROPS ORDER ID IS', props.order)
+        orderId = Number(props.order.orderId || props.order.id)
         dispatch(postCart(productId, orderId));
       }
       event.stopPropagation();
