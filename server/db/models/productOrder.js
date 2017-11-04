@@ -8,7 +8,8 @@ const ProductOrder = db.define('productOrders', {
     defaultValue: 1
   },
   productId: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: true
   },
   orderId: {
     type: Sequelize.INTEGER,
