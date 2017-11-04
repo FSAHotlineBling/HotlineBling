@@ -22,7 +22,6 @@ export class SingleProduct extends Component {
         this.setState({
             product : {...this.state.product, name: event.target.value}
         })
-        console.log(this.state)
     }
     handlePriceChange(event) {
         this.setState({

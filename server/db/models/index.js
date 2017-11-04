@@ -16,7 +16,7 @@ const ProductCategory = require('./productCategory')
  Product.hasMany(Review)
  Review.belongsTo(Product)
  User.hasMany(Order)
- Order.belongsTo(User)
+ Order.belongsTo(User, {constraints: false})
  User.hasMany(Review)
  Review.belongsTo(User)
 
