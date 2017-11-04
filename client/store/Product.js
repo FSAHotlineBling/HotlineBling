@@ -8,6 +8,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
 const NEW_PRODUCT = 'NEW_PRODUCT'
+const DECREASE_PRODUCT = 'DECREASE_PRODUCT'
 
 /**
  * ACTION CREATORS
@@ -16,6 +17,7 @@ const getProducts = products => ({type: GET_PRODUCTS, products})
 const updateProduct = product => ({type: UPDATE_PRODUCT, product})
 const deleteProduct = id => ({type: DELETE_PRODUCT, id})
 const newProduct = product => ({type: NEW_PRODUCT, product})
+const decreaseProduct = product => ({type: DECREASE_PRODUCT, product})
 
 /**
  * THUNK CREATORS
@@ -38,6 +40,20 @@ export const putProduct = (productid, productObj, history) => (dispatch) => {
       })
       .catch();
   })
+  .catch();
+}
+
+export const decreaseProduct = (productid) => (dispatch) => {
+  axios.put(`/api/phoness/decrease/${productid}`)
+  .then(() => {
+    axios.get(`/api/phones/${productid}`)
+    .then(res => res.data)
+    .then((user) => {
+        const action = decreaseProduct(user);
+        dispatch(action);
+    })
+    .catch();
+})
   .catch();
 }
 
