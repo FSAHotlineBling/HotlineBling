@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { logout } from '../store'
+import { logout, resetOrder } from '../store'
 
 /**
  * COMPONENT
@@ -56,6 +56,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(resetOrder())
     }
   }
 }

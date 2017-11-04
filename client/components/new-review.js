@@ -49,6 +49,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  console.log('OWNPROPS IS', ownProps)
   return {
     postReview(event) {
       event.preventDefault();
@@ -58,7 +59,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(postReview({ title, reviewText, stars }))
         .then(() => {
           alert('Thank you for your feedback!')
-          ownProps.history.push(`/orders/${ownProps.orderId}`)})
+          ownProps.history.goBack()
+        })
     }
   }
 }
