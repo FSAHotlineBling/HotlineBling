@@ -16,7 +16,9 @@ describe('User routes', () => {
 
     beforeEach(() => {
       return User.create({
-        email: codysEmail
+        email: codysEmail,
+        id: 1,
+        isAdmin: false
       })
     })
 
@@ -28,6 +30,16 @@ describe('User routes', () => {
           expect(res.body).to.be.an('array')
           expect(res.body[0].email).to.be.equal(codysEmail)
         })
+    })
+    it('DELETE /api/users', () => {
+      return request(app)
+        .delete('/api/users/1')
+        .expect(201)
+    })
+    it('ADMIN /api/users', () => {
+      return request(app)
+        .delete('/api/users/1')
+        .expect(201)
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')

@@ -26,17 +26,19 @@ export function Product (props){
               <span>{product.price}</span>
             </h5>
             <h5 className="tucked">
-              <span>{product.quantity}</span>
+              <span>Quantity Available: {product.quantityAvailable}</span>
             </h5>
           </NavLink>
           <div className="media-right media-middle">
-            <button
+          {
+            product.quantityAvailable && product.quantityAvailable >= 1 ? <button
               className="btn btn-default"
               onClick={() => props.addProductToCart(event, props)}
             >
               <span className="glyphicon glyphicon-remove" />
               Add to Cart!
-          </button>
+          </button> : <p> More Coming Soon </p>
+          }
           </div>
         </div>
       </div>

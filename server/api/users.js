@@ -21,7 +21,6 @@ router.get('/:id', (req, res, next) => {
   })
 
 router.put('/admin/:id', (req, res, next) => {
-    console.log('LOOKING FOR REQ BODY*****', req.body)
   User.update({
     isAdmin: true
   }, {
@@ -41,5 +40,8 @@ router.delete('/:id', (req, res, next) => {
           id: req.params.id
       }
   })
-      .catch(next);
+  .then(() => {
+      res.sendStatus(201);
+  })
+ .catch(next);
 })
