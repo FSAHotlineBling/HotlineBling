@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postCart, postOrder } from '../store'
+import { postCart, postOrder, decreaseProductPut } from '../store'
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -31,7 +31,7 @@ export function Product (props){
           </NavLink>
           <div className="media-right media-middle">
           {
-            product.quantityAvailable && product.quantityAvailable >= 1 ? <button
+            product !== undefined && product.quantityAvailable >= 1 ? <button
               className="btn btn-default"
               onClick={() => props.addProductToCart(event, props)}
             >
@@ -62,6 +62,7 @@ const mapDispatch = dispatch => {
         orderId = Number(props.order.id)
         dispatch(postCart(productId, orderId));
       }
+      dispatch(decreaseProductPut(props.product))
       event.stopPropagation();
     }
   }
