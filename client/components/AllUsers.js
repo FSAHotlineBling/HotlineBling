@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Switch, Link } from 'react-router-dom';
 import store from '../store/index';
-import { adminUser } from '../store';
+import { adminUser, destroyUser } from '../store';
 
 /**
  * COMPONENT
@@ -39,7 +39,7 @@ filterHandleChange (event) {
         {
             users.map((user) => {
                 return (
-                <li key={user.id}>Name: {user.name} Email: {user.email}, Admin: {user.isAdmin === true ? `True` : `False`}
+                <li key={user.id}>Name: {user.name} Email: {user.email}, Admin: {user.isAdmin === true ? `True` : `False`} <button onClick={(event) => this.props.handleDelete(event, user.id)}>Delete</button>
                 {
                     !user.isAdmin && <button  onClick={(event) => this.props.handlePromote(event, user.id)}>Promote</button>
                 }
@@ -65,6 +65,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handlePromote(event, id) {
             const thunk = adminUser(id, ownProps.history);
+            dispatch(thunk);
+        },
+        handleDelete(event, id) {
+            const thunk = destroyUser(id, ownProps.history);
             dispatch(thunk);
         }
     }
