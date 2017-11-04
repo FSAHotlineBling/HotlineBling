@@ -6,7 +6,7 @@ const db = require('../db')
 const app = require('../index')
 const Product = db.model('product')
 
-describe('Product routes', () => {
+describe('Order routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
@@ -14,23 +14,34 @@ describe('Product routes', () => {
   describe('/api/phones/', () => {
     const name = 'New phone'
     const quantity = 3
+    let prodId;
 
     beforeEach(() => {
       return Product.create({
         name: name,
         quantityAvailable: quantity
       })
+      .then(product => {
+        prodId = product.id
+      })
     })
 
-    it('GET /api/phones', () => {
+    it('adds cookie with cartId to session when sending POST to /api/users', () => {
       return request(app)
-        .get('/api/phones')
+        .post('/api/orders')
+        .send({productId: prodId})
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.an('array')
-          expect(res.body[0].name).to.be.equal(name)
-          expect(res.body[0].quantityAvailable).to.be.equal(quantity)
+          let cookies = res.headers['set-cookie']
+          .map(function(r){
+            return r.replace("; path=/; httponly","")
+          }).join("; ");
+          let cartId = cookies[7]*1
+          expect(cartId).to.equal(res.body.orderId)
         })
     })
   })
 })
+
+
+
