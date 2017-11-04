@@ -31,17 +31,6 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 
-// router.put('/decrease/:id', (req, res, next) => {
-//     Product.update(req.body, {
-//         where: {
-//             id: req.params.id
-//         }
-//     })
-//     .then(() => {
-//         res.sendStatus(201);
-//     })
-//     .catch(next);
-// });
 
 router.delete('/:id', (req, res, next) => {
     Product.destroy({
