@@ -1,27 +1,26 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchCart } from '../store'
+import { fetchCart, removeItemInCart } from '../store'
 
 export class Cart extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.returnQuantityArray = this.returnQuantityArray.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const orderId = this.props.orderId
-    console.log('PROPS IN COMPONENT', this.props)
     this.props.fetchCartOrders(orderId)
   }
 
   returnQuantityArray(quantity) {
     let result = []
-    for(let i=1; i<= quantity; i++) {
+    for (let i = 1; i <= quantity; i++) {
       result.push(i)
     }
-    return result    
+    return result
   }
 
   handleChange(event) {
@@ -30,18 +29,13 @@ export class Cart extends Component {
   }
 
   render() {
-    const cart = {
-      products: [{id: 1, name: 'Phone', quantityAvailable: 3, price: '$100.00', description: 'a phone'}]
-    }
-
     let quantity;
-
-  
+    let products = this.props.products
     return (
       <div id="cart-component">
         <h2>Your Cart</h2>
         <ul>
-          {cart.products.map(product => {
+          {products.map(product => {
             return (
               <li key={product.id}>
                 <ul>
@@ -49,31 +43,40 @@ export class Cart extends Component {
                   <li>{product.price}</li>
                   <label>Quantity:</label>
                   <select name="quantity" onChange={this.handleChange}>
-                    
+
                     {
                       quantity = this.returnQuantityArray(product.quantityAvailable)
                     }
                     {
                       quantity.map(num => {
-                        return(<option key={num}>{num}</option>)
-                       }) 
+                        return (<option key={num}>{num}</option>)
+                      })
                     }
                   </select>
                 </ul>
+                <button
+                  className="btn btn-default"
+                  onClick = {() => this.props.removeItem(event, product)}
+                  >Remove
+                </button>
               </li>
             )
           })}
         </ul>
-
+        <div className="media-right media-middle">
+          <Link to="/checkout">Checkout</Link>
+          <br />
+          <Link to="/">Continue Shopping</Link>
+        </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log('STATE IN CART', state)
+const mapStateToProps = (state) => {
   return {
-    orderId: state.order.id
+    orderId: state.order.id,
+    products: state.cart
   }
 }
 
@@ -82,6 +85,10 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCartOrders(orderId) {
       dispatch(fetchCart(orderId))
+    },
+    removeItem(event, product){
+      event.stopPropagation();
+      dispatch(removeItemInCart(product.id));
     }
   }
 }

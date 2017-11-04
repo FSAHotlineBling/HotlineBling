@@ -26,7 +26,6 @@ export const postOrder = (productId, userId) => dispatch => {
 }
 
 export const fetchCreatedOrder = userid => dispatch => {
-  console.log("USER ID!!!!", userid)
   return axios.get(`/api/orders/${userid}`)
     .then(res => {
       dispatch(getCreatedOrder(res.data))
