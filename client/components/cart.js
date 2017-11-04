@@ -10,11 +10,11 @@ export class Cart extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  // componentDidMount(){
-  //   const orderId = this.props.orderId
-  //   console.log(this.props)
-  //   this.props.fetchCartOrders(orderId)
-  // }
+  componentDidMount(){
+    const orderId = this.props.orderId
+    console.log('PROPS IN COMPONENT', this.props)
+    this.props.fetchCartOrders(orderId)
+  }
 
   returnQuantityArray(quantity) {
     let result = []
@@ -55,7 +55,7 @@ export class Cart extends Component {
                     }
                     {
                       quantity.map(num => {
-                        return(<option>{num}</option>)
+                        return(<option key={num}>{num}</option>)
                        }) 
                     }
                   </select>
@@ -70,12 +70,12 @@ export class Cart extends Component {
   }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//   console.log('STATE IN CART', state)
-//   return {
-//     orderId: state.order.id
-//   }
-// }
+const mapStateToProps = (state, ownProps) => {
+  console.log('STATE IN CART', state)
+  return {
+    orderId: state.order.id
+  }
+}
 
 
 const mapDispatchToProps = dispatch => {
@@ -86,6 +86,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const CartContainer = connect(null, mapDispatchToProps)(Cart)
+const CartContainer = connect(mapStateToProps, mapDispatchToProps)(Cart)
 
 export default CartContainer

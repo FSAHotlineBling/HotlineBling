@@ -34,12 +34,12 @@ export const fetchCart = orderId => dispatch => {
 /**
  * REDUCER
  */
-export default function (cart = { products: []}, action){
+export default function (cart = [], action){
   switch (action.type){
     case ADD_PRODUCT_TO_CART:
-      return Object.assign({}, cart, {product: action.products})
+      return [...cart, action.product]
     case GET_PRODUCTS_IN_CART:
-      return Object.assign({}, cart, {products: action.products})
+      return action.products
     default:
       return cart
   }

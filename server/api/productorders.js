@@ -10,16 +10,23 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+// router.get('/:orderId', (req, res, next) => {
+//   let id = req.params.orderId
+//   ProductOrders.findAll({
+//     where: {
+//       orderId: id
+//     },
+//     include: [Product]
+//   })
+//     .then(cartOrder => res.json(cartOrder))
+//     .catch(next)
+// })
+
 router.get('/:orderId', (req, res, next) => {
-  let id = req.params.orderId
   ProductOrders.findAll({
-    where: {
-      orderId: id
-    },
+    where: { orderId: req.params.orderId },
     include: [Product]
   })
-    .then(cartOrder => res.json(cartOrder))
-    .catch(next)
+    .then(orders => console.log('ORDERS',orders))
+    .catch(next);
 })
-
-
