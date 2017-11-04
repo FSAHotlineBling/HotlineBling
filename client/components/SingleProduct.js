@@ -123,7 +123,7 @@ export class SingleProduct extends Component {
                                         <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
                                     </span>
                                 </form>
-                                <button hidden={control} type="button" className="btn btn-danger" onClick={(e) => this.props.handleDelete(e, product.id)}>Delete</button>
+                                <button id="delete-button" hidden={control} type="button" className="btn btn-danger" onClick={(e) => this.props.handleDelete(e, product.id)}>Delete</button>
                                 </div>
                         </div>
                         <div className="col-sm-8">
@@ -144,12 +144,15 @@ export class SingleProduct extends Component {
                                         {
                                         product !== undefined && <p>{product.description}</p>
                                         }
-                                        <button
-                                            className="btn btn-default"
-                                            >
-                                            <span className="glyphicon glyphicon-remove" />
-                                            Add to Cart!
-                                        </button>
+                                        {
+                                            product.quantityAvailable && product.quantityAvailable >= 1 ? 
+                                                <button
+                                                    className="btn btn-default"
+                                                    >
+                                                    <span className="glyphicon glyphicon-remove" />
+                                                    Add to Cart!
+                                                </button> : <p>More Coming Soon!!</p>
+                                        }
                                     </div>
                                 </div>
                             </div>
