@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {ProductOrders, Product, Orders} = require('../db/models')
+const {ProductOrders, Product, Order} = require('../db/models')
 module.exports = router
 
 router.post('/', (req, res, next) => {
@@ -10,16 +10,23 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+
 router.get('/:orderId', (req, res, next) => {
-  let id = req.params.orderId
-  ProductOrders.findAll({
-    where: {
-      orderId: id
-    },
-    include: [Product]
+    Order.findById(req.params.orderId,
+      {
+      include: [Product]
+    })
+      .then(order => res.json(order.products))
+      .catch(next);
   })
-    .then(cartOrder => res.json(cartOrder))
-    .catch(next)
+
+router.delete('/:productId', (req, res, next) => {
+  const id = req.params.productId
+  ProductOrders.destroy({
+    where: {
+      productId: id
+    }
+  })
+  .then(() => res.status(204).end())
+  .catch(next);
 })
-
-

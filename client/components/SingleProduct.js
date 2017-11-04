@@ -145,7 +145,7 @@ export class SingleProduct extends Component {
                                         product !== undefined && <p>{product.description}</p>
                                         }
                                         {
-                                            product.quantityAvailable && product.quantityAvailable >= 1 ? 
+                                            product !== undefined && product.quantityAvailable >= 1 ?
                                                 <button
                                                     className="btn btn-default"
                                                     >
