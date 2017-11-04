@@ -31,7 +31,7 @@ export function Product (props){
           </NavLink>
           <div className="media-right media-middle">
           {
-            product.quantityAvailable && product.quantityAvailable >= 1 ? <button
+            product !== undefined && product.quantityAvailable >= 1 ? <button
               className="btn btn-default"
               onClick={() => props.addProductToCart(event, props)}
             >
