@@ -7,7 +7,7 @@ import history from './history'
 import PastOrders from './components/past-orders'
 import OrderDetail from './components/past-order-detail'
 import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart, AllUsers, NewReview, Checkout } from './components'
-import { me, fetchProducts, store, fetchCreatedOrder, fetchUsers } from './store'
+import { me, fetchProducts, store, fetchCreatedOrder, fetchUsers, fetchReviews } from './store'
 
 
 
@@ -35,7 +35,7 @@ class Routes extends Component {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/cart" component={Cart} />
-              <Route path="/users" component={AllUsers} />
+              <Route exact path="/users" component={AllUsers} />
               <Route path="/checkout" component={Checkout} />
               {
                 isLoggedIn &&
@@ -74,6 +74,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData(userId) {
+      dispatch(fetchReviews())
       dispatch(fetchProducts())
       dispatch(me())
       dispatch(fetchUsers())

@@ -6,12 +6,15 @@ import history from '../history'
  */
 const CREATE_ORDER = 'CREATE_ORDER'
 const GET_CREATED_ORDER = 'GET_CREATED_ORDER'
+const RESET_ORDER = 'RESET_ORDER'
+
 
 /**
  * ACTION CREATORS
  */
 const createOrder = order => ({type: CREATE_ORDER, order})
 const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
+export const resetOrder = () => ({type: RESET_ORDER})
 
 /**
  * THUNK CREATORS
@@ -22,7 +25,6 @@ export const postOrder = (productId, userId) => dispatch => {
       dispatch(createOrder(res.data))
     })
     .catch(err => dispatch(createOrder(err)))
-  //!!!!!!! do we want to dispatch this to our store?
 }
 
 export const fetchCreatedOrder = userid => dispatch => {
@@ -31,9 +33,8 @@ export const fetchCreatedOrder = userid => dispatch => {
       dispatch(getCreatedOrder(res.data))
     })
     .catch(err => dispatch(getCreatedOrder(err)))
-
-  //!!!!!!! do we want to dispatch this to our store?
 }
+
 
 /**
  * REDUCER
@@ -45,6 +46,8 @@ export default function (order = {}, action){
       //won't this return an empty object or last created object?
     case GET_CREATED_ORDER:
       return action.order
+    case RESET_ORDER:
+      return ({})
     default:
       return order
   }

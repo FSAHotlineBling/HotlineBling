@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { logout } from '../store'
+import { logout, resetOrder } from '../store'
 
 /**
  * COMPONENT
@@ -11,14 +11,14 @@ import { logout } from '../store'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const { children, handleClick, isLoggedIn } = props
+  const { children, handleClick, isLoggedIn, userId } = props
 
   return (
     <div>
       <h1>
-        <i className="fa fa-bolt" aria-hidden="true"></i>
+        <i className="fa fa-bolt" aria-hidden="true" />
         HOTLINE BLING
-        <i className="fa fa-bolt" aria-hidden="true"></i></h1>
+        <i className="fa fa-bolt" aria-hidden="true" /></h1>
       <nav>
         <Link to="/">Home</Link>
         <Link to="/cart">Cart</Link>
@@ -27,6 +27,7 @@ const Main = (props) => {
             ? <div>
               {/* The navbar will show these links after you log in */}
               <a href="#" onClick={handleClick}>Logout</a>
+              <Link to={`/users/${userId}/orders`}>Account</Link>
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
@@ -46,7 +47,8 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
@@ -54,6 +56,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(resetOrder())
     }
   }
 }
