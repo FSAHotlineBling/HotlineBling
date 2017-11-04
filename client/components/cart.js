@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchCart, removeItemInCart } from '../store'
+import { fetchCart, removeItemInCart, increaseProductPut } from '../store'
 
 export class Cart extends Component {
   constructor(props) {
@@ -89,6 +89,7 @@ const mapDispatchToProps = dispatch => {
     removeItem(event, product){
       event.stopPropagation();
       dispatch(removeItemInCart(product.id));
+      dispatch(increaseProductPut(product));
     }
   }
 }

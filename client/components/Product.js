@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postCart, postOrder } from '../store'
+import { postCart, postOrder, decreaseProductPut } from '../store'
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -61,6 +61,7 @@ const mapDispatch = dispatch => {
         orderId = props.order.id
         dispatch(postCart(productId, orderId));
       }
+      dispatch(decreaseProductPut(props.product))
       event.stopPropagation();
     }
   }
