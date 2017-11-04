@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       event.preventDefault();
       const title = event.target.title.value
       const reviewText = event.target.reviewText.value
-      const stars = event.target.stars.value
+      const stars = Number(event.target.stars.value)
       const productId = ownProps.match.params.productId
 
       dispatch(postReview({ title, reviewText, stars, productId, userId }))

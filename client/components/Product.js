@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postCart, postOrder, decreaseProductPut } from '../store'
+import PhoneReviews from './phone-reviews.js'
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -58,7 +59,6 @@ const mapDispatch = dispatch => {
       if (props.order === null || Object.keys(props.order).length === 0){
         dispatch(postOrder(productId, userId))
       } else {
-        console.log('PROPS ORDER ID IS', props.order)
         orderId = Number(props.order.id)
         dispatch(postCart(productId, orderId));
       }
