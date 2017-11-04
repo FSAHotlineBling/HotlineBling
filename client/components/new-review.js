@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { postReview } from '../store'
 
-//Props will need to be passed: product, user
 
 export function NewReview(props) {
   const userId = props.user.id
@@ -46,8 +45,6 @@ export function NewReview(props) {
 const mapStateToProps = ({reviews, user}) => ({ reviews, user })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log('OWNPROPS IS', ownProps)
-  // const userId = props.user.id
 
   return {
     postReview(event, userId) {
@@ -57,9 +54,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       const reviewText = event.target.reviewText.value
       const stars = event.target.stars.value
       const productId = ownProps.match.params.productId
-      // const userId = props.user.id
-
-
 
       dispatch(postReview({ title, reviewText, stars, productId, userId }))
         .then(() => {

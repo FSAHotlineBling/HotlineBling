@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -59,7 +57,7 @@ export class PastOrders extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    pastOrders: state.viewOrder,
+    pastOrders: state.viewOrder.orders,
     userId: Number(ownProps.match.params.userId),
     user: state.user
   }

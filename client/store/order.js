@@ -8,6 +8,7 @@ const CREATE_ORDER = 'CREATE_ORDER'
 const GET_CREATED_ORDER = 'GET_CREATED_ORDER'
 const RESET_ORDER = 'RESET_ORDER'
 
+
 /**
  * ACTION CREATORS
  */
@@ -24,20 +25,15 @@ export const postOrder = (productId, userId) => dispatch => {
       dispatch(createOrder(res.data))
     })
     .catch(err => dispatch(createOrder(err)))
-  //!!!!!!! do we want to dispatch this to our store?
 }
 
 export const fetchCreatedOrder = userid => dispatch => {
-  console.log("USER ID!!!!", userid)
   return axios.get(`/api/orders/${userid}`)
     .then(res => {
       dispatch(getCreatedOrder(res.data))
     })
     .catch(err => dispatch(getCreatedOrder(err)))
-
-  //!!!!!!! do we want to dispatch this to our store?
 }
-
 
 
 /**
