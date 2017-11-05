@@ -7,7 +7,7 @@ import history from './history'
 import PastOrders from './components/past-orders'
 import OrderDetail from './components/past-order-detail'
 import { Main, Login, Signup, UserHome, Phones, SingleProduct, Cart, AllUsers, NewReview, Checkout } from './components'
-import { me, fetchProducts, store, fetchCreatedOrder, fetchUsers, fetchReviews } from './store'
+import { me, fetchProducts, store, fetchCreatedOrder, fetchUsers, fetchReviews, fetchCategories } from './store'
 
 
 
@@ -78,6 +78,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchProducts())
       dispatch(me())
       dispatch(fetchUsers())
+      dispatch(fetchCategories())
       if (userId) dispatch(fetchCreatedOrder(userId))
     }
   }
