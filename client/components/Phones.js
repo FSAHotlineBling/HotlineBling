@@ -23,6 +23,7 @@ filterHandleChange (event) {
     });
 }
   render() {
+    const categories = this.props.categories;
     const regex =  new RegExp(this.state.inputValue, 'i')
     const products = this.props.products.filter((product) => {
         if(product.name.match(regex) || product.description.match(regex)){
@@ -100,6 +101,15 @@ filterHandleChange (event) {
                               onChange={this.handleDescriptionChange}
                           />
                       </div>
+                      <select
+                        className="form-control"
+                        name="category">
+                        {
+                            categories.map((category) => {
+                                return <option key={category.id} value={category.id}>{category.value}</option>
+                            })
+                        }
+                    </select>
                       <span className="input-group-btn">
                           <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
                       </span>
@@ -137,18 +147,17 @@ filterHandleChange (event) {
   }
 }
 
-const mapState = ({ products, user }) => ({ products, user });
+const mapState = ({ products, user, categories }) => ({ products, user, categories });
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
     handleSubmit(event) {
       event.preventDefault()
-      dispatch(createProduct(event.target.name.value, event.target.price.value, event.target.quantity.value, event.target.imgURL.value, event.target.description.value, ownProps.history));
+      dispatch(createProduct(event.target.name.value, event.target.price.value, event.target.quantity.value, event.target.imgURL.value, event.target.description.value, event.target.category.value, ownProps.history));
     },
     handleCategorySubmit(event) {
         event.preventDefault()
         dispatch(createCategory(event.target.value.value, event.target.category.value, ownProps.history))
-        resetForm()
     }
   }
 }

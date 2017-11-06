@@ -27,11 +27,13 @@ router.put('/:orderId', (req, res, next) => {
     .catch(next)
 })
 
+
 router.get('/admin/:orderId', (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => res.json(order))
     .catch(next)
 })
+
 
 router.get('/:userid', (req, res, next) => {
   let id = req.params.userid

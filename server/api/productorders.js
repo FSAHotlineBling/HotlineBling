@@ -3,7 +3,6 @@ const {ProductOrders, Product, Order} = require('../db/models')
 module.exports = router
 
 router.post('/', (req, res, next) => {
-  console.log('MADE IT TO POST', req.body)
   ProductOrders.create(req.body)
     .then(productOrder => {
       res.json(productOrder)
@@ -30,4 +29,15 @@ router.delete('/:productId', (req, res, next) => {
   })
   .then(() => res.status(204).end())
   .catch(next);
+})
+
+router.put('/', (req, res, next) => {
+  ProductOrders.update({quantity: req.body.quantity}, {
+    where: {
+      productId: req.body.productId,
+      orderId: req.body.orderId
+    }
+  })
+  .then(productorder => res.json(productorder))
+  .catch(next)
 })
