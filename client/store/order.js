@@ -18,6 +18,7 @@ const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
 export const resetOrder = () => ({type: RESET_ORDER})
 const updateTheOrder = cartOrder => ({type: UPDATE_ORDER, cartOrder})
 
+
 /**
  * THUNK CREATORS
  */
@@ -42,6 +43,7 @@ export const updateOrder = (address, city, zip, state, email, orderId) => dispat
     .then(res => dispatch(updateTheOrder(res.data)))
     .catch(err => console.error('Updating order unsuccessful', err))
 }
+
 /**
  * REDUCER
  */
