@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchCart, removeItemInCart, increaseProductPut } from '../store'
+import { fetchCart, removeItemInCart, increaseProductPut, updateQuantity } from '../store'
 
 export class Cart extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export class Cart extends Component {
 
   handleChange(event) {
     event.preventDefault()
-    console.log(event)
+    dispatch(updateQuantity())
   }
 
   render() {
