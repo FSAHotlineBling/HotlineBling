@@ -49,9 +49,7 @@ export class OrderDetail extends Component {
           <li> {order.city}, {order.state} {order.zip} </li>
         </ul>
         <ul>
-          {console.log('PRODUCTS', products)}
           {products.map(product => {
-            console.log('PRODUCT', product)
             return (
               <li key={product.id}>
                 <ul>
