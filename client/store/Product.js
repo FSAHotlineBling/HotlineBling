@@ -102,7 +102,6 @@ export const createProduct = (name, price, quantityAvailable, imgUrl, descriptio
 
 export const updateQuantityAvailable = (product, num) => dispatch => {
   const quantity = product.quantityAvailable - num
-  console.log('checking quantity', quantity)
   axios.put(`/api/phones/${product.id}`, {quantityAvailable: quantity})
     .then(res => dispatch(updateQuantityInProduct(res.data)))
     .catch(err => console.error('Updating quantity unsuccessful', err))
