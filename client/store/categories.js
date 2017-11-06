@@ -26,7 +26,6 @@ export const fetchCategories = () => dispatch => {
 }
 
 export const destroyCategory = (categoryId, productId) => (dispatch) => {
-  console.log('what am i getting', categoryId, productId)
   axios.delete(`/api/categories/${productId}/${categoryId}`)
   .catch(err => console.error(`Removing category: unsuccesful`, err));
 };
