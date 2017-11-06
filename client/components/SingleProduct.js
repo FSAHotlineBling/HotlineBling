@@ -3,45 +3,46 @@ import { putProduct, destroyProduct } from '../store/index';
 import { withRouter, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios'
+import PhoneReviews from './phone-reviews'
 
 export class SingleProduct extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             product: {}
         }
-    this.handleProductNameChange = this.handleProductNameChange.bind(this);
-    this.handlePriceChange = this.handlePriceChange.bind(this);
-    this.handleQuantityChange = this.handleQuantityChange.bind(this);
-    this.handleImageURLChange = this.handleImageURLChange.bind(this);
-    this.handleDesciptionChange = this.handleDesciptionChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleProductNameChange = this.handleProductNameChange.bind(this);
+        this.handlePriceChange = this.handlePriceChange.bind(this);
+        this.handleQuantityChange = this.handleQuantityChange.bind(this);
+        this.handleImageURLChange = this.handleImageURLChange.bind(this);
+        this.handleDesciptionChange = this.handleDesciptionChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleProductNameChange(event) {
         this.setState({
-            product : {...this.state.product, name: event.target.value}
+            product: { ...this.state.product, name: event.target.value }
         })
     }
     handlePriceChange(event) {
         this.setState({
-            product : {...this.state.product, price: event.target.value}
+            product: { ...this.state.product, price: event.target.value }
         })
     }
     handleQuantityChange(event) {
         this.setState({
-            product: {...this.state.product, quantityAvailable: event.target.value}
+            product: { ...this.state.product, quantityAvailable: event.target.value }
         })
 
     }
     handleImageURLChange(event) {
         this.setState({
-            product: {...this.state.product, imageUrl: event.target.value}
+            product: { ...this.state.product, imageUrl: event.target.value }
         })
     }
     handleDesciptionChange(event) {
         this.setState({
-            product: {...this.state.product, description: event.target.value}
+            product: { ...this.state.product, description: event.target.value }
         })
     }
     handleSubmit(event) {
@@ -68,7 +69,7 @@ export class SingleProduct extends Component {
                                 <form
                                     id="edit-product-form"
                                     onSubmit={this.handleSubmit}
-                                    >
+                                >
                                     <div className="input-group input-group-sm"
                                     >
                                         <input
@@ -124,35 +125,42 @@ export class SingleProduct extends Component {
                                     </span>
                                 </form>
                                 <button id="delete-button" hidden={control} type="button" className="btn btn-danger" onClick={(e) => this.props.handleDelete(e, product.id)}>Delete</button>
-                                </div>
+                            </div>
                         </div>
                         <div className="col-sm-8">
                             <div className="container">
                                 <div id="product-card-container">
                                     <div>
                                         {
-                                        product === undefined ? <div /> : <img src={`${product.imageURL}`} />
+                                            product === undefined ? <div /> : <img src={`${product.imageURL}`} />
                                         }
                                     </div>
                                     <div id="product-card-info">
                                         {
-                                        product === undefined ? <p /> : <div><h1>{product.name}</h1></div>
+                                            product === undefined ? <p /> : <div><h1>{product.name}</h1></div>
                                         }
                                         {
-                                        product === undefined ? <p /> : <div><h1>Price: {product.price}</h1></div>
+                                            product !== undefined &&  <img src={product.imageUrl} />
                                         }
                                         {
-                                        product !== undefined && <p>{product.description}</p>
+                                            product === undefined ? <p /> : <div><h1>Price: {product.price}</h1></div>
                                         }
                                         {
-                                            product.quantityAvailable && product.quantityAvailable >= 1 ? 
-                                                <button
-                                                    className="btn btn-default"
-                                                    >
-                                                    <span className="glyphicon glyphicon-remove" />
-                                                    Add to Cart!
-                                                </button> : <p>More Coming Soon!!</p>
+                                            product !== undefined && <p>{product.description}</p>
                                         }
+                                        {
+                                            product !== undefined && product.quantityAvailable >= 1 ?
+                                            <button
+                                            className="btn btn-default"
+                                            >
+                                            <span className="glyphicon glyphicon-remove" />
+                                            Add to Cart!
+                                            </button> : <p>More Coming Soon!!</p>
+                                        }
+                                        {
+                                            product !== undefined &&  <PhoneReviews productId={product.id} />
+                                        }
+
                                     </div>
                                 </div>
                             </div>

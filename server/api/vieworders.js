@@ -20,6 +20,15 @@ orderRouter.get('/:userId', (req, res, next) => {
 })
 
 // GET /api/orders/view/:userId/:orderId
+orderRouter.get('/:userId/:orderId', (req, res, next) => {
+  Order.findById(req.params.orderId, {
+    include: [Product]
+  })
+    .then(order => res.json(order))
+    .catch(next)
+})
+
+// GET /api/orders/view/:userId/:orderId
 // orderRouter.get('/:orderId', (req, res, next) => {
 //   Order.findById(req.params.userId, {
 //     include: [ Product]

@@ -31,6 +31,7 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 
+
 router.delete('/:id', (req, res, next) => {
     Product.destroy({
         where: {

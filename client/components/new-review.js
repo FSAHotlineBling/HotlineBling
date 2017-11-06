@@ -3,13 +3,13 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { postReview } from '../store'
 
-//Props will need to be passed: product, orderId
-//can get user from session
+
 export function NewReview(props) {
+  const userId = props.user.id
 
   return (
       <div id="new-review-form">
-        <form onSubmit={props.postReview}>
+        <form onSubmit={(event) => props.postReview(event, userId)}>
           <h3>Review this product</h3>
           <div className="form-group">
             <label>Review Title</label>
@@ -42,23 +42,24 @@ export function NewReview(props) {
     )
   }
 
-const mapStateToProps = (state) => {
-  return {
-    reviews: state.reviews
-  }
-}
+const mapStateToProps = ({reviews, user}) => ({ reviews, user })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+
   return {
-    postReview(event) {
+    postReview(event, userId) {
+
       event.preventDefault();
       const title = event.target.title.value
       const reviewText = event.target.reviewText.value
-      const stars = event.target.stars.value
-      dispatch(postReview({ title, reviewText, stars }))
+      const stars = Number(event.target.stars.value)
+      const productId = ownProps.match.params.productId
+
+      dispatch(postReview({ title, reviewText, stars, productId, userId }))
         .then(() => {
           alert('Thank you for your feedback!')
-          ownProps.history.push(`/orders/${ownProps.orderId}`)})
+          ownProps.history.goBack()
+        })
     }
   }
 }

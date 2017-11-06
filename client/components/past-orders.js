@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -38,7 +36,7 @@ export class PastOrders extends Component {
                       <Link to={`/users/${userId}/orders/${order.id}`}>
                         <ul>
                           <li><h4>Order No.{order.id}</h4></li>
-                          <li>Ordered on {order.dateCreated}></li>
+                          <li>Ordered on {order.dateCreated}</li>
                           <li>Status: {order.status}</li>
                           <li>Total: ${order.total} </li>
                         </ul>
@@ -59,7 +57,7 @@ export class PastOrders extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    pastOrders: state.viewOrder,
+    pastOrders: state.viewOrder.orders,
     userId: Number(ownProps.match.params.userId),
     user: state.user
   }

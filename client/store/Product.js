@@ -41,6 +41,36 @@ export const putProduct = (productid, productObj, history) => (dispatch) => {
   .catch();
 }
 
+export const decreaseProductPut = (product) => (dispatch) => {
+  const quantity = product.quantityAvailable - 1
+  axios.put(`/api/phones/${product.id}`, {quantityAvailable: quantity})
+  .then(() => {
+    axios.get(`/api/phones/${product.id}`)
+    .then(res => res.data)
+    .then((product) => {
+        const action = updateProduct(product);
+        dispatch(action);
+    })
+    .catch();
+})
+  .catch();
+}
+
+export const increaseProductPut = (product) => (dispatch) => {
+  const quantity = product.quantityAvailable + 1
+  axios.put(`/api/phones/${product.id}`, {quantityAvailable: quantity})
+  .then(() => {
+    axios.get(`/api/phones/${product.id}`)
+    .then(res => res.data)
+    .then((product) => {
+        const action = updateProduct(product);
+        dispatch(action);
+    })
+    .catch();
+})
+  .catch();
+}
+
 export const destroyProduct = (id) => (dispatch) => {
   dispatch(deleteProduct(id));
   axios.delete(`/api/phones/${id}`)
