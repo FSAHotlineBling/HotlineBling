@@ -19,7 +19,6 @@ const updateQuantityInCart = product => ({type: UPDATE_QUANTITY, product})
  * THUNK CREATORS
  */
 export const postCart = (productId, orderId) => dispatch => {
-  console.log('WHATS GOIN ON', productId, orderId)
   return axios.post('/api/productorders', { productId, orderId })
     .then(res => {
       dispatch(addProductToCart(res.data))
@@ -42,11 +41,12 @@ export const removeItemInCart = productId => dispatch => {
     .catch(err => console.error('Delete unsuccessful', err))
 }
 
-export const updateQuantity = (id, quantity) => disptach => {
-  return axios.put(`/api/productorders/${id}`, {quantity})
+export const updateQuantity = (productId, orderId, quantity) => disptach => {
+  return axios.put('/api/productorders', {productId, orderId, quantity})
     .then(res => disptach(updateQuantityInCart(res.data)))
     .catch(err => console.error('Update unsuccessful', err))
 }
+
 /**
  * REDUCER
  */
