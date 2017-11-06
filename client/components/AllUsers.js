@@ -23,7 +23,11 @@ filterHandleChange (event) {
 
   render() {
     const regex =  new RegExp(this.state.inputValue, 'i')
-    const users = this.props.users.filter(user => user.name.match(regex));
+    const users = this.props.users.filter((user) => {
+        if ( user.name ){
+            return user.name.match(regex)
+        }
+    });
     const control = false
     return (
       <div>
