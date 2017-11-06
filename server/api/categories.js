@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Category } = require('../db/models')
+const { Category, ProductCategory } = require('../db/models')
 const {Review} = require('../db/models')
 module.exports = router
 
@@ -29,3 +29,23 @@ router.get('/:id', (req, res, next) => {
       .catch(next)
   })
   
+  router.post('/add', (req, res, next) => {
+    ProductCategory.create(req.body)
+    .then(() => {
+        res.sendStatus(201)
+    })
+    .catch(next);
+});
+
+router.delete('/:productId/:categoryId', (req, res, next) => {
+    ProductCategory.destroy({
+        where: {
+            productId: req.params.productId,
+            categoryId: req.params.categoryId
+        }
+    })
+    .then(() => {
+        res.sendStatus(201)
+    })
+    .catch(next);
+})
