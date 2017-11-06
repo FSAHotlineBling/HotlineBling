@@ -9,12 +9,10 @@ export function PhoneReviews(props) {
   if (reviews.length) {
     var averageRating = 0;
     reviews.forEach(function (review) {
-      console.log(`REVIEW STARS FOR ${productId}:`, review.stars)
       averageRating += (Number(review.stars) || 0)
     })
     averageRating /= reviews.length
 
-    console.log('AVERAGE IS', averageRating)
   }
 
   return (

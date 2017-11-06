@@ -1,16 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
+import {updateOrder} from '../store'
 /**
  * COMPONENT
  */
 const Checkout = (props) => {
   return (
     <div>
-      <form >
+      <form onSubmit={event => props.handleSubmit(event, props.order)}>
         <div>
           <label htmlFor="email"><small>Email</small></label>
-          <input name="email" type="text" />
+          <input name="email" type="text" placeholder="email"/>
         </div>
         <div>
           <label htmlFor="address"><small>Address</small></label>
@@ -29,10 +29,18 @@ const Checkout = (props) => {
 
 const mapState = (state) => {
   return {
-
+    order: state.order
   }
 }
 
+const mapDispatch = (dispatch) => {
+  return {
+    handleSubmit(event, order) {
+      event.preventDefault();
+      dispatch(updateOrder(event.target.streetaddress.value, event.target.city.value, event.target.zip.value, event.target.state.value, event.target.email.value, order.id));
+    }
+  }
+}
 
-const CheckoutForm = connect(mapState, null)(Checkout)
+const CheckoutForm = connect(mapState, mapDispatch)(Checkout)
 export default CheckoutForm

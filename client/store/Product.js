@@ -47,8 +47,8 @@ export const decreaseProductPut = (product) => (dispatch) => {
   .then(() => {
     axios.get(`/api/phones/${product.id}`)
     .then(res => res.data)
-    .then((product) => {
-        const action = updateProduct(product);
+    .then((returnProduct) => {
+        const action = updateProduct(returnProduct);
         dispatch(action);
     })
     .catch();

@@ -59,7 +59,7 @@ const mapDispatch = dispatch => {
       if (props.order === null || Object.keys(props.order).length === 0){
         dispatch(postOrder(productId, userId))
       } else {
-        orderId = props.order.orderId
+        orderId = props.order.id
         dispatch(postCart(productId, orderId));
       }
       dispatch(decreaseProductPut(props.product))
