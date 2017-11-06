@@ -7,6 +7,7 @@ import history from '../history'
 const CREATE_ORDER = 'CREATE_ORDER'
 const GET_CREATED_ORDER = 'GET_CREATED_ORDER'
 const RESET_ORDER = 'RESET_ORDER'
+const UPDATE_ORDER = 'UPDATE_ORDER'
 
 
 /**
@@ -15,6 +16,7 @@ const RESET_ORDER = 'RESET_ORDER'
 const createOrder = order => ({type: CREATE_ORDER, order})
 const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
 export const resetOrder = () => ({type: RESET_ORDER})
+const updateTheOrder = cartOrder => ({type: UPDATE_ORDER, cartOrder})
 
 /**
  * THUNK CREATORS
@@ -35,7 +37,11 @@ export const fetchCreatedOrder = userid => dispatch => {
     .catch(err => dispatch(getCreatedOrder(err)))
 }
 
-
+export const updateOrder = (address, city, zip, state, email, orderId) => dispatch => {
+  return axios.put(`/api/orders/${orderId}`, {address, city, zip, state, email, id: orderId, status: 'processing'})
+    .then(res => dispatch(updateTheOrder(res.data)))
+    .catch(err => console.error('Updating order unsuccessful', err))
+}
 /**
  * REDUCER
  */
@@ -48,6 +54,8 @@ export default function (order = {}, action){
       return action.order
     case RESET_ORDER:
       return ({})
+    case UPDATE_ORDER:
+      return action.cartOrder.id === order.id ? action.cartOrder : order
     default:
       return order
   }

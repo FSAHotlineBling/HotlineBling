@@ -17,6 +17,7 @@ const deleteItemInCart = id => ({type: REMOVE_ITEM_IN_CART, id})
  * THUNK CREATORS
  */
 export const postCart = (productId, orderId) => dispatch => {
+  console.log('WHATS GOIN ON', productId, orderId)
   return axios.post('/api/productorders', { productId, orderId })
     .then(res => {
       dispatch(addProductToCart(res.data))
