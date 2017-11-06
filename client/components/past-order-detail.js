@@ -21,10 +21,16 @@ export class OrderDetail extends Component {
 
   }
 
+  handleChange(event) {
+    event.preventDefault()
+    console.log(event.target.value)
+  }
+
   render() {
 
     const order = this.props.order
     const products = order.products ? order.products : []
+    const admin = this.props.user.isAdmin
 
     let total = 0
     if (order.products) {
@@ -40,7 +46,28 @@ export class OrderDetail extends Component {
         <h2>Order {order.id} Detail</h2>
         <ul>
           <li>Ordered {order.dateCreated}</li>
-          <li> Status: {order.status}</li>
+          { admin &&
+            (
+              <li>
+                <select
+                  name="status"
+                  onChange={this.handleChange}
+                >
+                  <option>Created</option>
+                  <option>Processing</option>
+                  <option>Cancelled</option>
+                  <option>Completed</option>
+                  <option>Delivered</option>
+                </select>
+              </li>
+            )
+          }
+          { !admin &&
+            (
+              <li> Status: {order.status}</li>
+            )
+          }
+
         </ul>
         <ul>
           <li>Ship to:</li>
