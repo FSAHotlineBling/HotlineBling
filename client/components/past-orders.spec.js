@@ -65,4 +65,9 @@ describe('PastOrders component admin authentication', () => {
       expect(pastOrdersAdmin.find('ul').first().children().length).to.be.equal(2);
       expect(pastOrdersNonAdmin.find('ul').first().children().length).to.be.equal(0);
     })
+
+    it('should allow admin to filter orders by status', () => {
+      expect(pastOrdersAdmin.find('select')).to.have.length(1)
+    })
   })
+
