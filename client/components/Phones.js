@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store from '../store/index';
-import { fetchProducts, createProduct } from '../store';
+import { fetchProducts, createProduct, createCategory } from '../store';
 import Product from './Product';
 import { Link } from 'react-router-dom';
 
@@ -104,6 +104,33 @@ filterHandleChange (event) {
                           <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
                       </span>
                   </form>
+            <h3>Add category form</h3>
+            <form
+                      id="edit-category-form"
+                      onSubmit={this.props.handleCategorySubmit}
+            >
+                <div className="input-group input-group-sm"
+                        >
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="value"
+                                placeholder="Enter Category Value"
+                            />
+                </div>
+                <div className="input-group input-group-sm"
+                        >
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="category"
+                                placeholder="Enter Category"
+                            />
+                </div>
+                <span className="input-group-btn">
+                          <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
+                </span>
+            </form>
       </div>
       </div>
     )
@@ -115,8 +142,13 @@ const mapState = ({ products, user }) => ({ products, user });
 const mapDispatch = (dispatch, ownProps) => {
   return {
     handleSubmit(event) {
-      event.preventDefault();
+      event.preventDefault()
       dispatch(createProduct(event.target.name.value, event.target.price.value, event.target.quantity.value, event.target.imgURL.value, event.target.description.value, ownProps.history));
+    },
+    handleCategorySubmit(event) {
+        event.preventDefault()
+        dispatch(createCategory(event.target.value.value, event.target.category.value, ownProps.history))
+        resetForm()
     }
   }
 }
