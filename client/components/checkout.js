@@ -10,7 +10,7 @@ const Checkout = (props) => {
       <form >
         <div>
           <label htmlFor="email"><small>Email</small></label>
-          <input name="email" type="text" />
+          <input name="email" type="text" placeholder="email"/>
         </div>
         <div>
           <label htmlFor="address"><small>Address</small></label>
