@@ -8,7 +8,7 @@ router.use('/reviews', require('./reviews'))
 
 router.use('/phones', require('./products'))
 
-router.use('/orders', require('./ordersEO'))
+router.use('/orders', require('./orders'))
 
 router.use('/productorders', require('./productorders'))
 
