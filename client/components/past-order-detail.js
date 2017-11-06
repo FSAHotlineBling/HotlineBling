@@ -20,10 +20,14 @@ export class OrderDetail extends Component {
 
   handleChange(event) {
     event.preventDefault()
+<<<<<<< Updated upstream
     const newStatus = event.target.value.toLowerCase()
     this.props.putOrderStatus(this.props.orderId, {status: newStatus})
 
 
+=======
+    console.log(event.target.value)
+>>>>>>> Stashed changes
   }
 
   render() {
