@@ -27,9 +27,3 @@ describe('PastOrders component', () => {
     expect(pastOrders.find('ul').first().children().length).to.be.equal(2);
   })
 })
-
-
-// it('renders the email in an h3', () => {
-//   expect(userHome.find('h3').children().length).to.be.equal(3)
-// })
-// })
