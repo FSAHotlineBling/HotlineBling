@@ -8,7 +8,7 @@ const CREATE_ORDER = 'CREATE_ORDER'
 const GET_CREATED_ORDER = 'GET_CREATED_ORDER'
 const RESET_ORDER = 'RESET_ORDER'
 const UPDATE_ORDER = 'UPDATE_ORDER'
-
+const CREATE_ORDER_NO_PRODUCT = 'CREATE_ORDER_NO_PRODUCT'
 
 /**
  * ACTION CREATORS
@@ -17,7 +17,7 @@ const createOrder = order => ({type: CREATE_ORDER, order})
 const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
 export const resetOrder = () => ({type: RESET_ORDER})
 const updateTheOrder = cartOrder => ({type: UPDATE_ORDER, cartOrder})
-
+const createOrderNoProduct = order => ({type: CREATE_ORDER_NO_PRODUCT, order})
 
 /**
  * THUNK CREATORS
@@ -44,6 +44,11 @@ export const updateOrder = (address, city, zip, state, email, orderId) => dispat
     .catch(err => console.error('Updating order unsuccessful', err))
 }
 
+export const createOrderOnCartClick = () => dispatch => {
+  return axios.post('/api/orders/noproduct')
+    .then(res => dispatch(createOrderNoProduct(res.data)))
+    .catch(err => console.error('Creating order after clicking cart was unsuccessful', err))
+}
 /**
  * REDUCER
  */
@@ -58,6 +63,8 @@ export default function (order = {}, action){
       return ({})
     case UPDATE_ORDER:
       return action.cartOrder.id === order.id ? action.cartOrder : order
+    case CREATE_ORDER_NO_PRODUCT:
+      return action.order
     default:
       return order
   }
