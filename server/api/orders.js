@@ -29,3 +29,14 @@ router.get('/:userid', (req, res, next) => {
     .then(order => res.json(order))
     .catch(next)
 })
+
+router.put('/:orderId', (req, res, next) => {
+  let id = req.params.orderId
+  Order.update(req.body, {
+    where: {
+      id: id
+    }
+  })
+    .then(order => res.json(order))
+    .catch(next)
+})
