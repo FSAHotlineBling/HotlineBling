@@ -18,18 +18,18 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:orderId', (res, req, next) => {
+router.put('/:orderId', (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.update(req.body))
     .then(updatedOrder => res.status(201).json(updatedOrder))
     .catch(next)
 })
 
-router.get('/admin/:orderId', (req, res, next) => {
-  Order.findById(req.params.orderId)
-    .then(order => res.json(order))
-    .catch(next)
-})
+// router.get('/admin/:orderId', (req, res, next) => {
+//   Order.findById(req.params.orderId)
+//     .then(order => res.json(order))
+//     .catch(next)
+// })
 
 router.get('/:userid', (req, res, next) => {
   let id = req.params.userid

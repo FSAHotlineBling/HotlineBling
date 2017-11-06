@@ -37,8 +37,8 @@ export const fetchCreatedOrder = userid => dispatch => {
     .catch(err => dispatch(getCreatedOrder(err)))
 }
 
-export const putOrderStatus = orderId => dispatch => {
-  return axios.put(`/api/orders/${orderId}`)
+export const putOrderStatus = (orderId, update) => dispatch => {
+  return axios.put(`/api/orders/${orderId}`, update)
     .then(res => dispatch(updateOrder(res.data)))
     .catch(err => console.error(err))
 }

@@ -1,29 +1,29 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchOrder } from '../store'
+import { fetchOrder, putOrderStatus } from '../store'
 
 //need total (can get from validation?)
-//need to access individual order information - state.viewOrder
-//then need array of products within order
-
-// need each line item from productOrders with orderId matching
-// then for each line item => sum += quant*price
-// price needs to be gotten from product table
 
 export class OrderDetail extends Component {
-
+  constructor(props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+  }
 
   componentDidMount() {
-    const orderId = Number(this.props.match.params.orderId)
-    const userId = Number(this.props.user.id)
+    const orderId = this.props.orderId
+    const userId = this.props.user.id
     this.props.fetchOrder(userId, orderId)
 
   }
 
   handleChange(event) {
     event.preventDefault()
-    console.log(event.target.value)
+    const newStatus = event.target.value.toLowerCase()
+    this.props.putOrderStatus(this.props.orderId, {status: newStatus})
+
+
   }
 
   render() {
@@ -103,10 +103,11 @@ export class OrderDetail extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     order: state.viewOrder.currentOrder,
-    user: state.user
+    user: state.user,
+    orderId: ownProps.match.params.orderId
   }
 }
 
@@ -115,6 +116,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchOrder(userId, orderId) {
       dispatch(fetchOrder(userId, orderId))
+    },
+    putOrderStatus(orderId, update) {
+      dispatch(putOrderStatus(orderId, update))
     }
   }
 }
