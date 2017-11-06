@@ -9,6 +9,7 @@ export class OrderDetail extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
+    this.cancelOrder = this.cancelOrder.bind(this)
   }
 
   componentDidMount() {
@@ -21,9 +22,12 @@ export class OrderDetail extends Component {
   handleChange(event) {
     event.preventDefault()
     const newStatus = event.target.value.toLowerCase()
-    this.props.putOrderStatus(this.props.orderId, {status: newStatus})
+    this.props.putOrderStatus(this.props.orderId, { status: newStatus })
+  }
 
-
+  cancelOrder(event) {
+    event.preventDefault()
+    this.props.putOrderStatus(this.props.orderId, { status: 'cancelled' })
   }
 
   render() {
@@ -46,7 +50,8 @@ export class OrderDetail extends Component {
         <h2>Order {order.id} Detail</h2>
         <ul>
           <li>Ordered {order.dateCreated}</li>
-          { admin &&
+          <li> Status: {order.status}</li>
+          {admin &&
             (
               <li>
                 <select
@@ -62,12 +67,6 @@ export class OrderDetail extends Component {
               </li>
             )
           }
-          { !admin &&
-            (
-              <li> Status: {order.status}</li>
-            )
-          }
-
         </ul>
         <ul>
           <li>Ship to:</li>
@@ -86,20 +85,30 @@ export class OrderDetail extends Component {
                   <li><img src={product.imageUrl} /></li>
                   <li>quantity: {product.productOrders.quantity}</li>
                   <li>${product.price}</li>
-                  <li>
-                    <Link to={`/products/${product.id}/review-product`}>
-                      <button>Review This Product</button>
-                    </Link>
-                  </li>
+                  {
+                    (order.status === 'completed' || order.status === 'delivered') &&
+                    (
+                      <li>
+                        <Link to={`/products/${product.id}/review-product`}>
+                          <button>Review This Product</button>
+                        </Link>
+                      </li>
+                    )
+                  }
                 </ul>
               </li>
             )
           })}
           <li>Order Total: ${total.toFixed(2)}</li>
         </ul>
+        {
+          (order.status === 'processing' || order.status === 'created') &&
+          (
+            <button onClick={this.cancelOrder}>Cancel This Order</button>
+          )
+        }
       </div>
     )
-
   }
 }
 
