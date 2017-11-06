@@ -12,6 +12,7 @@ let viewOrder = {
 const GET_USER_ORDERS = 'GET_USER_ORDERS'
 const GET_ORDER = 'GET_ORDER'
 const ADMIN_GET_ALL_ORDERS = 'ADMIN_GET_ALL_ORDERS'
+const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
 
 //ACTION CREATORS
 
@@ -21,6 +22,8 @@ const getUserOrders = userOrders => ({type: GET_USER_ORDERS,
 const getOrder = currentOrder => ({type: GET_ORDER, currentOrder})
 
 const adminGetAllOrders = allOrders => ({type: ADMIN_GET_ALL_ORDERS, allOrders})
+
+const updateOrderStatus = order => ({type: UPDATE_ORDER_STATUS, order})
 
 
 //THUNKS
@@ -49,6 +52,12 @@ export const fetchAllOrders = () => dispatch => {
     .catch(err => console.error(err))
 }
 
+export const putOrderStatus = (orderId, update) => dispatch => {
+  return axios.put(`/api/orders/${orderId}`, update)
+    .then(res => dispatch(updateOrderStatus(res.data)))
+    .catch(err => console.error(err))
+}
+
 //REDUCER
 
 const orderReducer = (state = viewOrder, action) => {
@@ -59,6 +68,8 @@ const orderReducer = (state = viewOrder, action) => {
       return Object.assign({}, state, {currentOrder: action.currentOrder})
     case ADMIN_GET_ALL_ORDERS:
       return Object.assign({}, state, {adminOrders: action.allOrders})
+    case UPDATE_ORDER_STATUS:
+      return Object.assign({}, state, {currentOrder: action.order})
 
     default: return state;
   }

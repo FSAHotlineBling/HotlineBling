@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchOrder, updateOrder } from '../store'
+import { fetchOrder, putOrderStatus } from '../store'
 
 //need total (can get from validation?)
 
@@ -21,7 +21,7 @@ export class OrderDetail extends Component {
   handleChange(event) {
     event.preventDefault()
     const newStatus = event.target.value.toLowerCase()
-    this.props.updateOrder(this.props.orderId, {status: newStatus})
+    this.props.putOrderStatus(this.props.orderId, {status: newStatus})
 
 
   }
@@ -117,8 +117,8 @@ const mapDispatchToProps = dispatch => {
     fetchOrder(userId, orderId) {
       dispatch(fetchOrder(userId, orderId))
     },
-    updateOrder(orderId, update) {
-      dispatch(updateOrder(orderId, update))
+    putOrderStatus(orderId, update) {
+      dispatch(putOrderStatus(orderId, update))
     }
   }
 }
