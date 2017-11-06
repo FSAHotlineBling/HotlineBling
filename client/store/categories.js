@@ -45,7 +45,6 @@ export const createCategory = (value, category) => (dispatch) => {
 }
 
 export const addCategory = (categoryId, productId) => (dispatch) => {
-  console.log('what am i getting', categoryId, productId)
   axios.post(`/api/categories/add`, {categoryId, productId})
       .then((res) => {
           return res.data
