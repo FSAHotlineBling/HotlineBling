@@ -7,7 +7,8 @@ module.exports = orderRouter
 orderRouter.get('/', (req, res, next) => {
   Order.findAll({
     include: [ Product ],
-    order: [ ['dateCreated', 'DESC'] ]
+    order: [ ['dateCreated', 'DESC'] ],
+    //limit: 100 - will do pagination later if time
   })
     .then(orders => res.json(orders))
     .catch(next)
