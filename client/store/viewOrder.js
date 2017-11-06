@@ -2,21 +2,25 @@ import axios from 'axios'
 
 //INITIAL STATE
 let viewOrder = {
-  orders: [],
-  currentOrder: {}
+  userOrders: [],
+  currentOrder: {},
+  adminOrders: []
 }
 
 //ACTION TYPES
 
 const GET_USER_ORDERS = 'GET_USER_ORDERS'
 const GET_ORDER = 'GET_ORDER'
+const ADMIN_GET_ALL_ORDERS = 'ADMIN_GET_ALL_ORDERS'
 
 //ACTION CREATORS
 
 const getUserOrders = userOrders => ({type: GET_USER_ORDERS,
   userOrders })
 
-const getOrder = order => ({type: GET_ORDER, order})
+const getOrder = currentOrder => ({type: GET_ORDER, currentOrder})
+
+const adminGetAllOrders = allOrders => ({type: ADMIN_GET_ALL_ORDERS, allOrders})
 
 
 //THUNKS
@@ -29,6 +33,7 @@ export const fetchUserOrders = (userId) => {
         const action = getUserOrders(fetchedUserOrders)
         dispatch(action)
       })
+      .catch(err => console.error(err))
   }
 }
 
@@ -38,14 +43,23 @@ export const fetchOrder = (userId, orderId) => dispatch => {
     .catch(err => console.error(err))
 }
 
+export const fetchAllOrders = () => dispatch => {
+  return axios.get(`/api/orders/view`)
+    .then(res => dispatch(adminGetAllOrders(res.data)))
+    .catch(err => console.error(err))
+}
+
 //REDUCER
 
 const orderReducer = (state = viewOrder, action) => {
   switch (action.type) {
     case GET_USER_ORDERS:
-      return Object.assign({}, state, {orders: action.userOrders})
+      return Object.assign({}, state, {userOrders: action.userOrders})
     case GET_ORDER:
-      return Object.assign({}, state, {currentOrder: action.order})
+      return Object.assign({}, state, {currentOrder: action.currentOrder})
+    case ADMIN_GET_ALL_ORDERS:
+      return Object.assign({}, state, {adminOrders: action.allOrders})
+
     default: return state;
   }
 }

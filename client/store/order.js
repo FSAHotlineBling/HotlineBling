@@ -16,7 +16,7 @@ const UPDATE_ORDER = 'UPDATE_ORDER'
 const createOrder = order => ({type: CREATE_ORDER, order})
 const getCreatedOrder = order => ({type: GET_CREATED_ORDER, order})
 export const resetOrder = () => ({type: RESET_ORDER})
-const updateOrder = order => ({type: UPDATE_ORDER, order})
+const updateTheOrder = cartOrder => ({type: UPDATE_ORDER, cartOrder})
 
 /**
  * THUNK CREATORS
@@ -37,12 +37,11 @@ export const fetchCreatedOrder = userid => dispatch => {
     .catch(err => dispatch(getCreatedOrder(err)))
 }
 
-export const putOrderStatus = (orderId, update) => dispatch => {
-  return axios.put(`/api/orders/${orderId}`, update)
-    .then(res => dispatch(updateOrder(res.data)))
-    .catch(err => console.error(err))
+export const updateOrder = (address, city, zip, state, email, orderId) => dispatch => {
+  return axios.put(`/api/orders/${orderId}`, {address, city, zip, state, email, id: orderId, status: 'processing'})
+    .then(res => dispatch(updateTheOrder(res.data)))
+    .catch(err => console.error('Updating order unsuccessful', err))
 }
-
 /**
  * REDUCER
  */
@@ -56,7 +55,7 @@ export default function (order = {}, action){
     case RESET_ORDER:
       return ({})
     case UPDATE_ORDER:
-      return action.order
+      return action.cartOrder.id === order.id ? action.cartOrder : order
     default:
       return order
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { putProduct, destroyProduct } from '../store/index';
 import { withRouter, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios'
+import { postCart, postOrder, decreaseProductPut } from '../store'
 import PhoneReviews from './phone-reviews'
 
 export class SingleProduct extends Component {
@@ -152,6 +152,7 @@ export class SingleProduct extends Component {
                                             product !== undefined && product.quantityAvailable >= 1 ?
                                             <button
                                             className="btn btn-default"
+                                            onClick={() => this.props.addProductToCart(event, this.props, product)}
                                             >
                                             <span className="glyphicon glyphicon-remove" />
                                             Add to Cart!
@@ -177,7 +178,8 @@ export class SingleProduct extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         products: state.products,
-        user: state.user
+        user: state.user,
+        order: state.order
     };
 };
 
@@ -190,7 +192,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         handleDelete(event, id) {
             dispatch(destroyProduct(id));
-        }
+        },
+        addProductToCart(event, props, product) {
+            const productId = product.id
+            const userId = props.user ? props.user.id : null
+            let orderId
+            if (props.order === null || Object.keys(props.order).length === 0){
+              dispatch(postOrder(productId, userId))
+            } else {
+              orderId = props.order.id
+              dispatch(postCart(productId, orderId));
+            }
+            dispatch(decreaseProductPut(product))
+            event.stopPropagation();
+          }
     }
 }
 
