@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { putProduct, destroyProduct } from '../store/index';
+import { putProduct, destroyProduct, destroyCategory, addCategory } from '../store/index';
 import { withRouter, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios'
@@ -53,6 +53,7 @@ export class SingleProduct extends Component {
 
     render() {
         const products = this.props.products;
+        const categories = this.props.categories;
         //filtering products by product id
         const filteredProducts = products.filter((productFilter) => {
             return productFilter.id === Number(this.props.match.params.phoneid)
@@ -66,6 +67,7 @@ export class SingleProduct extends Component {
                         <div className="col-sm-3" >
                             <div id="add-content" hidden={control}>
                                 <h3>Edit Product </h3>
+                                <button id="delete-button" hidden={control} type="button" className="btn btn-danger" onClick={(e) => this.props.handleDelete(e, product.id)}>Delete Product</button>
                                 <form
                                     id="edit-product-form"
                                     onSubmit={this.handleSubmit}
@@ -124,7 +126,30 @@ export class SingleProduct extends Component {
                                         <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
                                     </span>
                                 </form>
-                                <button id="delete-button" hidden={control} type="button" className="btn btn-danger" onClick={(e) => this.props.handleDelete(e, product.id)}>Delete</button>
+                                <div><p>Categories</p></div>
+                                <h2>Add Category</h2>
+                                <form
+                                    id="add-category-form"
+                                    onSubmit={(e) => this.props.handleCategory(e, product.id)}>
+                                    <select
+                                        className="form-control"
+                                        name="category">
+                                        {
+                                            categories.map((category) => {
+                                                return <option key={category.id} value={category.id}>{category.value}</option>
+                                            })
+                                        }
+                                    </select>
+                                    <span className="input-group-btn">
+                                        <button className="btn btn-default btn btn-danger btn-sm" type="submit" >Add</button>
+                                    </span>
+                                </form>
+                                <h3>Remove Category</h3>
+                            {
+                                product === undefined ? <div /> : product.categories.map((category) => {
+                                    return <div key={category.id}><span>{category.value}<button onClick={(e) => this.props.handleCategoryDelete(e, category.id, product.id)}>Remove</button></span></div>
+                                })
+                            }
                             </div>
                         </div>
                         <div className="col-sm-8">
@@ -177,7 +202,8 @@ export class SingleProduct extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         products: state.products,
-        user: state.user
+        user: state.user,
+        categories: state.categories
     };
 };
 
@@ -190,6 +216,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         handleDelete(event, id) {
             dispatch(destroyProduct(id));
+        },
+        handleCategoryDelete(event, categoryId, productId) {
+            event.preventDefault();
+            dispatch(destroyCategory(categoryId, productId));
+            dispatch(putProduct(productId, {}, ownProps.history))
+        },
+        handleCategory(event, productId) {
+            event.preventDefault();
+            dispatch(addCategory(event.target.category.value, productId));
+            dispatch(putProduct(productId, {}, ownProps.history))
         }
     }
 }

@@ -77,7 +77,7 @@ export const destroyProduct = (id) => (dispatch) => {
   .catch(err => console.error(`Removing user: ${id} unsuccesful`, err));
 };
 
-export const createProduct = (name, price, quantityAvailable, imgUrl, description) => (dispatch) => {
+export const createProduct = (name, price, quantityAvailable, imgUrl, description, categoryId) => (dispatch) => {
   axios.post(`/api/phones`, { name, price, quantityAvailable, imgUrl, description })
       .then((res) => {
           return res.data
@@ -89,6 +89,7 @@ export const createProduct = (name, price, quantityAvailable, imgUrl, descriptio
           axios.get(`/api/phones/${id}`)
               .then(res => res.data)
               .then((product) => {
+                axios.post(`/api/categories/add/${categoryId}`, {productId: product.id, categoryId: categoryId})
                   const action = newProduct(product);
                   dispatch(action);
                   history.push(`/phones/${product.id}`);

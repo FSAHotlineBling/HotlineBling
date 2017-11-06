@@ -25,10 +25,10 @@ export const fetchCategories = () => dispatch => {
     .catch(err => dispatch(getCategories(err)))
 }
 
-export const destroyCategory = (id) => (dispatch) => {
-  dispatch(deleteCategory(id));
-  axios.delete(`/api/categories/${id}`)
-  .catch(err => console.error(`Removing user: ${id} unsuccesful`, err));
+export const destroyCategory = (categoryId, productId) => (dispatch) => {
+  console.log('what am i getting', categoryId, productId)
+  axios.delete(`/api/categories/${productId}/${categoryId}`)
+  .catch(err => console.error(`Removing category: unsuccesful`, err));
 };
 
 export const createCategory = (value, category) => (dispatch) => {
@@ -40,6 +40,15 @@ export const createCategory = (value, category) => (dispatch) => {
         const action = newCategory(createdCategory);
         dispatch(action);
         history.goBack();
+      })
+      .catch();
+}
+
+export const addCategory = (categoryId, productId) => (dispatch) => {
+  console.log('what am i getting', categoryId, productId)
+  axios.post(`/api/categories/add`, {categoryId, productId})
+      .then((res) => {
+          return res.data
       })
       .catch();
 }
@@ -56,8 +65,6 @@ export default function (categories = [], action){
     case UPDATE_CATEGORY:
       return categories.map((category) => {
               return action.category.id === category.id ? action.category : category})
-    case DELETE_CATEGORY:
-      return categories.filter(category => category.id !== action.id)
     default:
       return categories
   }
