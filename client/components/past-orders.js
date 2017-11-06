@@ -10,6 +10,13 @@ STILL NEED TO DO THIS
  */
 
 export class PastOrders extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      orders: []
+    }
+    this.filterOrders = this.filterOrders.bind(this)
+  }
 
 
   componentDidMount() {
@@ -17,22 +24,43 @@ export class PastOrders extends Component {
     const user = this.props.user
 
     // if URL route is /users/admin/orders & user is actaully admin
-    if (userId === 'admin' && user.isAdmin) { this.props.fetchOrders()}
+    if (userId === 'admin' && user.isAdmin) { this.props.fetchOrders() }
     else if (userId !== 'admin') { this.props.fetchOrders(userId) }
   }
 
-  render() {
+  filterOrders(event) {
+    const filter = event.target.value.toLowerCase()
     const pastOrders = this.props.pastOrders
+    let orders = filter !== 'default' ?
+      pastOrders.filter(order => order.status === filter) :
+      pastOrders
+    this.setState({ orders })
+  }
+
+  render() {
+    const pastOrders = this.state.orders.length ? this.state.orders : this.props.pastOrders
     const currentUser = this.props.user //user on state
     const userId = this.props.userId //accessed from URL, either userId or 'admin'
     //checking that user on state also matches user ID in URL bar (only users that are logged in can see their own order history)
     const authorized = currentUser && (currentUser.isAdmin || currentUser.id === userId)
     return (
       <div id="past-orders-component">
-        { authorized &&
+        {authorized &&
           (
             <div id="past-orders">
               <h2>Order History</h2>
+              { currentUser.isAdmin &&
+                (
+                  <select name="filter-orders" onChange={this.filterOrders} >
+                      <option value="default">Filter Orders By Status</option>
+                      <option>Created</option>
+                      <option>Processing</option>
+                      <option>Cancelled</option>
+                      <option>Completed</option>
+                      <option>Delivered</option>
+                  </select>
+                )
+              }
               <ul>
                 {pastOrders.map(order => {
                   return (
