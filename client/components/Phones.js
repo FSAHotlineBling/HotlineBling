@@ -1,123 +1,215 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store from '../store/index';
-import { fetchProducts, createProduct } from '../store';
+import { createProduct, fetchCategories } from '../store';
 import Product from './Product';
+import Checkbox from './Checkbox';
 import { Link } from 'react-router-dom';
 
 /**
  * COMPONENT
  */
 class PhonesHome extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        inputValue: ''
-    }
-    this.filterHandleChange = this.filterHandleChange.bind(this);
-}
-
-filterHandleChange (event) {
-    this.setState({
-        inputValue: event.target.value
-    });
-}
-  render() {
-    const regex =  new RegExp(this.state.inputValue, 'i')
-    const products = this.props.products.filter((product) => {
-        if(product.name.match(regex) || product.description.match(regex)){
-            return product
+    constructor(props) {
+        super(props);
+        this.state = {
+            inputValue: '',
+            categoryIds: [],
+            isDirty: false
         }
-    });
-    const control = this.props.user.isAdmin === undefined || this.props.user.isAdmin === false
-    return (
-      <div>
-      <div className="products-list" >
-      <form className="form-group" style={{marginTop: '20px'}}>
-            <input
-                className="form-control"
-                placeholder="Product Search"
-                onChange={this.filterHandleChange}
-            />
-     </form>
-        {products.map(product => <Product product={product} key={product.id} />)}
-      </div>
-      <div hidden={control}>
-         <Link to="/users"><button>View Users</button></Link>
-         <h3>Add Phone </h3>
-                  <form
-                      id="edit-product-form"
-                      onSubmit={this.props.handleSubmit}
-                      >
-                      <div className="input-group input-group-sm"
-                      >
-                          <input
-                              className="form-control"
-                              type="text"
-                              name="name"
-                              placeholder="Enter Product name"
-                              onChange={this.handleProductNameChange}
-                          />
-                      </div>
-                      <div className="input-group input-group-sm"
-                      >
-                          <input
-                              className="form-control"
-                              type="text"
-                              name="price"
-                              placeholder="Enter Product Price"
-                              onChange={this.handlePriceChange}
-                          />
-                      </div>
-                      <div className="input-group input-group-sm"
-                      >
-                          <input
-                              className="form-control"
-                              type="text"
-                              name="quantity"
-                              placeholder="Enter Product Quantity"
-                              onChange={this.handleQuantityChange}
-                          />
-                      </div>
-                      <div className="input-group input-group-sm"
-                      >
-                          <input
-                              className="form-control"
-                              type="text"
-                              name="imgURL"
-                              placeholder="Enter Product Image Url"
-                              onChange={this.handleImageURLChange}
-                          />
-                      </div>
-                      <div className="input-group input-group-sm"
-                      >
-                          <input
-                              className="form-control"
-                              type="text"
-                              name="description"
-                              placeholder="Enter Product Description"
-                              onChange={this.handleDescriptionChange}
-                          />
-                      </div>
-                      <span className="input-group-btn">
-                          <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
-                      </span>
-                  </form>
-      </div>
-      </div>
+        this.filterHandleChange = this.filterHandleChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.toggleCheckbox = this.toggleCheckbox.bind(this);
+        this.createCheckbox = this.createCheckbox.bind(this);
+        this.load = this.load.bind(this);
+    }
+
+    componentWillMount = () => {
+        this.selectedCheckboxes = new Set();
+      }
+
+    componentDidMount() {
+        this.props.loadInitialData()
+    }
+
+    filterHandleChange(event) {
+        this.setState({
+            inputValue: event.target.value
+        });
+    }
+
+    toggleCheckbox = label => {
+        if (this.selectedCheckboxes.has(label)) {
+            this.selectedCheckboxes.delete(label);
+        } else {
+            this.selectedCheckboxes.add(label);
+        }
+    }
+
+    handleFormSubmit = formSubmitEvent => {
+        formSubmitEvent.preventDefault();
+        let catIds = [];
+        for (const checkbox of this.selectedCheckboxes) {
+            catIds.push(checkbox)
+        }
+        this.setState({
+            categoryIds: catIds,
+            isDirty: true
+        })
+    }
+
+    load = () => {
+
+    }
+
+    createCheckbox = label => (
+        <Checkbox
+            label={label}
+            key={label[0]}
+            handleCheckboxChange={this.toggleCheckbox}
+        />
     )
-  }
+
+    render() {
+        //SEARCH
+        const regex = new RegExp(this.state.inputValue, 'i')
+        let products = this.props.products.filter((product) => {
+            if (product.name.match(regex) || product.description.match(regex)) {
+                return product
+            }
+        });
+        //ADMIN FUNCTIONALITY
+        const control = this.props.user.isAdmin === undefined || this.props.user.isAdmin === false
+        //CATEGORIES
+        let categories = {};
+        this.props.category.forEach((cat) => {
+            let keys = Object.keys(categories)
+            let keyName = cat.category
+            if (keys.indexOf(keyName) === -1) {
+                categories[keyName] = [];
+            }
+            categories[keyName].push([cat.id, cat.value])
+        })
+        let keys = Object.keys(categories)
+        if(this.state.isDirty) { products = products.filter((product)=>{
+            let arr = []
+            let bool = false;
+
+            product.categories.forEach((cat)=>{
+
+                if(this.state.categoryIds.indexOf(cat.id) !== -1) bool = true
+            })
+            return bool;
+          })
+        }
+        return (
+            <div>
+                <div className="products-list" >
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <form onSubmit={this.handleFormSubmit}>
+                                    {keys.map((key) => {
+                                        return (
+                                            <div key={key}>
+                                                <h6>{key}</h6>
+                                                {categories[key].map(this.createCheckbox)}
+                                            </div>
+                                        )
+                                    })}
+                                    <button className="btn btn-default" type="submit">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <form className="form-group" style={{ marginTop: '20px' }}>
+                        <input
+                            className="form-control"
+                            placeholder="Product Search"
+                            onChange={this.filterHandleChange}
+                        />
+                    </form>
+                    {products.map(product => <Product product={product} key={product.id} />)}
+                </div>
+                <div hidden={control}>
+                    <Link to="/users"><button>View Users</button></Link>
+                    <h3>Add Phone </h3>
+                    <form
+                        id="edit-product-form"
+                        onSubmit={this.props.handleSubmit}
+                    >
+                        <div className="input-group input-group-sm"
+                        >
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="name"
+                                placeholder="Enter Product name"
+                                onChange={this.handleProductNameChange}
+                            />
+                        </div>
+                        <div className="input-group input-group-sm"
+                        >
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="price"
+                                placeholder="Enter Product Price"
+                                onChange={this.handlePriceChange}
+                            />
+                        </div>
+                        <div className="input-group input-group-sm"
+                        >
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="quantity"
+                                placeholder="Enter Product Quantity"
+                                onChange={this.handleQuantityChange}
+                            />
+                        </div>
+                        <div className="input-group input-group-sm"
+                        >
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="imgURL"
+                                placeholder="Enter Product Image Url"
+                                onChange={this.handleImageURLChange}
+                            />
+                        </div>
+                        <div className="input-group input-group-sm"
+                        >
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="description"
+                                placeholder="Enter Product Description"
+                                onChange={this.handleDescriptionChange}
+                            />
+                        </div>
+                        <span className="input-group-btn">
+                            <button className="btn btn-default btn btn-danger btn-sm" type="submit">Submit</button>
+                        </span>
+                    </form>
+                </div>
+            </div >
+        )
+    }
 }
 
-const mapState = ({ products, user }) => ({ products, user });
+const mapState = ({ products, user, category }) => ({ products, user, category });
 
 const mapDispatch = (dispatch, ownProps) => {
-  return {
-    handleSubmit(event) {
-      event.preventDefault();
-      dispatch(createProduct(event.target.name.value, event.target.price.value, event.target.quantity.value, event.target.imgURL.value, event.target.description.value, ownProps.history));
+    return {
+        loadInitialData() {
+            dispatch(fetchCategories());
+        },
+        handleSubmit(event) {
+            event.preventDefault();
+            dispatch(createProduct(event.target.name.value, event.target.price.value, event.target.quantity.value, event.target.imgURL.value, event.target.description.value, ownProps.history));
+        }
     }
-  }
 }
 
 export default connect(mapState, mapDispatch)(PhonesHome);

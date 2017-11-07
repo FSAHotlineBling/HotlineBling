@@ -12,6 +12,8 @@ router.use('/orders', require('./ordersEO'))
 
 router.use('/productorders', require('./productorders'))
 
+router.use('/category', require('./category'))
+
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
