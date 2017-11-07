@@ -26,7 +26,6 @@ module.exports = {
   //   })
   //     .then(user => {
   //       if (req.user) {
-  //         console.log('USER IN MIDDLEWARE', user)
   //         return next()
   //       }
   //       reject(401, 'This user did not purchase this item so they do not have access to leave a review', next);
