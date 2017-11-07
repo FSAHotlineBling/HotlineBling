@@ -28,9 +28,7 @@ router.get('/', (req, res, next) => {
 // });
 
 router.post('/', isAdmin, (req, res, next) => {
-    console.log('LOOKING FOR REQ BODY',  req.body)
     let newCategory = Category.build(req.body)
-    console.log('Looking for new cat****', newCategory)
     newCategory.save()
     .then(() =>{
         res.sendStatus(201);
