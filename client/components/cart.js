@@ -81,7 +81,6 @@ export class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("WHAT IS STATE", state)
   const orderId = state.order.id ? state.order.id : state.order.orderId
   return {
     orderId: orderId,

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { updateOrder, updateQuantityAvailable, fetchCart } from '../store'
-import ThankYou from './ThankYou'
+import { updateOrder, updateQuantityAvailable, fetchCart, clearCart } from '../store'
 /**
  * COMPONENT
  */
@@ -13,6 +11,7 @@ class Checkout extends Component {
   }
 
   render() {
+    console.log('CART', this.props.cart)
     return (
       <div className="container">
         <div className="row">
@@ -72,6 +71,7 @@ const mapDispatch = (dispatch) => {
       const zip = event.target.zip.value
 
       dispatch(updateOrder(streetaddress, city, zip, state, email, orderId));
+      dispatch(clearCart())
       emailjs.send('gmail', 'order_confirmation', {
         id: orderId,
         email: email
