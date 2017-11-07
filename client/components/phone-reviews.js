@@ -15,9 +15,16 @@ export function PhoneReviews(props) {
 
   }
 
+  const ratingPercentage = {
+    width: (averageRating)/(review.length)
+  }
+
+  console.log('RATING PERCENTAGE IS', ratingPercentage)
+
   return (
     <div className="phone-reviews">
       <h4>Customer Reviews</h4>
+      <div className="star-ratings-sprite"><span  className="star-ratings-sprite-rating" /></div>
       <p>Average Rating: {averageRating} out of {reviews.length} Review(s)  </p>
       {
         reviews.length && reviews.map(review => {
