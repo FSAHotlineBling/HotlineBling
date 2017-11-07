@@ -30,3 +30,14 @@ router.delete('/:productId', (req, res, next) => {
   .then(() => res.status(204).end())
   .catch(next);
 })
+
+router.put('/', (req, res, next) => {
+  ProductOrders.update({quantity: req.body.quantity}, {
+    where: {
+      productId: req.body.productId,
+      orderId: req.body.orderId
+    }
+  })
+  .then(productorder => res.json(productorder))
+  .catch(next)
+})

@@ -8,6 +8,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
 const NEW_PRODUCT = 'NEW_PRODUCT'
+const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 
 /**
  * ACTION CREATORS
@@ -16,6 +17,7 @@ const getProducts = products => ({type: GET_PRODUCTS, products})
 const updateProduct = product => ({type: UPDATE_PRODUCT, product})
 const deleteProduct = id => ({type: DELETE_PRODUCT, id})
 const newProduct = product => ({type: NEW_PRODUCT, product})
+const updateQuantityInProduct = product => ({type: UPDATE_QUANTITY, product})
 
 /**
  * THUNK CREATORS
@@ -47,8 +49,8 @@ export const decreaseProductPut = (product) => (dispatch) => {
   .then(() => {
     axios.get(`/api/phones/${product.id}`)
     .then(res => res.data)
-    .then((product) => {
-        const action = updateProduct(product);
+    .then((returnProduct) => {
+        const action = updateProduct(returnProduct);
         dispatch(action);
     })
     .catch();
@@ -77,7 +79,7 @@ export const destroyProduct = (id) => (dispatch) => {
   .catch(err => console.error(`Removing user: ${id} unsuccesful`, err));
 };
 
-export const createProduct = (name, price, quantityAvailable, imgUrl, description) => (dispatch) => {
+export const createProduct = (name, price, quantityAvailable, imgUrl, description, categoryId) => (dispatch) => {
   axios.post(`/api/phones`, { name, price, quantityAvailable, imgUrl, description })
       .then((res) => {
           return res.data
@@ -89,6 +91,7 @@ export const createProduct = (name, price, quantityAvailable, imgUrl, descriptio
           axios.get(`/api/phones/${id}`)
               .then(res => res.data)
               .then((product) => {
+                axios.post(`/api/categories/add/${categoryId}`, {productId: product.id, categoryId: categoryId})
                   const action = newProduct(product);
                   dispatch(action);
                   history.push(`/phones/${product.id}`);
@@ -98,6 +101,12 @@ export const createProduct = (name, price, quantityAvailable, imgUrl, descriptio
       .catch();
 }
 
+export const updateQuantityAvailable = (product, num) => dispatch => {
+  const quantity = product.quantityAvailable - num
+  axios.put(`/api/phones/${product.id}`, {quantityAvailable: quantity})
+    .then(res => dispatch(updateQuantityInProduct(res.data)))
+    .catch(err => console.error('Updating quantity unsuccessful', err))
+}
 /**
  * REDUCER
  */
