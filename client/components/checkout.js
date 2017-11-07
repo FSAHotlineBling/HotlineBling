@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import {updateOrder, updateQuantityAvailable, fetchCart} from '../store'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { updateOrder, updateQuantityAvailable, fetchCart } from '../store'
+import ThankYou from './ThankYou'
 /**
  * COMPONENT
  */
 class Checkout extends Component {
   componentDidMount() {
-    this.props.loadCart(this.props.order.id)
+    const orderId = this.props.order.id ? this.props.order.id : this.props.order.orderId
+    this.props.loadCart(orderId)
   }
 
-  render (){
+  render() {
     return (
       <div className="container">
         <div className="row">
@@ -60,12 +63,13 @@ const mapDispatch = (dispatch) => {
   return {
     handleSubmit(event, order) {
       event.preventDefault();
-      dispatch(updateOrder(event.target.streetaddress.value, event.target.city.value, event.target.zip.value, event.target.state.value, event.target.email.value, order.id));
+      const orderId = order.id ? order.id : order.orderId
+      dispatch(updateOrder(event.target.streetaddress.value, event.target.city.value, event.target.zip.value, event.target.state.value, event.target.email.value, orderId));
     },
-    loadCart(orderId){
+    loadCart(orderId) {
       dispatch(fetchCart(orderId))
     },
-    update(product, num){
+    update(product, num) {
       dispatch(updateQuantityAvailable(product, num))
     }
   }

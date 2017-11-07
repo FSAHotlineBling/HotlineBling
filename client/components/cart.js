@@ -28,52 +28,53 @@ export class Cart extends Component {
     let orderId = this.props.orderId
     return (
       <div>
-      <div className="container">
-      <div className="row">
-          <div className="col-sm-2" />
-          <div className="col-sm-8" >
-      <div id="cart-component">
-        <h2>Your Cart</h2>
-        <ul>
-          {products.map(product => {
-            return (
-              <div key={product.id} className="card">
-              <h3 className="card-header">{product.name}</h3>
-              <div className="card-block">
-                <h4 className="card-title">{product.price}</h4>
-                <p className="card-text">{product.description}</p>
-                <label>Quantity:</label>
-                  <select name="quantity" onChange={event => this.props.handleChange(event, product, orderId)}>
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-2" />
+            <div className="col-sm-8" >
+              <div id="cart-component">
+                <h2>Your Cart</h2>
+                <ul>
+                  {products.map(product => {
+                    let id = product.id ? product.id : product.productId
+                    return (
+                      <div key={id} className="card">
+                        <h3 className="card-header">{product.name}</h3>
+                        <div className="card-block">
+                          <h4 className="card-title">{product.price}</h4>
+                          <p className="card-text">{product.description}</p>
+                          <label>Quantity:</label>
+                          <select name="quantity" onChange={event => this.props.handleChange(event, product, orderId)}>
 
-                    {
-                      quantity = this.returnQuantityArray(product.quantityAvailable)
-                    }
-                    {
-                      quantity.map(num => {
-                        return (<option key={num}>{num}</option>)
-                      })
-                    }
-                  </select>
-                <button
-                  className="btn btn-default"
-                  onClick = {event => this.props.removeItem(event, product)}
-                  >Remove
-                </button>
+                            {
+                              quantity = this.returnQuantityArray(product.quantityAvailable)
+                            }
+                            {
+                              quantity.map(num => {
+                                return (<option key={num}>{num}</option>)
+                              })
+                            }
+                          </select>
+                          <button
+                            className="btn btn-default"
+                            onClick={event => this.props.removeItem(event, product)}
+                          >Remove
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </ul>
+                <div className="media-right media-middle">
+                  <Link to="/checkout">Checkout</Link>
+                  <br />
+                  <Link to="/">Continue Shopping</Link>
+                </div>
               </div>
             </div>
-            )
-          })}
-        </ul>
-        <div className="media-right media-middle">
-          <Link to="/checkout">Checkout</Link>
-          <br />
-          <Link to="/">Continue Shopping</Link>
+          </div>
+          <div className="col-sm-2" />
         </div>
-      </div>
-      </div>    
-      </div>
-      <div className="col-sm-2"/>
-      </div>
       </div>
     )
   }
@@ -93,7 +94,7 @@ const mapDispatchToProps = dispatch => {
     fetchCartOrders(orderId) {
       orderId ? dispatch(fetchCart(orderId)) : dispatch(createOrderOnCartClick())
     },
-    removeItem(event, product){
+    removeItem(event, product) {
       dispatch(removeItemInCart(product.id));
     },
     handleChange(event, product, orderId) {

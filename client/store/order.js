@@ -40,7 +40,10 @@ export const fetchCreatedOrder = userid => dispatch => {
 
 export const updateOrder = (address, city, zip, state, email, orderId) => dispatch => {
   return axios.put(`/api/orders/${orderId}`, {address, city, zip, state, email, id: orderId, status: 'processing'})
-    .then(res => dispatch(updateTheOrder(res.data)))
+    .then(res => {
+      dispatch(updateTheOrder(res.data))
+      history.push('/thankyou')
+    })
     .catch(err => console.error('Updating order unsuccessful', err))
 }
 
