@@ -62,7 +62,6 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleSubmit(event, order) {
-      console.log('DISPATCH', order)
       event.preventDefault();
       const orderId = order.id ? order.id : order.orderId
       dispatch(updateOrder(event.target.streetaddress.value, event.target.city.value, event.target.zip.value, event.target.state.value, event.target.email.value, orderId));
