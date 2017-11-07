@@ -30,28 +30,42 @@ filterHandleChange (event) {
     });
     const control = false
     return (
-      <div>
-      <div className="products-list" >
-      <form className="form-group" style={{marginTop: '20px'}}>
-            <input
-                className="form-control"
-                placeholder="User Search"
-                onChange={this.filterHandleChange}
-            />
-     </form>
-        <ul>
+    <div className="container">
+        <div className="row">
+          <div className="col-sm-2" />
+          <div className="col-sm-8">
+            <div className="users-list" >
+                <form className="form-group" style={{marginTop: '20px'}}>
+                    <input
+                        className="form-control"
+                        placeholder="User Search"
+                        onChange={this.filterHandleChange}
+                    />
+                </form>
         {
             users.map((user) => {
                 return (
-                <li key={user.id}>Name: {user.name} Email: {user.email}, Admin: {user.isAdmin === true ? `True` : `False`} <button onClick={(event) => this.props.handleDelete(event, user.id)}>Delete</button>
-                {
-                    !user.isAdmin && <button  onClick={(event) => this.props.handlePromote(event, user.id)}>Promote</button>
-                }
-                </li>
+                    <div className="card" key={user.id}>
+                    <div className="card-block">
+                      <h4 className="card-title">{user.name}</h4>
+                      <h6 className="card-subtitle mb-2 text-muted">User</h6>
+                      <p className="card-text">Email: {user.email}</p>
+                      <p>Admin: {user.isAdmin === true ? `True` : `False`}</p>
+                      <button className="btn btn-default btn btn-danger btn-sm" onClick={(event) => this.props.handleDelete(event, user.id)}>Delete</button>
+                        {
+                            !user.isAdmin && <button  className="btn btn-default btn btn-danger btn-sm" onClick={(event) => this.props.handlePromote(event, user.id)}>Promote</button>
+                        }
+                    </div>
+                  </div>
+             
+                
+                
                 )
             })
         }
-        </ul>
+        </div>
+        </div>
+        <div className="col-sm-8" />
       </div>
       </div>
     )
