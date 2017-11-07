@@ -34,7 +34,7 @@ class Checkout extends Component {
                     <input name="streetaddress" type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" />
                   </div>
                   <div className="form-group row">
-                    <input name="city" type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
+                    <input name="city" type="text" className="form-control" id="inputAddress2" placeholder="City" />
                   </div>
                   <div className="form-group row">
                     <input name="state" type="text" className="form-control" id="inputCity" placeholder="State"/>
@@ -55,7 +55,8 @@ class Checkout extends Component {
 const mapState = (state) => {
   return {
     order: state.order,
-    cart: state.cart
+    cart: state.cart,
+    user: state.user
   }
 }
 
@@ -64,7 +65,17 @@ const mapDispatch = (dispatch) => {
     handleSubmit(event, order) {
       event.preventDefault();
       const orderId = order.id ? order.id : order.orderId
-      dispatch(updateOrder(event.target.streetaddress.value, event.target.city.value, event.target.zip.value, event.target.state.value, event.target.email.value, orderId));
+      const streetaddress = event.target.streetaddress.value
+      const city = event.target.city.value
+      const state = event.target.state.value
+      const email = event.target.email.value
+      const zip = event.target.zip.value
+
+      dispatch(updateOrder(streetaddress, city, zip, state, email, orderId));
+      emailjs.send('gmail', 'order_confirmation', {
+        id: orderId,
+        email: email
+      })
     },
     loadCart(orderId) {
       dispatch(fetchCart(orderId))
