@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {Product} = require('../db/models')
 const {Review} = require('../db/models')
 const { ProductCategory, Category } = require('../db/models')
+const { isAdmin } = require('../middleware')
 
 module.exports = router
 
@@ -35,7 +36,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', isAdmin, (req, res, next) => {
     Product.destroy({
         where: {
             id: req.params.id
@@ -44,7 +45,7 @@ router.delete('/:id', (req, res, next) => {
         .catch(next);
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', isAdmin,(req, res, next) => {
     Product.create(req.body)
         .then((product) => {
             res.status(201).json(product);
