@@ -22,7 +22,9 @@ export class OrderDetail extends Component {
   handleChange(event) {
     event.preventDefault()
     const newStatus = event.target.value.toLowerCase()
-    this.props.putOrderStatus(this.props.orderId, { status: newStatus })
+    if (newStatus !== 'default') {
+      this.props.putOrderStatus(this.props.orderId, { status: newStatus })
+    }
   }
 
   cancelOrder(event) {
@@ -58,6 +60,7 @@ export class OrderDetail extends Component {
                   name="status"
                   onChange={this.handleChange}
                 >
+                  <option value="default">Change Order Status</option>
                   <option>Created</option>
                   <option>Processing</option>
                   <option>Cancelled</option>

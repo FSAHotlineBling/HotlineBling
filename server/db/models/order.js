@@ -25,22 +25,12 @@ const Order = db.define('order', {
   status: {
     type: Sequelize.ENUM('created', 'processing', 'cancelled', 'completed', 'delivered'),
     defaultValue: 'created'
+  },
+  total: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: 0.00
   }
-// }, {
-//   hooks: {
-//     afterValidate: (order, options) => {
-//       let orderLineItems, sum;
-
-//       ProductOrders.findById(order.id)
-//         .then(orderLines => {
-//           orderLines.forEach(orderLine => sum +=)
-
-//         })
-//       user.username = 'Toni';
-//     }
-//   }
 })
-
 
 
 module.exports = Order

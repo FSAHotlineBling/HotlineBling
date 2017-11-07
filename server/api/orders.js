@@ -6,22 +6,32 @@ module.exports = router
 router.use('/view', require('./vieworders'))
 
 router.post('/', (req, res, next) => {
-  Order.create(req.body)
-    .then(order => {
-      return order
+  if (!req.cookies.cartId) {
+    Order.create(req.body)
+      .then(order => {
+        return order
+      })
+      .then(order => {
+        ProductOrders.create({ productId: req.body.productId, orderId: order.id })
+        return order
+      })
+      .then(order => {
+        res.cookie('cartId', order.id).json(order)
+      })
+      .catch(next)
+  } else {
+    ProductOrders.create({
+      orderId: req.cookies.cartId, productId: req.body.productId
     })
-    .then(order => {
-      return ProductOrders.create({ productId: req.body.productId, orderId: order.id })
-    })
-    .then(order => {
-      res.cookie('cartId', order.orderId).json(order)
-    })
-    .catch(next)
+      .then(productOrder =>
+        Order.findById(productOrder.orderId))
+      .then(order => res.json(order))
+  }
 })
 
 router.put('/:orderId', (req, res, next) => {
   Order.findById(req.params.orderId, {
-    include: [ Product ]
+    include: [Product]
   })
     .then(order => order.update(req.body))
     .then(updatedOrder => res.status(201).json(updatedOrder))
@@ -29,8 +39,10 @@ router.put('/:orderId', (req, res, next) => {
 })
 
 
-router.get('/admin/:orderId', isAdmin,(req, res, next) => {
-  Order.findById(req.params.orderId)
+router.get('/admin/:orderId', isAdmin, (req, res, next) => {
+  Order.findById(req.params.orderId, {
+    include: [Product]
+  })
     .then(order => res.json(order))
     .catch(next)
 })
@@ -42,7 +54,8 @@ router.get('/:userid', (req, res, next) => {
     where: {
       userId: id,
       status: 'created'
-    }
+    },
+    include: [Product]
   })
     .then(order => res.json(order))
     .catch(next)
@@ -53,7 +66,8 @@ router.put('/:orderId', (req, res, next) => {
   Order.update(req.body, {
     where: {
       id: id
-    }
+    },
+    include: [Product]
   })
     .then(order => res.json(order))
     .catch(next)
