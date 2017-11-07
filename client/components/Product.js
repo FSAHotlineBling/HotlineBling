@@ -20,8 +20,8 @@ class Product extends React.Component {
   render() {
     const button = this.state.showme ? <button className="btn btn-default"
     onClick={event => {
-      {this.changeText()}
       this.props.addProductToCart(event, this.props)
+      this.changeText()
     }}
   >
     <span className="glyphicon glyphicon-remove" />
