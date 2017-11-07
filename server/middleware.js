@@ -15,5 +15,13 @@ module.exports = {
   isAdmin: (req, res, next) => {
     if (req.user && req.user.isAdmin) return next();
     reject(401, 'This user is not an Admin so they do not have access to do this', next);
+  },
+
+  purchased: (req, res, next) => {
+    Order.findById(req.user.id)
+    .then(user => done(null, user))
+    .catch(done))
+    if (req.user && ) return next()
+    reject(401, 'This user did not purchase this item so they do not have access to leave a review', next);
   }
 }

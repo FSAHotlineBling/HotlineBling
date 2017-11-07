@@ -10,7 +10,8 @@ const Review = db.define('review', {
     type: Sequelize.TEXT
   },
   stars: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    max: 5
   },
   dateCreated: {
     type: Sequelize.DATE,

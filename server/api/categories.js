@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
-router.post('/', isAdmin,(req, res, next) => {
+router.post('/', isAdmin, (req, res, next) => {
     Category.findOrCreate({
         where: {
             value: req.body.value,
@@ -30,7 +30,7 @@ router.get('/:id', (req, res, next) => {
         .catch(next)
 })
 
-router.post('/add', isAdmin,(req, res, next) => {
+router.post('/add', isAdmin, (req, res, next) => {
     ProductCategory.create(req.body)
         .then(() => {
             res.sendStatus(201)

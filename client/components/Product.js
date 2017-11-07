@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postCart, postOrder, decreaseProductPut } from '../store'
+import { postCart, postOrder } from '../store'
 import PhoneReviews from './phone-reviews.js'
 
 /* -----------------    COMPONENT     ------------------ */
