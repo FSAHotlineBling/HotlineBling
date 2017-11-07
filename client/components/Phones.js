@@ -99,11 +99,12 @@ filterHandleChange (event) {
           })
         }
     return (
+        <div>
+        <div>
       <div>
-      <div className="products-list" >
       <div className="container">
-      <div className="row">
-          <div className="col-sm-12">
+        <div className="row">
+          <div className="col-sm-2">
               <form onSubmit={this.handleFormSubmit}>
                   {keys.map((key) => {
                       return (
@@ -116,18 +117,18 @@ filterHandleChange (event) {
                   <button className="btn btn-default" type="submit">Save</button>
               </form>
           </div>
-      </div>
-  </div>
-      <form className="form-group" style={{marginTop: '20px'}}>
+          <div className="col-sm-8">
+          <form className="form-group" style={{marginTop: '20px'}}>
             <input
                 className="form-control"
                 placeholder="Product Search"
                 onChange={this.filterHandleChange}
             />
-     </form>
-        {products.map(product => <Product product={product} key={product.id} />)}
-      </div>
-      <div hidden={control}>
+            </form>
+            {
+                products.map(product => <Product product={product} key={product.id} />)
+            }
+            <div hidden={control}>
          <Link to="/users"><button>View Users</button></Link>
          <Link to="/users/admin/orders"><button>View All Orders</button></Link>
          <h3>Add Phone </h3>
@@ -226,6 +227,14 @@ filterHandleChange (event) {
                 </span>
             </form>
       </div>
+        </div>
+      </div>
+  </div>
+      
+      </div>
+      
+      </div>
+      <div className="col-sm-2" />
       </div>
     )
   }

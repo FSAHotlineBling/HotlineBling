@@ -27,16 +27,22 @@ export class Cart extends Component {
     let products = this.props.products
     let orderId = this.props.orderId
     return (
+      <div>
+      <div className="container">
+      <div className="row">
+          <div className="col-sm-2" />
+          <div className="col-sm-8" >
       <div id="cart-component">
         <h2>Your Cart</h2>
         <ul>
           {products.map(product => {
             return (
-              <li key={product.id}>
-                <ul>
-                  <li>{product.name}</li>
-                  <li>{product.price}</li>
-                  <label>Quantity:</label>
+              <div key={product.id} className="card">
+              <h3 className="card-header">{product.name}</h3>
+              <div className="card-block">
+                <h4 className="card-title">{product.price}</h4>
+                <p className="card-text">{product.description}</p>
+                <label>Quantity:</label>
                   <select name="quantity" onChange={event => this.props.handleChange(event, product, orderId)}>
 
                     {
@@ -48,13 +54,13 @@ export class Cart extends Component {
                       })
                     }
                   </select>
-                </ul>
                 <button
                   className="btn btn-default"
                   onClick = {event => this.props.removeItem(event, product)}
                   >Remove
                 </button>
-              </li>
+              </div>
+            </div>
             )
           })}
         </ul>
@@ -63,6 +69,11 @@ export class Cart extends Component {
           <br />
           <Link to="/">Continue Shopping</Link>
         </div>
+      </div>
+      </div>    
+      </div>
+      <div className="col-sm-2"/>
+      </div>
       </div>
     )
   }
