@@ -55,18 +55,3 @@ orderRouter.get('/:userId/:orderId', (req, res, next) => {
     .catch(next)
 })
 
-// orderRouter.use('/', (req, res, next) => {
-//   let orders = req.body
-//   console.log('ORDERS ARE', orders)
-//   console.log('REQBODY IS', req.body)
-//   //  orders.forEach(order => {
-//   //     let total = 0;
-//   //     //within each order, array of products
-//   //     order.products.forEach(product => {
-//   //       total += product.price * product.productOrders.quantity
-//   //     })
-//   //     order.total = total.toFixed(2);
-//   //   })
-//   //   res.json(orders)
-//   // })
-// })
