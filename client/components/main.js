@@ -11,33 +11,50 @@ import { logout, resetOrder } from '../store'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const { children, handleClick, isLoggedIn, userId } = props
+  const { children, handleClick, isLoggedIn, userId, isAdmin } = props
 
   return (
     <div>
       <nav className="navbar" >
-            <div className="container">
-                <div className="row">
-                  <div className="navbar-collapse" id="navbarNav">
-                    <span>HOTLINE | BLING <Link to="/cart">Cart</Link><Link to="/">Home</Link></span>  
-                  </div>
-
-                    {
-                    isLoggedIn
-                      ? <span>
-                          <a href="#" onClick={handleClick}>Logout</a>
-                          <Link to={`/users/${userId}/orders`}>Account</Link>
-                        </span>
-                      : <span>
-                          <Link to="/login">Login</Link>
-                          <Link to="/signup">Sign Up</Link>
-                        </span>
-                     
-                  }
-                </div>
+        <div className="container">
+          <div className="row">
+            <div className="navbar-collapse" id="navbarNav">
+              <span>HOTLINE | BLING
+                      <Link to="/cart">Cart</Link>
+                <Link to="/">Home</Link></span>
             </div>
-        </nav>
-      {children}
+
+            <div id="admin-navbar">
+              {
+                (
+                  isAdmin &&
+                  <span>
+                    <li><Link to="/users">View Users</Link></li>
+                    <li><Link to="/users/admin/orders">View All Orders</Link></li>
+                  </span>
+                )
+              }
+            </div>
+
+            <div id="user-navbar">
+            {
+              isLoggedIn
+                ? <span>
+                  <li><a href="#" onClick={handleClick}>Logout</a></li>
+                  <li><Link to={`/users/${userId}/orders`}>Account</Link></li>
+                </span>
+                : <span>
+                  <Link to="/login">Login</Link>
+                  <Link to="/signup">Sign Up</Link>
+                </span>
+            }
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="children">
+        {children}
+      </div>
     </div>
   )
 }
@@ -48,7 +65,8 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    userId: state.user.id
+    userId: state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
