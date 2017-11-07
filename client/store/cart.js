@@ -28,7 +28,6 @@ export const postCart = (productId, orderId) => dispatch => {
 }
 
 export const fetchCart = orderId => dispatch => {
-  console.log('order id in thunk', orderId)
   return axios.get(`/api/productorders/${orderId}`)
     .then(res => {
       dispatch(getProductsInCart(res.data))
