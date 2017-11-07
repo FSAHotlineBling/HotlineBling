@@ -23,7 +23,6 @@ export const postCart = (productId, orderId) => dispatch => {
     .then(res => {
       dispatch(addProductToCart(res.data))
     })
-    //QUESTION ??????
     .catch(err => dispatch(addProductToCart(err)))
 }
 
@@ -41,9 +40,9 @@ export const removeItemInCart = productId => dispatch => {
     .catch(err => console.error('Delete unsuccessful', err))
 }
 
-export const updateQuantity = (productId, orderId, quantity) => disptach => {
+export const updateQuantity = (productId, orderId, quantity) => dispatch => {
   return axios.put('/api/productorders', {productId, orderId, quantity})
-    .then(res => disptach(updateQuantityInCart(res.data)))
+    .then(res => dispatch(updateQuantityInCart(res.data)))
     .catch(err => console.error('Update unsuccessful', err))
 }
 
