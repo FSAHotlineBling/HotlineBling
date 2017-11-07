@@ -98,7 +98,6 @@ filterHandleChange (event) {
             return bool;
           })
         }
-        console.log(categories2, "keys", keys)
     return (
       <div>
       <div className="products-list" >
