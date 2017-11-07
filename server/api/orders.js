@@ -6,22 +6,35 @@ module.exports = router
 router.use('/view', require('./vieworders'))
 
 router.post('/', (req, res, next) => {
-  Order.create(req.body)
-    .then(order => {
-      return order
+  console.log('REQBODY IS', req.body)
+  if (!req.cookies.cartId) {
+    Order.create(req.body)
+      .then(order => {
+        return order
+      })
+      .then(order => {
+        ProductOrders.create({ productId: req.body.productId, orderId: order.id })
+        return order
+      })
+      .then(order => {
+        res.cookie('cartId', order.id).json(order)
+      })
+      .catch(next)
+  } else {
+    console.log('ORDERID:', req.cookies.cartId)
+    console.log('PRODUCTID:', req.body.productId)
+    ProductOrders.create({
+      orderId: req.cookies.cartId, productId: req.body.productId
     })
-    .then(order => {
-      return ProductOrders.create({ productId: req.body.productId, orderId: order.id })
-    })
-    .then(order => {
-      res.cookie('cartId', order.orderId).json(order)
-    })
-    .catch(next)
+      .then(productOrder =>
+        Order.findById(productOrder.orderId))
+      .then(order => res.json(order))
+  }
 })
 
 router.put('/:orderId', (req, res, next) => {
   Order.findById(req.params.orderId, {
-    include: [ Product ]
+    include: [Product]
   })
     .then(order => order.update(req.body))
     .then(updatedOrder => res.status(201).json(updatedOrder))
@@ -29,9 +42,9 @@ router.put('/:orderId', (req, res, next) => {
 })
 
 
-router.get('/admin/:orderId', isAdmin,(req, res, next) => {
+router.get('/admin/:orderId', isAdmin, (req, res, next) => {
   Order.findById(req.params.orderId, {
-    include: [ Product ]
+    include: [Product]
   })
     .then(order => res.json(order))
     .catch(next)
@@ -45,7 +58,7 @@ router.get('/:userid', (req, res, next) => {
       userId: id,
       status: 'created'
     },
-    include: [ Product ]
+    include: [Product]
   })
     .then(order => res.json(order))
     .catch(next)
@@ -57,7 +70,7 @@ router.put('/:orderId', (req, res, next) => {
     where: {
       id: id
     },
-    include: [ Product ]
+    include: [Product]
   })
     .then(order => res.json(order))
     .catch(next)

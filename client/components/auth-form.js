@@ -12,7 +12,7 @@ const AuthForm = (props) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-sm-3" /> 
+        <div className="col-sm-3" />
           <div className="col-sm-6">
             <div className="well">
             <form onSubmit={handleSubmit} name={name}>
@@ -32,7 +32,7 @@ const AuthForm = (props) => {
             <a href="/auth/google">{displayName} with Google</a>
             </div>
           </div>
-          <div cLassName="col-sm-3" />
+          <div className="col-sm-3" />
         </div>
       </div>
   )

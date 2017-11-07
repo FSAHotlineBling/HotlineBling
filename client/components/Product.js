@@ -30,7 +30,7 @@ export function Product (props){
                   </button> : <p> More Coming Soon </p>
           }
         </div>
-        </div>  
+        </div>
     );
 }
 
@@ -47,7 +47,7 @@ const mapDispatch = dispatch => {
       if (props.order === null || Object.keys(props.order).length === 0){
         dispatch(postOrder(productId, userId))
       } else {
-        orderId = props.order.id
+        orderId = props.order.id ? props.order.id : props.order.orderId
         dispatch(postCart(productId, orderId));
       }
       dispatch(decreaseProductPut(props.product))
