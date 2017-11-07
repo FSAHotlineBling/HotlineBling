@@ -11,8 +11,9 @@ router.get('/', (req, res, next) => {
 })
 
 // POST /api/reviews
-router.post('/', hasOrderedPhone, (req, res, next) => {
+router.post('/', (req, res, next) => {
   Review.create(req.body)
     .then(review => res.json(review))
     .catch(next)
 })
+

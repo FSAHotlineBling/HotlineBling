@@ -17,25 +17,25 @@ module.exports = {
     reject(401, 'This user is not an Admin so they do not have access to do this', next);
   },
 
-  hasOrderedPhone: (req, res, next) => {
-    console.log('REQBODY IS', req.body)
-    let productId = req.body
-    Order.findAll({
-      where: { userId: req.user.id }
-    })
-      .then(orders => {
-        orders.forEach(order => {
-          ProductOrders.findOne({
-            where: {
-              orderId: order.id,
-              productId: productId
-            }
-          })
-            .then(productOrder => {
-              if (productOrder) return next()
-            })
-        })
-        reject(405, 'This user has not purchased the item before.', next)
-      }
-    )}
+  // hasOrderedPhone: (req, res, next) => {
+  //   console.log('REQBODY IS', req.body)
+  //   let productId = req.body
+  //   Order.findAll({
+  //     where: { userId: req.user.id }
+  //   })
+  //     .then(orders => {
+  //       orders.forEach(order => {
+  //         ProductOrders.findOne({
+  //           where: {
+  //             orderId: order.id,
+  //             productId: productId
+  //           }
+  //         })
+  //           .then(productOrder => {
+  //             if (productOrder) return next()
+  //           })
+  //       })
+  //       reject(405, 'This user has not purchased the item before.', next)
+  //     }
+  //   )}
 }

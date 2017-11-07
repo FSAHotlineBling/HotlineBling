@@ -15,7 +15,7 @@ module.exports = router
 // const isAdmin = () => (req, res, next) => {
 //   if (req.user && req.user.isAdmin) return next()
 //   const err = new Error('User not authorized')
-//   err.status = 401
+//   err.status = 401 it was closer it was
 //   next(err)
 // }
 
