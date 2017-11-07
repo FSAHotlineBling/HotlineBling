@@ -40,30 +40,23 @@ router.post('/login', (req, res, next) => {
           else {
             //set the session userId to the found user's id
             req.session.userId = user.id;
-            console.log('COOKIES ARE', req.cookies.cartId)
             //if user's cookie contains cartId, they had a cart before signing in
             if (req.cookies.cartId) {
-              console.log('INSIDE COOKE CART BLOCK')
               //check to see if that user has any other existing open (aka 'created') orders in the db
               Order.findOne({
                 where:
                 { userId: user.id, status: 'created' }
               })
                 .then(order => {
-                  console.log('INSIDE ORDERS, SHOULD BE ARRAY OF OPEN ORDERS FOR USER AFTER LOGIN')
-                  console.log('ORDERS ARE', order)
                   //if no matching order is found
                   if (!order) {
                     //find their pre-sign-in cart and associate it with their userId
-                    console.log('NO ORDERS')
                     Order.findById(req.cookies.cartId)
                       .then((foundOrder) => {
                         foundOrder.update({ userId: user.id })
                       })
                     //if they do have an open ('created') order in the db already -> merge the two carts
                   } else {
-                    console.log('ORDERS FOUND')
-                    console.log('PRODUCTORDERS', Object.keys(ProductOrders))
                     //now need to get into Product Orders table and find orders with either orderId & change it to new orderid
                     ProductOrders.update(
                       { orderId: order.id },
