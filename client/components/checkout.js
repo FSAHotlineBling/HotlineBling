@@ -14,30 +14,40 @@ class Checkout extends Component {
 
   render() {
     return (
-      <div>
-        <form
-        onSubmit={event => {
-          this.props.handleSubmit(event, this.props.order)
-          this.props.cart.map(productInCart => {
-            this.props.update(productInCart, productInCart.productOrders.quantity)
-          })
-        }}>
-          <div>
-            <label htmlFor="email"><small>Email</small></label>
-            <input name="email" type="text" placeholder="email" />
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-2" />
+            <div className="col-sm-8">
+            <form onSubmit={event => {
+                this.props.handleSubmit(event, this.props.order)
+                this.props.cart.map(productInCart => {
+                  this.props.update(productInCart, productInCart.productOrders.quantity)
+                })
+              }}>
+
+                  <div className="form-group row">
+                    <label>Email</label>
+                    <input type="text" name="email" className="form-control" id="inputEmail4" placeholder="Email" />
+                  </div>
+                  <div className="form-group row">
+                    <label>Address</label>
+                    <input name="streetaddress" type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" />
+                  </div>
+                  <div className="form-group row">
+                    <input name="city" type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
+                  </div>
+                  <div className="form-group row">
+                    <input name="state" type="text" className="form-control" id="inputCity" placeholder="State"/>
+                  </div>
+                  <div className="form-group row">
+                    <input name="zip" type="text" className="form-control" id="inputZip" placeholder="Zip"/>
+                  </div>
+                  <button type="submit" className="btn">Submit</button>
+              </form>
+            </div>
+            <div className="col-sm-3" />
           </div>
-          <div>
-            <label htmlFor="address"><small>Address</small></label>
-            <input name="streetaddress" type="streetaddress" placeholder="street address" />
-            <input name="city" type="city" placeholder="city" />
-            <input name="state" type="state" placeholder="state" />
-            <input name="zip" type="zip" placeholder="zip" />
-          </div>
-          <div>
-            <button> Submit</button>
-          </div>
-        </form>
-      </div>
+        </div>
     )
   }
 }

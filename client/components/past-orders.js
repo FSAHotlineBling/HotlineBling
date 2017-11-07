@@ -47,40 +47,48 @@ export class PastOrders extends Component {
       <div id="past-orders-component">
         {authorized &&
           (
-            <div id="past-orders">
-              <h2>Order History</h2>
-              { currentUser.isAdmin &&
-                (
-                  <select name="filter-orders" onChange={this.filterOrders} >
-                      <option value="default">Filter Orders By Status</option>
-                      <option>Created</option>
-                      <option>Processing</option>
-                      <option>Cancelled</option>
-                      <option>Completed</option>
-                      <option>Delivered</option>
-                  </select>
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-2" />
+              <div className="col-sm-8">
+                <div id="past-orders">
+                  <h2>Order History</h2>
+                    { currentUser.isAdmin &&
+                      (
+                        <select name="filter-orders" onChange={this.filterOrders} >
+                            <option value="default">Filter Orders By Status</option>
+                            <option>Created</option>
+                            <option>Processing</option>
+                            <option>Cancelled</option>
+                            <option>Completed</option>
+                            <option>Delivered</option>
+                        </select>
+                      )
+                    }
+                    <ul>
+                      {pastOrders.map(order => {
+                        return (
+                          <div className="card" key={order.id}>
+                            <div className="card-header">
+                              <Link to={`/users/${userId}/orders/${order.id}`}>Order No.{order.id}</Link>
+                            </div>
+                            <div className="card-block">
+                              <blockquote className="card-blockquote">
+                                <p>Ordered on {order.dateCreated}</p>
+                                <footer>Status: {order.status} Total: ${order.total} </footer>
+                              </blockquote>
+                            </div>
+                        </div>
+                        )
+                      })}
+                    </ul>
+                </div>
+                </div>
+                <div className="col-sm-2" />
+                </div>
+                </div>
                 )
               }
-              <ul>
-                {pastOrders.map(order => {
-                  return (
-                    <li key={order.id}>
-                      <Link to={`/users/${userId}/orders/${order.id}`}>
-                        <ul>
-                          <li><h4>Order No.{order.id}</h4></li>
-                          <li>Ordered on {order.dateCreated}</li>
-                          <li>Status: {order.status}</li>
-                          <li>Total: ${order.total} </li>
-                        </ul>
-                      </Link>
-
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          )
-        }
       </div>
     )
   }

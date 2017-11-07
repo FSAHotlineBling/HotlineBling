@@ -22,7 +22,7 @@ export function PhoneReviews(props) {
       {
         reviews.length && reviews.map(review => {
               return (
-                <div key={review.id} class="card">
+                <div key={review.id} className="card">
                 <h3 className="card-header">{review.title}</h3>
                 <div className="card-block">
                   <h4 className="card-title">Rating: {review.stars} star(s)</h4>
