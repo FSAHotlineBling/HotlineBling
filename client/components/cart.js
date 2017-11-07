@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchCart, removeItemInCart, increaseProductPut, updateQuantity, createOrderOnCartClick } from '../store'
+import { fetchCart, removeItemInCart, updateQuantity, createOrderOnCartClick } from '../store'
 
 export class Cart extends Component {
   constructor(props) {
@@ -95,7 +95,6 @@ const mapDispatchToProps = dispatch => {
     },
     removeItem(event, product){
       dispatch(removeItemInCart(product.id));
-      dispatch(increaseProductPut(product));
     },
     handleChange(event, product, orderId) {
       const productId = product.id

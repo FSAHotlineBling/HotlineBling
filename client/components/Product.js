@@ -50,7 +50,6 @@ const mapDispatch = dispatch => {
         orderId = props.order.id
         dispatch(postCart(productId, orderId));
       }
-      dispatch(decreaseProductPut(props.product))
       event.stopPropagation();
     }
   }
