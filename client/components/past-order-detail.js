@@ -24,6 +24,11 @@ export class OrderDetail extends Component {
     const newStatus = event.target.value.toLowerCase()
     if (newStatus !== 'default') {
       this.props.putOrderStatus(this.props.orderId, { status: newStatus })
+      if (newStatus === 'completed' || newStatus === 'delivered'){
+        emailjs.send('gmail', `order_${newStatus}`, {
+        email: this.props.order.email
+        })
+      }
     }
   }
 
