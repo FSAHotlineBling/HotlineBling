@@ -11,7 +11,6 @@ class Checkout extends Component {
   }
 
   render() {
-    console.log('CART', this.props.cart)
     return (
       <div className="container">
         <div className="row">
