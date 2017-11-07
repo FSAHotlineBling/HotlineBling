@@ -38,7 +38,7 @@ export const createCategory = (value, category) => (dispatch) => {
       .then(createdCategory => {
         const action = newCategory(createdCategory);
         dispatch(action);
-        history.goBack();
+        history.push('/');
       })
       .catch();
 }

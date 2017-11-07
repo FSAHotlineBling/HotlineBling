@@ -8,10 +8,15 @@ const Product = db.define('product', {
     allowNull: false
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    allowNull: false
   },
   price: {
-    type: Sequelize.DECIMAL(10,2)
+    type: Sequelize.DECIMAL(10,2),
+    allowNull: false,
+    validate:{
+      isFloat: true
+    }
   },
   quantityAvailable: {
     type: Sequelize.INTEGER,
@@ -21,7 +26,8 @@ const Product = db.define('product', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'http://images.mentalfloss.com/sites/default/files/red-phone.jpg?resize=1100x740'
   }
 })
 

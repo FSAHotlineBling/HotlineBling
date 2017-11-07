@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const { Review, User } = require('../db/models')
-const { hasOrderedPhone } = require('../middleware')
 module.exports = router
 
 // GET /api/reviews

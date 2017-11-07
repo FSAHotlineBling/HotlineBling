@@ -9,33 +9,33 @@ const ProductCategory = Models.ProductCategory;
 const db = require('../server/db/');
 
 const categories = [
-  { id: 1, value: 'Black', category: 'COLOR' }, //1
-  { id: 2, value: 'Gray', category: 'COLOR' }, //2
-  { id: 3, value: 'White', category: 'COLOR' }, //3
-  { id: 4, value: 'Red', category: 'COLOR' },  //4
-  { id: 5, value: 'IBM', category: 'BRAND' },  //5
-  { id: 6, value: 'Nokia', category: 'BRAND' },  //6
-  { id: 7, value: 'Motorola', category: 'BRAND' },  //7
-  { id: 8, value: 'Siemens', category: 'BRAND' },  //8
-  { id: 9, value: '1993', category: 'YEAR' },  //9
-  { id: 10, value: '1994', category: 'YEAR' }, //10
-  { id: 11, value: '1995', category: 'YEAR' }, //11
-  { id: 12, value: '1996', category: 'YEAR' }, //12
-  { id: 13, value: '1997', category: 'YEAR' }, //13
-  { id: 14, value: '1998', category: 'YEAR' }, //14
+  { value: 'Black', category: 'COLOR' }, //1
+  { value: 'Gray', category: 'COLOR' }, //2
+  { value: 'White', category: 'COLOR' }, //3
+  { value: 'Red', category: 'COLOR' },  //4
+  { value: 'IBM', category: 'BRAND' },  //5
+  { value: 'Nokia', category: 'BRAND' },  //6
+  { value: 'Motorola', category: 'BRAND' },  //7
+  { value: 'Siemens', category: 'BRAND' },  //8
+  { value: '1993', category: 'YEAR' },  //9
+  {  value: '1994', category: 'YEAR' }, //10
+  {  value: '1995', category: 'YEAR' }, //11
+  {  value: '1996', category: 'YEAR' }, //12
+  {  value: '1997', category: 'YEAR' }, //13
+  {  value: '1998', category: 'YEAR' }, //14
 ];
 
 const products = [
-  { id: 1, name: 'IBM Simon Personal Communicator', description: 'Cell phone, PDA, and Fax machine!', price: '299', quantityAvailable: '5', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/kwojp854hn8b0velxzb4.jpg' },
-  {id: 2, name: 'Motorola StarTAC', description: 'Bold, yet simplistic, flip phone.', price: '199', quantityAvailable: '3', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/y4qlwuotvdszkjkok5k4.jpg' },
-  {id: 3, name: 'Motorola DynaTAC 800X', description: 'First commercial mobile phone ever produced!', price: '349', quantityAvailable: '8', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/k9toczdgjdizgkkxxvex.jpg' },
-  {id: 4, name: 'Nokia 8810', description: 'Tiny size makes it irresistably easy to pocket, use and, of course, show off!', price: '229', quantityAvailable: '2', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/jfpltrbs3afpyjfblxtb.jpg' },
-  {id: 5, name: 'Siemens S10', description: 'First-ever commercial color-screen cellular—displaying up to six lines of info in four colors (white, red, green, and blue)', price: '419', quantityAvailable: '0', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/hoqkslii6nfcfv09u4uc.jpg' },
-  {id: 6, name: 'Nokia 9000 Communicator', description: 'Cutting-edge design that carried the look of a regular phone and flipped open to disclose a secondary screen and QWERTY keyboard to accommodate emails and SMS', price: '299', quantityAvailable: '5', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/xsbb0kuqylh0ah8y88gr.jpg' },
-  {id: 7, name: 'Motorola Microtac 9800X', description: 'The first truly portable phone!', price: '379', quantityAvailable: '12', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_392fhn6j9hb_b.jpg' },
-  {id: 8, name: 'NOKIA 1011', description: 'Cell phone, PDA, and Fax machine!', price: '189', quantityAvailable: '4', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_420cxnstvcw_b.jpg' },
-  {id: 9, name: 'NOKIA 9110I', description: 'Lightweight precursor to the smartphone.', price: '279', quantityAvailable: '24', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_399gwsthwch_b.jpg' },
-  {id: 10, name: 'NOKIA 8210', description: 'Fantastic phone with customizable design', price: '349', quantityAvailable: '0', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_488q5g3q3gc_b.jpg' },
+  { name: 'IBM Simon Personal Communicator', description: 'Cell phone, PDA, and Fax machine!', price: '299', quantityAvailable: '5', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/kwojp854hn8b0velxzb4.jpg' },
+  {name: 'Motorola StarTAC', description: 'Bold, yet simplistic, flip phone.', price: '199', quantityAvailable: '3', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/y4qlwuotvdszkjkok5k4.jpg' },
+  {name: 'Motorola DynaTAC 800X', description: 'First commercial mobile phone ever produced!', price: '349', quantityAvailable: '8', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/k9toczdgjdizgkkxxvex.jpg' },
+  {name: 'Nokia 8810', description: 'Tiny size makes it irresistably easy to pocket, use and, of course, show off!', price: '229', quantityAvailable: '2', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/jfpltrbs3afpyjfblxtb.jpg' },
+  {name: 'Siemens S10', description: 'First-ever commercial color-screen cellular—displaying up to six lines of info in four colors (white, red, green, and blue)', price: '419', quantityAvailable: '0', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/hoqkslii6nfcfv09u4uc.jpg' },
+  {name: 'Nokia 9000 Communicator', description: 'Cutting-edge design that carried the look of a regular phone and flipped open to disclose a secondary screen and QWERTY keyboard to accommodate emails and SMS', price: '299', quantityAvailable: '5', imageUrl: 'http://images.complex.com/complex/image/upload/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/c_limit,w_680/xsbb0kuqylh0ah8y88gr.jpg' },
+  {name: 'Motorola Microtac 9800X', description: 'The first truly portable phone!', price: '379', quantityAvailable: '12', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_392fhn6j9hb_b.jpg' },
+  {name: 'NOKIA 1011', description: 'Cell phone, PDA, and Fax machine!', price: '189', quantityAvailable: '4', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_420cxnstvcw_b.jpg' },
+  {name: 'NOKIA 9110I', description: 'Lightweight precursor to the smartphone.', price: '279', quantityAvailable: '24', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_399gwsthwch_b.jpg' },
+  { name: 'NOKIA 8210', description: 'Fantastic phone with customizable design', price: '349', quantityAvailable: '0', imageUrl: 'https://netdna.webdesignerdepot.com/uploads/cellphone_design/dkmb86g_488q5g3q3gc_b.jpg' },
 ];
 
 const productCat = [
@@ -129,36 +129,59 @@ const productOrders = [
 ]
 
 const seedData = () =>
-  Promise.all(users.map(user =>
-    User.create(user))
-  )
-    .then(() => {
-      categories.forEach((category) => {
-        Category.create(category)
-      })
-    })
-    .then(() => {
-      products.forEach(product => {
-        Product.create(product)
-      })
-    })
-    .then(() => {
-      productCat.forEach((pc) => {
-        ProductCategory.create(pc)
-      })
-    })
-    .then(() =>
-      Promise.all(reviews.map(review =>
-        Review.create(review))
-      ))
-    .then(() =>
-      Promise.all(orders.map(order =>
-        Order.create(order))
-      ))
-    .then(() =>
-      Promise.all(productOrders.map(po =>
-        ProductOrders.create(po))
-      ));
+  User.bulkCreate(users)
+  .then(() => {
+    return Category.bulkCreate(categories)
+  })
+  .then(() => {
+    return Product.bulkCreate(products)
+  })
+  .then(() => {
+    return ProductCategory.bulkCreate(productCat)
+  })
+  .then(() => {
+    return Review.bulkCreate(reviews)
+  })
+  .then(() => {
+    return Order.bulkCreate(orders)
+  })
+  .then(() => {
+    return ProductOrders.bulkCreate(productOrders)
+  })
+
+
+
+
+  // Promise.all(users.map(user =>
+  //   User.bulkCreate(user))
+  // )
+  //   .then(() => {
+  //     return Promise.all(categories.map((category) => {
+  //       return Category.bulkCreate(category)
+  //     }))
+  //   })
+  //   .then(() => {
+  //     return Promise.all(products.map(product => {
+  //       return Product.bulkCreate(product)
+  //     }))
+  //   })
+  //   .then(() => {
+  //     return Promise.all(productCat.map((pc) => {
+  //       ProductCategory.bulkCreate(pc)
+  //     }))
+  //   })
+  //   .then(() =>
+  //     Promise.all(reviews.map(review =>
+  //       Review.bulkCreate(review))
+  //     ))
+  //   .then(() =>
+  //     Promise.all(orders.map(order =>
+  //       Order.bulkCreate(order))
+  //     ))
+  //   .then(() =>
+  //     Promise.all(productOrders.map(po =>
+  //       ProductOrders.bulkCreate(po))
+  //     ));
 
 const runSeed = () => {
   db.sync({ force: true })
