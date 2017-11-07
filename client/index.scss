@@ -35,7 +35,7 @@ body {
 
 .rating:not(:checked) > label {
   float:right;
-  width:1em;
+  width:1.2em;
   padding:0 .1em;
   overflow:hidden;
   white-space:nowrap;
@@ -74,4 +74,56 @@ body {
   position:relative;
   top:2px;
   left:2px;
+}
+
+// .rating {
+//   display: flex;
+//   flex-direction: row;
+// }
+
+.rating > input {
+  width: 100%
+}
+
+#new-review-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+#review-container {
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  list-style: none;
+}
+
+.navbar li {
+  display: inline;
+}
+
+#navbarNav {
+  flex-basis: 40%;
+}
+
+.navbar .row {
+  display: flex;
+}
+
+#admin-navbar {
+  flex-basis: 30%
+}
+
+#user-navbar {
+  flex-basis: 30%
+}
+
+h3 {
+  padding: 2rem;
+}
+
+h2, h3 {
+  text-align: center;
 }
