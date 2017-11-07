@@ -12,13 +12,13 @@ class Product extends React.Component {
     this.state = {showme: true}
     this.changeText = this.changeText.bind(this)
   }
-  
+
   changeText() {
     this.setState({showme: false})
   }
 
   render() {
-    const button = this.state.showme ? <button className="btn btn-default" 
+    const button = this.state.showme ? <button className="btn btn-default"
     onClick={event => {
       {this.changeText()}
       this.props.addProductToCart(event, this.props)
