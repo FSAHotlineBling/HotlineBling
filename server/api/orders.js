@@ -20,8 +20,19 @@ router.post('/', (req, res, next) => {
       })
       .catch(next)
   } else {
-    ProductOrders.create({
-      orderId: req.cookies.cartId, productId: req.body.productId
+    ProductOrders.findOrCreate({
+      where: {orderId: req.cookies.cartId, productId: req.body.productId}
+    })
+      .spread((prodOrder, created) => {
+        if (!created){
+          let newQuantity = prodOrder.quantity + 1;
+          return ProductOrders.update(
+            { quantity: newQuantity },
+            {where: {orderId: req.cookies.cartId, productId: req.body.productId}
+          })
+        } else {
+          return prodOrder
+        }
     })
       .then(productOrder =>
         Order.findById(productOrder.orderId))
