@@ -8,19 +8,6 @@ const ProductOrders = db.models.productOrders
 
 module.exports = router
 
-// const isLoggedIn = () => (req, res, next) => {
-//   if (req.user) return next()
-//   const err = new Error('User not authenticated')
-//   err.status = 401
-//   next(err)
-// }
-
-// const isAdmin = () => (req, res, next) => {
-//   if (req.user && req.user.isAdmin) return next()
-//   const err = new Error('User not authorized')
-//   err.status = 401 it was closer it was
-//   next(err)
-// }
 
 
 router.post('/login', (req, res, next) => {
