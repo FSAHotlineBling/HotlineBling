@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postCart, postOrder, decreaseProductPut } from '../store'
+import { postCart, postOrder } from '../store'
 import PhoneReviews from './phone-reviews.js'
 
 /* -----------------    COMPONENT     ------------------ */
@@ -20,8 +20,8 @@ class Product extends React.Component {
   render() {
     const button = this.state.showme ? <button className="btn btn-default"
     onClick={event => {
-      {this.changeText()}
       this.props.addProductToCart(event, this.props)
+      this.changeText()
     }}
   >
     <span className="glyphicon glyphicon-remove" />

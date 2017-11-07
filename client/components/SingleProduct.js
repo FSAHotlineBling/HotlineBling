@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { putProduct, destroyProduct, destroyCategory, addCategory } from '../store/index';
 import { withRouter, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postCart, postOrder, decreaseProductPut } from '../store'
+import { postCart, postOrder } from '../store'
 import PhoneReviews from './phone-reviews'
 
 export class SingleProduct extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product: {}
+            product: {},
+            showme: true
         }
         this.handleProductNameChange = this.handleProductNameChange.bind(this);
         this.handlePriceChange = this.handlePriceChange.bind(this);
@@ -17,6 +18,11 @@ export class SingleProduct extends Component {
         this.handleImageURLChange = this.handleImageURLChange.bind(this);
         this.handleDesciptionChange = this.handleDesciptionChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.changeText = this.changeText.bind(this)        
+    }
+
+    changeText() {
+        this.setState({ showme: false })
     }
 
     handleProductNameChange(event) {
@@ -60,6 +66,15 @@ export class SingleProduct extends Component {
         })
         const product = filteredProducts[0]
         const control = this.props.user.isAdmin === undefined || this.props.user.isAdmin === false
+        const button = this.state.showme ? <button className="btn btn-default"
+            onClick={event => {
+                this.props.addProductToCart(event, this.props, product)
+                this.changeText()
+            }}
+        >
+            <span className="glyphicon glyphicon-remove" />
+            Add to Cart!
+      </button> : <p>Your item has been added to your cart</p>
         return (
             <div>
                 <div className="container">
@@ -145,20 +160,20 @@ export class SingleProduct extends Component {
                                     </span>
                                 </form>
                                 <h3>Remove Category</h3>
-                            {
-                                product === undefined ? <div /> : product.categories.map((category) => {
-                                    return <div key={category.id}><span>{category.value}<button onClick={(e) => this.props.handleCategoryDelete(e, category.id, product.id)}>Remove</button></span></div>
-                                })
-                            }
+                                {
+                                    product === undefined ? <div /> : product.categories.map((category) => {
+                                        return <div key={category.id}><span>{category.value}<button onClick={(e) => this.props.handleCategoryDelete(e, category.id, product.id)}>Remove</button></span></div>
+                                    })
+                                }
                             </div>
                         </div>
                         <div className="col-sm-8">
                             <div className="container">
-                            <div className="card">
-                                        {
-                                            product === undefined ? <div /> : <img className="card-img-top" src={product.imageUrl} alt="Card image" />
-                                        }
-                                    
+                                <div className="card">
+                                    {
+                                        product === undefined ? <div /> : <img className="card-img-top" src={product.imageUrl} alt="Card image" />
+                                    }
+
                                     <div className="card-block">
                                         {
                                             product === undefined ? <p /> : <h4 className="card-title">{product.name}</h4>
@@ -171,26 +186,20 @@ export class SingleProduct extends Component {
                                         }
                                         {
                                             product !== undefined && product.quantityAvailable >= 1 ?
-                                            <button
-                                            className="btn btn-default"
-                                            onClick={() => this.props.addProductToCart(event, this.props, product)}
-                                            >
-                                            <span className="glyphicon glyphicon-remove" />
-                                            Add to Cart!
-                                            </button> : <p>More Coming Soon!!</p>
+                                                button : <p>More Coming Soon!!</p>
                                         }
                                         {
-                                            product !== undefined &&  <PhoneReviews productId={product.id} />
+                                            product !== undefined && <PhoneReviews productId={product.id} />
                                         }
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
-                        <div className="col-sm-1" />
                     </div>
+                    <div className="col-sm-1" />
                 </div>
+            </div>
         )
     }
 }
@@ -229,15 +238,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             const productId = product.id
             const userId = props.user ? props.user.id : null
             let orderId
-            if (props.order === null || Object.keys(props.order).length === 0){
-              dispatch(postOrder(productId, userId))
+            if (props.order === null || Object.keys(props.order).length === 0) {
+                dispatch(postOrder(productId, userId))
             } else {
-              orderId = props.order.id
-              dispatch(postCart(productId, orderId));
+                orderId = props.order.id
+                dispatch(postCart(productId, orderId));
             }
-            dispatch(decreaseProductPut(product))
             event.stopPropagation();
-          }
+        }
     }
 }
 
