@@ -32,27 +32,5 @@ const Order = db.define('order', {
   }
 })
 
-// Order.prototype.total = function () {
-//     // let orderLineItems, sum=0;
-
-//     // ProductOrders.findById(this.id)
-//     //   .then(orderLines => {
-//     //     orderLines.forEach(orderLine => sum += orderLine.city)
-//         console.log('ORDERLINES ARE')
-//       // })
-//   }
-//   // }, {
-  //   hooks: {
-  //     afterValidate: (order, options) => {
-  //       let orderLineItems, sum;
-
-  //       ProductOrders.findById(order.id)
-  //         .then(orderLines => {
-  //           orderLines.forEach(orderLine => sum +=)
-
-  //         })
-  //       user.username = 'Toni';
-  //     }
-  //   }
 
 module.exports = Order
