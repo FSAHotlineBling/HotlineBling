@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchCart, removeItemInCart, increaseProductPut } from '../store'
+import { fetchCart, removeItemInCart, increaseProductPut, updateQuantity, createOrderOnCartClick } from '../store'
 
 export class Cart extends Component {
   constructor(props) {
     super(props)
     this.returnQuantityArray = this.returnQuantityArray.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -23,14 +22,10 @@ export class Cart extends Component {
     return result
   }
 
-  handleChange(event) {
-    event.preventDefault()
-    console.log(event)
-  }
-
   render() {
     let quantity;
     let products = this.props.products
+    let orderId = this.props.orderId
     return (
       <div id="cart-component">
         <h2>Your Cart</h2>
@@ -42,7 +37,7 @@ export class Cart extends Component {
                   <li>{product.name}</li>
                   <li>{product.price}</li>
                   <label>Quantity:</label>
-                  <select name="quantity" onChange={this.handleChange}>
+                  <select name="quantity" onChange={event => this.props.handleChange(event, product, orderId)}>
 
                     {
                       quantity = this.returnQuantityArray(product.quantityAvailable)
@@ -56,7 +51,7 @@ export class Cart extends Component {
                 </ul>
                 <button
                   className="btn btn-default"
-                  onClick = {() => this.props.removeItem(event, product)}
+                  onClick = {event => this.props.removeItem(event, product)}
                   >Remove
                 </button>
               </li>
@@ -74,8 +69,9 @@ export class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const orderId = state.order.id ? state.order.id : state.order.orderId
   return {
-    orderId: state.order.id,
+    orderId: orderId,
     products: state.cart
   }
 }
@@ -84,12 +80,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchCartOrders(orderId) {
-      dispatch(fetchCart(orderId))
+      orderId ? dispatch(fetchCart(orderId)) : dispatch(createOrderOnCartClick())
     },
     removeItem(event, product){
-      event.stopPropagation();
       dispatch(removeItemInCart(product.id));
       dispatch(increaseProductPut(product));
+    },
+    handleChange(event, product, orderId) {
+      const productId = product.id
+      const quantity = event.target.value
+      dispatch(updateQuantity(productId, orderId, quantity))
     }
   }
 }

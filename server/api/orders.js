@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Order, ProductOrders, Product } = require('../db/models')
+const { isLoggedIn, isAdmin } = require('../middleware')
 module.exports = router
 
 router.use('/view', require('./vieworders'))
@@ -27,11 +28,13 @@ router.put('/:orderId', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/admin/:orderId', (req, res, next) => {
+
+router.get('/admin/:orderId', isAdmin,(req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => res.json(order))
     .catch(next)
 })
+
 
 router.get('/:userid', (req, res, next) => {
   let id = req.params.userid
@@ -52,6 +55,12 @@ router.put('/:orderId', (req, res, next) => {
       id: id
     }
   })
+    .then(order => res.json(order))
+    .catch(next)
+})
+
+router.post('/noproduct', (req, res, next) => {
+  Order.create()
     .then(order => res.json(order))
     .catch(next)
 })
