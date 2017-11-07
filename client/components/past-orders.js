@@ -4,12 +4,6 @@ import { connect } from 'react-redux'
 import { fetchUserOrders, fetchAllOrders } from '../store'
 
 
-
-/*
-STILL NEED TO DO THIS
-(side note: will we need some sort of security in place to make sure that just anybody can't go to /api/orders/userId & see all past orders? how to implement that?)
- */
-
 export class PastOrders extends Component {
   constructor(props) {
     super(props)
@@ -43,7 +37,7 @@ export class PastOrders extends Component {
     const currentUser = this.props.user //user on state
     const userId = this.props.userId //accessed from URL, either userId or 'admin'
     //checking that user on state also matches user ID in URL bar (only users that are logged in can see their own order history)
-    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === userId)
+    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === Number(userId))
     return (
       <div id="past-orders-component">
         {authorized &&
