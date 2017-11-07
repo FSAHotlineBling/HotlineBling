@@ -39,7 +39,6 @@ export const fetchCreatedOrder = userid => dispatch => {
 }
 
 export const updateOrder = (address, city, zip, state, email, orderId) => dispatch => {
-  console.log('ORDERID', orderId)
   return axios.put(`/api/orders/${orderId}`, {address, city, zip, state, email, id: orderId, status: 'processing'})
     .then(res => {
       dispatch(updateTheOrder(res.data))
