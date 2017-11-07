@@ -1,6 +1,7 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
+import Popup from 'react-popup';
 import { postCart, postOrder, decreaseProductPut } from '../store'
 import PhoneReviews from './phone-reviews.js'
 
@@ -23,7 +24,10 @@ export function Product (props){
               {
                 product !== undefined && product.quantityAvailable >= 1 ? <button
                   className="btn btn-default"
-                  onClick={() => props.addProductToCart(event, props)}
+                  onClick={() => {
+                    props.addProductToCart(event, props)
+                    Popup.alert('Your item has been added to your cart')
+                  }}
                 >
                   <span className="glyphicon glyphicon-remove" />
                   Add to Cart!

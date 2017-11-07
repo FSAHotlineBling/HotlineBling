@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
 import {updateOrder, updateQuantityAvailable, fetchCart} from '../store'
 /**
  * COMPONENT
  */
 class Checkout extends Component {
   componentDidMount() {
-    this.props.loadCart(this.props.order.id)
+    const orderId = this.props.order.id ? this.props.order.id : this.props.order.orderId
+    this.props.loadCart(orderId)
   }
 
   render (){
@@ -30,7 +32,7 @@ class Checkout extends Component {
             <input name="zip" type="zip" placeholder="zip" />
           </div>
           <div>
-            <button type="submit">Submit</button>
+            <Link to="/thankyou">Submit</Link>
           </div>
         </form>
       </div>
