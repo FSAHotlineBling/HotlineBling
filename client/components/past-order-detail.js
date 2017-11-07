@@ -28,7 +28,6 @@ export class OrderDetail extends Component {
         emailjs.send('gmail', `order_${newStatus}`, {
         email: this.props.order.email
         })
-      console.log('EMAIL SENT')
       }
     }
   }

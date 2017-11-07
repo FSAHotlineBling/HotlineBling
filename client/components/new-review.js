@@ -8,38 +8,42 @@ export function NewReview(props) {
   const userId = props.user.id
 
   return (
-      <div>
-        <form id="new-review-form" onSubmit={(event) => props.postReview(event, userId)}>
-          <div id="review-header"><h3>Review this product</h3></div>
-          <div id="review-container">
-            <div className="form-group" id="review-title">
-              <label>Review Title</label>
-              <input
-                name="title"
-                className="form-control"
-                required
-              />
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-2" />
+            <div className="col-sm-8" >
+              <form onSubmit={(event) => props.postReview(event, userId)}>
+                <h3>Review this product</h3>
+                <div className="form-group row">
+                  <label>Review Title</label>
+                  <input
+                    name="title"
+                    className="form-control"
+                    required
+                  />
+                </div>
+                <div className="form-group row">
+                  <label>How did you like this phone?</label>
+                  <textarea
+                    name="reviewText"
+                    className="form-control"
+                  />
+                <div className="form-group">
+                  <fieldset className="rating">
+                    <legend>Please rate:</legend>
+                    <input type="radio" id="star5" name="stars" value="5" /><label htmlFor="star5" title="Love it">5 stars</label>
+                    <input type="radio" id="star4" name="stars" value="4" /><label htmlFor="star4" title="Like it">4 stars</label>
+                    <input type="radio" id="star3" name="stars" value="3" /><label htmlFor="star3" title="Meh">3 stars</label>
+                    <input type="radio" id="star2" name="stars" value="2" /><label htmlFor="star2" title="Don't like it">2 stars</label>
+                    <input type="radio" id="star1" name="stars" value="1" /><label htmlFor="star1" title="Terrible">1 star</label>
+                  </fieldset>
+                </div>
+                </div>
+                <button className="btn btn-default">Submit Feedback</button>
+              </form>
             </div>
-            <div className="form-group">
-              <fieldset className="rating">
-                <legend>Please rate:</legend>
-                <input type="radio" id="star5" name="stars" value="5" /><label htmlFor="star5" title="Love it">5 stars</label>
-                <input type="radio" id="star4" name="stars" value="4" /><label htmlFor="star4" title="Like it">4 stars</label>
-                <input type="radio" id="star3" name="stars" value="3" /><label htmlFor="star3" title="Meh">3 stars</label>
-                <input type="radio" id="star2" name="stars" value="2" /><label htmlFor="star2" title="Don't like it">2 stars</label>
-                <input type="radio" id="star1" name="stars" value="1" /><label htmlFor="star1" title="Terrible">1 star</label>
-              </fieldset>
-            </div>
-            <div className="form-group" id="review-text">
-              <label>How did you like this phone?</label>
-              <textarea
-                name="reviewText"
-                className="form-control"
-               />
-            </div>
-            <button>Submit Feedback</button>
+            <div className="col-sm-2" />
           </div>
-        </form>
       </div>
     )
   }
