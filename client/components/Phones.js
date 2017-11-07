@@ -129,8 +129,8 @@ filterHandleChange (event) {
                 products.map(product => <Product product={product} key={product.id} />)
             }
             <div hidden={control}>
-         <Link to="/users"><button>View Users</button></Link>
-         <Link to="/users/admin/orders"><button>View All Orders</button></Link>
+         <Link to="/users"><button className="btn btn-default btn btn-danger btn-sm">View Users</button></Link>
+         <Link to="/users/admin/orders"><button className="btn btn-default btn btn-danger btn-sm">View All Orders</button></Link>
          <h3>Add Phone </h3>
                   <form
                       id="edit-product-form"
