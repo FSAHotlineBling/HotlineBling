@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchCart, removeItemInCart, increaseProductPut, updateQuantity } from '../store'
+import { fetchCart, removeItemInCart, increaseProductPut, updateQuantity, createOrderOnCartClick } from '../store'
 
 export class Cart extends Component {
   constructor(props) {
@@ -69,8 +69,9 @@ export class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const orderId = state.order.id ? state.order.id : state.order.orderId
   return {
-    orderId: state.order.id,
+    orderId: orderId,
     products: state.cart
   }
 }
@@ -79,7 +80,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchCartOrders(orderId) {
-      dispatch(fetchCart(orderId))
+      orderId ? dispatch(fetchCart(orderId)) : dispatch(createOrderOnCartClick())
     },
     removeItem(event, product){
       dispatch(removeItemInCart(product.id));

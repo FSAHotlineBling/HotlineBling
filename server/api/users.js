@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
+const { isAdmin } = require('../middleware')
+
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -20,7 +22,7 @@ router.get('/:id', (req, res, next) => {
       .catch(next)
   })
 
-router.put('/admin/:id', (req, res, next) => {
+router.put('/admin/:id', isAdmin, (req, res, next) => {
   User.update({
     isAdmin: true
   }, {
@@ -34,7 +36,7 @@ router.put('/admin/:id', (req, res, next) => {
   .catch(next);
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', isAdmin, (req, res, next) => {
   User.destroy({
       where: {
           id: req.params.id
