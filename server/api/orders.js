@@ -6,7 +6,6 @@ module.exports = router
 router.use('/view', require('./vieworders'))
 
 router.post('/', (req, res, next) => {
-  console.log('REQBODY IS', req.body)
   if (!req.cookies.cartId) {
     Order.create(req.body)
       .then(order => {
@@ -21,8 +20,6 @@ router.post('/', (req, res, next) => {
       })
       .catch(next)
   } else {
-    console.log('ORDERID:', req.cookies.cartId)
-    console.log('PRODUCTID:', req.body.productId)
     ProductOrders.create({
       orderId: req.cookies.cartId, productId: req.body.productId
     })
