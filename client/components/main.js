@@ -25,8 +25,8 @@ const Main = (props) => {
                     {
                     isLoggedIn
                       ? <span>
-                          <li><a href="#" onClick={handleClick}>Logout</a></li>
-                          <li><Link to={`/users/${userId}/orders`}>Account</Link></li>
+                          <a href="#" onClick={handleClick}>Logout</a>
+                          <Link to={`/users/${userId}/orders`}>Account</Link>
                         </span>
                       : <span>
                           <Link to="/login">Login</Link>
