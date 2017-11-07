@@ -16,7 +16,7 @@ export function PhoneReviews(props) {
   }
 
   const ratingPercentage = {
-    width: (averageRating)/(review.length)
+    width: `${(averageRating) / 5 * 100}%`
   }
 
   console.log('RATING PERCENTAGE IS', ratingPercentage)
@@ -24,7 +24,7 @@ export function PhoneReviews(props) {
   return (
     <div className="phone-reviews">
       <h4>Customer Reviews</h4>
-      <div className="star-ratings-sprite"><span  className="star-ratings-sprite-rating" /></div>
+      <div className="star-ratings-sprite"><span style={ratingPercentage} className="star-ratings-sprite-rating" /></div>
       <p>Average Rating: {averageRating} out of {reviews.length} Review(s)  </p>
       {
         reviews.length && reviews.map(review => {

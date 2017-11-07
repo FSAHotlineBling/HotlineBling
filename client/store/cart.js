@@ -42,15 +42,9 @@ export const removeItemInCart = productId => dispatch => {
     .catch(err => console.error('Delete unsuccessful', err))
 }
 
-<<<<<<< HEAD
 export const updateQuantity = (productId, orderId, quantity) => dispatch => {
   return axios.put('/api/productorders', {productId, orderId, quantity})
     .then(res => dispatch(updateQuantityInCart(res.data)))
-=======
-export const updateQuantity = (productId, orderId, quantity) => disptach => {
-  return axios.put('/api/productorders', { productId, orderId, quantity })
-    .then(res => disptach(updateQuantityInCart(res.data)))
->>>>>>> master
     .catch(err => console.error('Update unsuccessful', err))
 }
 
