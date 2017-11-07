@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchUserOrders, fetchAllOrders } from '../store'
+import { Order } from '../../server/db/models'
 
 
 /*
@@ -13,7 +14,7 @@ export class PastOrders extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      orders: []
+      orders: undefined
     }
     this.filterOrders = this.filterOrders.bind(this)
   }
@@ -38,7 +39,7 @@ export class PastOrders extends Component {
   }
 
   render() {
-    const pastOrders = this.state.orders.length ? this.state.orders : this.props.pastOrders
+    const pastOrders = this.state.orders ? this.state.orders : this.props.pastOrders
     const currentUser = this.props.user //user on state
     const userId = this.props.userId //accessed from URL, either userId or 'admin'
     //checking that user on state also matches user ID in URL bar (only users that are logged in can see their own order history)
@@ -70,7 +71,7 @@ export class PastOrders extends Component {
                           <li><h4>Order No.{order.id}</h4></li>
                           <li>Ordered on {order.dateCreated}</li>
                           <li>Status: {order.status}</li>
-                          <li>Total: ${order.total} </li>
+                          <li>Total: ${order.getTotal()} </li>
                         </ul>
                       </Link>
 

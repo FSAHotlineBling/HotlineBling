@@ -26,21 +26,29 @@ const Order = db.define('order', {
     type: Sequelize.ENUM('created', 'processing', 'cancelled', 'completed', 'delivered'),
     defaultValue: 'created'
   }
-// }, {
-//   hooks: {
-//     afterValidate: (order, options) => {
-//       let orderLineItems, sum;
-
-//       ProductOrders.findById(order.id)
-//         .then(orderLines => {
-//           orderLines.forEach(orderLine => sum +=)
-
-//         })
-//       user.username = 'Toni';
-//     }
-//   }
 })
 
+Order.prototype.getTotal = function () {
+    let orderLineItems, sum;
 
+    ProductOrders.findById(order.id)
+      .then(orderLines => {
+        // orderLines.forEach(orderLine => sum +=)
+        console.log('ORDERLINES ARE', orderLines)
+      })
+  }
+  // }, {
+  //   hooks: {
+  //     afterValidate: (order, options) => {
+  //       let orderLineItems, sum;
+
+  //       ProductOrders.findById(order.id)
+  //         .then(orderLines => {
+  //           orderLines.forEach(orderLine => sum +=)
+
+  //         })
+  //       user.username = 'Toni';
+  //     }
+  //   }
 
 module.exports = Order
