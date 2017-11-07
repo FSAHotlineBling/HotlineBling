@@ -18,27 +18,20 @@ export function PhoneReviews(props) {
   return (
     <div className="phone-reviews">
       <h4>Customer Reviews</h4>
-      {reviews.length &&
-        (<ul className="reviews-div">
-          <li>Average Rating: {averageRating}</li>
-          <li> {reviews.length} Review(s) </li>
-          <ul>
-            {reviews.map(review => {
+      <p>Average Rating: {averageRating} out of {reviews.length} Review(s)  </p>
+      {
+        reviews.length && reviews.map(review => {
               return (
-                <li key={review.id}>
-                  <ul>
-                    <li>Rating: {review.stars} star(s)</li>
-                    <li>{review.title}</li>
-                    <li>{review.reviewText}</li>
-                    <li>{review.user.name}</li>
-                    <li>{review.dateCreated}</li>
-                  </ul>
-                </li>
-              )
-            })}
-          </ul>
-        </ul>
-        )
+                <div key={review.id} class="card">
+                <h3 className="card-header">{review.title}</h3>
+                <div className="card-block">
+                  <h4 className="card-title">Rating: {review.stars} star(s)</h4>
+                  <p className="card-text">{review.reviewText}</p>
+                  <p className="card-text"><small className="text-muted">{review.user.name} {review.dateCreated}</small></p>
+                  </div>
+                </div>
+            )}
+          )
       }
       {!reviews.length &&
         (
