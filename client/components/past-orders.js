@@ -50,7 +50,7 @@ export class PastOrders extends Component {
                   <h2>Order History</h2>
                     { currentUser.isAdmin &&
                       (
-                        <select name="filter-orders" onChange={this.filterOrders} >
+                        <select className="form-control" name="filter-orders" onChange={this.filterOrders} >
                             <option value="default">Filter Orders By Status</option>
                             <option>Created</option>
                             <option>Processing</option>
