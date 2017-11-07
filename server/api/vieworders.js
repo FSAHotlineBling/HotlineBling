@@ -1,3 +1,4 @@
+const Promise = require('bluebird')
 const orderRouter = require('express').Router()
 const { Order, Product } = require('../db/models')
 
@@ -10,7 +11,16 @@ orderRouter.get('/', (req, res, next) => {
     order: [ ['dateCreated', 'DESC'] ],
     //limit: 100 - will do pagination later if time
   })
-    .then(orders => res.json(orders))
+  .then(orders => {
+    orders.forEach(order => {
+      let total = 0;
+      order.products.forEach(product => {
+        total += product.price * product.productOrders.quantity
+      })
+      order.total = total.toFixed(2);
+    })
+    res.json(orders)
+  })
     .catch(next)
 })
 
@@ -21,7 +31,18 @@ orderRouter.get('/:userId', (req, res, next) => {
     include: [ Product ],
     order: [ ['dateCreated', 'DESC'] ]
   })
-    .then(orders => res.json(orders))
+    .then(orders => {
+      //array of all orders
+      orders.forEach(order => {
+        let total = 0;
+        //within each order, array of products
+        order.products.forEach(product => {
+          total += product.price * product.productOrders.quantity
+        })
+        order.total = total.toFixed(2);
+      })
+      res.json(orders)
+    })
     .catch(next);
 })
 
@@ -33,3 +54,19 @@ orderRouter.get('/:userId/:orderId', (req, res, next) => {
     .then(order => res.json(order))
     .catch(next)
 })
+
+// orderRouter.use('/', (req, res, next) => {
+//   let orders = req.body
+//   console.log('ORDERS ARE', orders)
+//   console.log('REQBODY IS', req.body)
+//   //  orders.forEach(order => {
+//   //     let total = 0;
+//   //     //within each order, array of products
+//   //     order.products.forEach(product => {
+//   //       total += product.price * product.productOrders.quantity
+//   //     })
+//   //     order.total = total.toFixed(2);
+//   //   })
+//   //   res.json(orders)
+//   // })
+// })

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchUserOrders, fetchAllOrders } from '../store'
-import { Order } from '../../server/db/models'
+
 
 
 /*
@@ -71,7 +71,7 @@ export class PastOrders extends Component {
                           <li><h4>Order No.{order.id}</h4></li>
                           <li>Ordered on {order.dateCreated}</li>
                           <li>Status: {order.status}</li>
-                          <li>Total: ${order.getTotal()} </li>
+                          <li>Total: $ {order.total}</li>
                         </ul>
                       </Link>
 

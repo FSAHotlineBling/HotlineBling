@@ -30,7 +30,9 @@ router.put('/:orderId', (req, res, next) => {
 
 
 router.get('/admin/:orderId', isAdmin,(req, res, next) => {
-  Order.findById(req.params.orderId)
+  Order.findById(req.params.orderId, {
+    include: [ Product ]
+  })
     .then(order => res.json(order))
     .catch(next)
 })
@@ -42,7 +44,8 @@ router.get('/:userid', (req, res, next) => {
     where: {
       userId: id,
       status: 'created'
-    }
+    },
+    include: [ Product ]
   })
     .then(order => res.json(order))
     .catch(next)
@@ -53,7 +56,8 @@ router.put('/:orderId', (req, res, next) => {
   Order.update(req.body, {
     where: {
       id: id
-    }
+    },
+    include: [ Product ]
   })
     .then(order => res.json(order))
     .catch(next)

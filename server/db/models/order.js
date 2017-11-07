@@ -25,19 +25,23 @@ const Order = db.define('order', {
   status: {
     type: Sequelize.ENUM('created', 'processing', 'cancelled', 'completed', 'delivered'),
     defaultValue: 'created'
+  },
+  total: {
+    type: Sequelize.DECIMAL(10, 2),
+    defaultValue: 0.00
   }
 })
 
-Order.prototype.getTotal = function () {
-    let orderLineItems, sum;
+// Order.prototype.total = function () {
+//     // let orderLineItems, sum=0;
 
-    ProductOrders.findById(order.id)
-      .then(orderLines => {
-        // orderLines.forEach(orderLine => sum +=)
-        console.log('ORDERLINES ARE', orderLines)
-      })
-  }
-  // }, {
+//     // ProductOrders.findById(this.id)
+//     //   .then(orderLines => {
+//     //     orderLines.forEach(orderLine => sum += orderLine.city)
+//         console.log('ORDERLINES ARE')
+//       // })
+//   }
+//   // }, {
   //   hooks: {
   //     afterValidate: (order, options) => {
   //       let orderLineItems, sum;

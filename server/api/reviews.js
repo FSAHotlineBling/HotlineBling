@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Review, User } = require('../db/models')
+const { hasOrderedPhone } = require('../middleware')
 module.exports = router
 
 // GET /api/reviews
@@ -10,7 +11,7 @@ router.get('/', (req, res, next) => {
 })
 
 // POST /api/reviews
-router.post('/', (req, res, next) => {
+router.post('/', hasOrderedPhone, (req, res, next) => {
   Review.create(req.body)
     .then(review => res.json(review))
     .catch(next)
