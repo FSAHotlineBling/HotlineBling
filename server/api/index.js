@@ -12,6 +12,8 @@ router.use('/orders', require('./orders'))
 
 router.use('/productorders', require('./productorders'))
 
+router.use('/category', require('./category'))
+
 router.use('/categories', require('./categories'))
 
 router.use((req, res, next) => {

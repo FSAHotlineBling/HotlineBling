@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
 const {Review} = require('../db/models')
-const { Category } = require('../db/models') 
+const { ProductCategory, Category } = require('../db/models')
 const { isAdmin } = require('../middleware')
 
 module.exports = router
