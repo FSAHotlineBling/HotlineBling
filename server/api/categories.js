@@ -13,6 +13,12 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
+// router.post('/', isAdmin, (req, res, next) => {
+//     Category.findOrCreate({
+//         where: {
+//             value: req.body.value,
+//             category: req.body.category
+//         }
 // router.post('/', isAdmin,(req, res, next) => {
 //     console.log('LOOKING FOR REQ BODY',  req.body)
 //     Category.findOrCreate({
@@ -43,7 +49,7 @@ router.get('/:id', (req, res, next) => {
         .catch(next)
 })
 
-router.post('/add', isAdmin,(req, res, next) => {
+router.post('/add', isAdmin, (req, res, next) => {
     ProductCategory.create(req.body)
         .then(() => {
             res.sendStatus(201)
