@@ -154,24 +154,20 @@ export class SingleProduct extends Component {
                         </div>
                         <div className="col-sm-8">
                             <div className="container">
-                                <div id="product-card-container">
-                                    <div>
+                            <div className="card">
                                         {
-                                            product === undefined ? <div /> : <img src={`${product.imageURL}`} />
+                                            product === undefined ? <div /> : <img className="card-img-top" src={product.imageUrl} alt="Card image" />
                                         }
-                                    </div>
-                                    <div id="product-card-info">
+                                    
+                                    <div className="card-block">
                                         {
-                                            product === undefined ? <p /> : <div><h1>{product.name}</h1></div>
-                                        }
-                                        {
-                                            product !== undefined &&  <img src={product.imageUrl} />
+                                            product === undefined ? <p /> : <h4 className="card-title">{product.name}</h4>
                                         }
                                         {
-                                            product === undefined ? <p /> : <div><h1>Price: {product.price}</h1></div>
+                                            product === undefined ? <p /> : <h2>Price: {product.price}</h2>
                                         }
                                         {
-                                            product !== undefined && <p>{product.description}</p>
+                                            product !== undefined && <p className="card-text">{product.description}</p>
                                         }
                                         {
                                             product !== undefined && product.quantityAvailable >= 1 ?
@@ -191,10 +187,10 @@ export class SingleProduct extends Component {
                                 </div>
                             </div>
                         </div>
+                        </div>
                         <div className="col-sm-1" />
                     </div>
                 </div>
-            </div>
         )
     }
 }
