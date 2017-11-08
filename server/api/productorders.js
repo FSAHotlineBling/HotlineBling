@@ -3,16 +3,14 @@ const {ProductOrders, Product, Order} = require('../db/models')
 module.exports = router
 
 router.post('/', (req, res, next) => {
-  console.log("yep")
   let orderId = req.body.orderId ? req.body.orderId : req.cookies.cartId
-  console.log("order id in da route", orderId)
   ProductOrders.findOrCreate({
-    where: {orderId: orderId, productId: req.body.productId}
+    where: {
+      orderId: orderId,
+      productId: req.body.productId
+    }
   })
   .spread((prodOrder, created) => {
-    console.log("in here!!!!!!!!!!")
-    console.log(created)
-
     if (!created){
 
       let newQuantity = prodOrder.quantity + 1;
@@ -25,7 +23,8 @@ router.post('/', (req, res, next) => {
     }
     })
     .then(productOrder => {
-      Order.findById(productOrder.orderId)})
+      Order.findById(productOrder.orderId)},
+     )
     .then(order => res.json(order))
     .catch(next)
 })

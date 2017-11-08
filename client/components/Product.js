@@ -64,7 +64,6 @@ const mapDispatch = dispatch => {
       const productId = props.product.id
       const userId = props.user ? props.user.id : null
       let orderId
-      console.log("props.order", productId, userId)
       if (props.order === null || Object.keys(props.order).length === 0) {
         dispatch(postOrder(productId, userId))
       } else {
