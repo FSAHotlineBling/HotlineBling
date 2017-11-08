@@ -9,19 +9,19 @@ export const UserHome = (props) => {
   const {email} = props
 
   return (
-    <div clasName="container">
+    <div className="container">
       <div className="row">
         <div className="col-sm-2" />
         <div className="col-sm-8">
-          <div class="card text-center">
-              <div class="card-header">
+          <div className="card text-center">
+              <div className="card-header">
                 Welcome
               </div>
-              <div class="card-block">
-                <h4 class="card-title">Hi, {email}</h4>
-                <p class="card-text"> Check out our new specials</p>
+              <div className="card-block">
+                <h4 className="card-title">Hi, {email}</h4>
+                <p className="card-text"> Check out our new specials</p>
               </div>
-              <div class="card-footer text-muted">
+              <div className="card-footer text-muted">
                 Happy Shopping!
               </div>
             </div>

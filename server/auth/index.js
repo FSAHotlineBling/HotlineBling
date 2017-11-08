@@ -61,7 +61,6 @@ router.post('/login', (req, res, next) => {
                         )
                       })
                       .then((updatedOrders) => {
-                        console.log("updated orders", )
                         ProductOrders.destroy(
                           {where: {
                               orderId: req.cookies.cartId
