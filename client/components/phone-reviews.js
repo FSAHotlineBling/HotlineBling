@@ -19,8 +19,6 @@ export function PhoneReviews(props) {
     width: `${(averageRating) / 5 * 100}%`
   }
 
-  console.log('RATING PERCENTAGE IS', ratingPercentage)
-
   return (
     <div className="phone-reviews">
       <h4>Customer Reviews</h4>
