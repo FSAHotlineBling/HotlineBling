@@ -29,6 +29,66 @@ router.post('/login', (req, res, next) => {
           else {
             req.session.userId = user.id;
             if (req.cookies.cartId) {
+              console.log("BBB")
+              return Order.findOne({
+                where:
+                { userId: user.id, status: 'created' }
+              })
+                .then(order => {
+                  if (!order) {
+                    Order.findById(req.cookies.cartId)
+                      .then((foundOrder) => {
+                        foundOrder.update({ userId: user.id })
+                      })
+                  } else {
+                    let idsToMerge = []
+                    return ProductOrders.findAll({
+                      where: { orderId: order.id }
+                    })
+                      .then((orders => {
+                        orders.forEach((myOrder) => {
+                          idsToMerge.push(myOrder.productId)
+                        })
+                      }))
+                      .then(() => {
+                        return ProductOrders.update(
+                          { orderId: order.id },
+                          {
+                            where: {
+                              orderId: req.cookies.cartId, productId: { [Op.notIn]: idsToMerge }
+                            }
+                          }
+                        )
+                      })
+                      .then(() => {
+                        ProductOrders.destroy(
+                          {where: {
+                              orderId: req.cookies.cartId
+                            }
+                          }
+                        )
+                        res.clearCookie('cartId').json(user)
+                      })
+                    }
+            })
+
+          }
+        }})
+        }
+      })
+      .catch(next)
+    })
+
+  router.post('/signup', (req, res, next) => {
+    User.create(req.body)
+      .then(user => {
+        req.login(user, err => {
+          if (err) {
+            next(err)
+          }
+          else {
+            req.session.userId = user.id;
+            if (req.cookies.cartId) {
               return Order.findOne({
                 where:
                 { userId: user.id, status: 'created' }
@@ -50,7 +110,6 @@ router.post('/login', (req, res, next) => {
                         })
                       }))
                       .then(() => {
-                        console.log("ids", idsToMerge)
                         return ProductOrders.update(
                           { orderId: order.id },
                           {
@@ -60,7 +119,8 @@ router.post('/login', (req, res, next) => {
                           }
                         )
                       })
-                      .then((updatedOrders) => {
+                      .then(() => {
+                        console.log("aaa")
                         ProductOrders.destroy(
                           {where: {
                               orderId: req.cookies.cartId
@@ -71,30 +131,7 @@ router.post('/login', (req, res, next) => {
                       })
                     }
             })
-
-          }}})
-        }
-      })
-      .catch(next)
-    })
-
-  router.post('/signup', (req, res, next) => {
-    User.create(req.body)
-      .then(user => {
-        req.login(user, err => {
-          if (err) {
-            next(err)
           }
-          else {
-            req.session.userId = user.id;
-            if (req.cookies.cartId) {
-              Order.findById(req.cookies.cartId)
-                .then((order) => {
-                  order.update({
-                    userId: user.id
-                  })
-                })
-            }
             res.json(user)
           }
         })

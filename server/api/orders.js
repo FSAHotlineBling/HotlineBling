@@ -34,8 +34,14 @@ router.post('/', (req, res, next) => {
           return prodOrder
         }
     })
-      .then(productOrder =>
-        Order.findById(productOrder.orderId))
+      .then(() =>{
+        return ProductOrders.findOne({
+          where: {orderId: req.cookies.cartId}
+      })})
+      .then((obj) =>{
+        return Order.findOne({
+          where: {id: obj.orderId}
+      })})
       .then(order => res.json(order))
   }
 })
@@ -68,7 +74,7 @@ router.get('/:userid', (req, res, next) => {
     },
     include: [Product]
   })
-    .then(order => res.json(order))
+    .then(order => res.json(order[0]))
     .catch(next)
 })
 
