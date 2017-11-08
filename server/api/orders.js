@@ -61,7 +61,7 @@ router.get('/admin/:orderId', isAdmin, (req, res, next) => {
 
 router.get('/:userid', (req, res, next) => {
   let id = req.params.userid
-  Order.findOne({
+  Order.findOrCreate({
     where: {
       userId: id,
       status: 'created'
