@@ -3,10 +3,29 @@ const {ProductOrders, Product, Order} = require('../db/models')
 module.exports = router
 
 router.post('/', (req, res, next) => {
-  ProductOrders.create(req.body)
-    .then(productOrder => {
-      res.json(productOrder)
+  let orderId = req.body.orderId ? req.body.orderId : req.cookies.cartId
+  ProductOrders.findOrCreate({
+    where: {
+      orderId: orderId,
+      productId: req.body.productId
+    }
+  })
+  .spread((prodOrder, created) => {
+    if (!created){
+
+      let newQuantity = prodOrder.quantity + 1;
+      return ProductOrders.update(
+        { quantity: newQuantity },
+        {where: {orderId: orderId, productId: req.body.productId}
+      })
+    } else {
+      return prodOrder
+    }
     })
+    .then(productOrder => {
+      Order.findById(productOrder.orderId)},
+     )
+    .then(order => res.json(order))
     .catch(next)
 })
 

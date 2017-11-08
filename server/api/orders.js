@@ -20,11 +20,28 @@ router.post('/', (req, res, next) => {
       })
       .catch(next)
   } else {
-    ProductOrders.create({
-      orderId: req.cookies.cartId, productId: req.body.productId
+    ProductOrders.findOrCreate({
+      where: {orderId: req.cookies.cartId, productId: req.body.productId}
     })
-      .then(productOrder =>
-        Order.findById(productOrder.orderId))
+      .spread((prodOrder, created) => {
+        if (!created){
+          let newQuantity = prodOrder.quantity + 1;
+          return ProductOrders.update(
+            { quantity: newQuantity },
+            {where: {orderId: req.cookies.cartId, productId: req.body.productId}
+          })
+        } else {
+          return prodOrder
+        }
+    })
+      .then(() =>{
+        return ProductOrders.findOne({
+          where: {orderId: req.cookies.cartId}
+      })})
+      .then((obj) =>{
+        return Order.findOne({
+          where: {id: obj.orderId}
+      })})
       .then(order => res.json(order))
   }
 })
@@ -50,14 +67,14 @@ router.get('/admin/:orderId', isAdmin, (req, res, next) => {
 
 router.get('/:userid', (req, res, next) => {
   let id = req.params.userid
-  Order.findOne({
+  Order.findOrCreate({
     where: {
       userId: id,
       status: 'created'
     },
     include: [Product]
   })
-    .then(order => res.json(order))
+    .then(order => res.json(order[0]))
     .catch(next)
 })
 
