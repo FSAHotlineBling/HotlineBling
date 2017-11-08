@@ -73,7 +73,10 @@ router.post('/login', (req, res, next) => {
             })
 
           }
-        }})
+          res.json(user)
+        }
+      }
+    )
         }
       })
       .catch(next)
