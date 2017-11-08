@@ -42,6 +42,7 @@ export class OrderDetail extends Component {
     const order = this.props.order
     const products = order.products ? order.products : []
     const admin = this.props.user.isAdmin
+    console.log(admin)
 
     let total = 0
     if (order.products) {
@@ -53,68 +54,78 @@ export class OrderDetail extends Component {
 
 
     return (
-      <div id="past-order-detail">
-        <h2>Order {order.id} Detail</h2>
-        <ul>
-          <li>Ordered {order.dateCreated}</li>
-          <li> Status: {order.status}</li>
-          {admin &&
-            (
-              <li>
-                <select
-                  name="status"
-                  onChange={this.handleChange}
-                >
-                  <option value="default">Change Order Status</option>
-                  <option>Created</option>
-                  <option>Processing</option>
-                  <option>Cancelled</option>
-                  <option>Completed</option>
-                  <option>Delivered</option>
-                </select>
-              </li>
-            )
-          }
-        </ul>
-        <ul>
-          <li>Ship to:</li>
-          <li> {order.email} </li>
-          <li> {order.address} </li>
-          <li> {order.city}, {order.state} {order.zip} </li>
-        </ul>
-        <ul>
-          {products.map(product => {
-            return (
-              <li key={product.id}>
-                <ul>
-                  <li>
-                    <Link to={`/phones/${product.id}`}>{product.name}</Link>
-                  </li>
-                  <li><img src={product.imageUrl} /></li>
-                  <li>quantity: {product.productOrders.quantity}</li>
-                  <li>${product.price}</li>
-                  {
-                    (order.status === 'completed' || order.status === 'delivered') &&
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-2"/>
+            <div className="col-sm-8">
+              <div id="past-order-detail">
+              <div class="card">
+                <div class="card-block">
+                  <h4 class="card-title">Order {order.id} Detail</h4>
+                  <p class="card-text">Ordered {order.dateCreated}</p>
+                  <p class="card-text"><small class="text-muted">Status: {order.status}</small></p>
+                  {admin &&
                     (
-                      <li>
-                        <Link to={`/products/${product.id}/review-product`}>
-                          <button>Review This Product</button>
-                        </Link>
-                      </li>
+                        <select
+                          name="status"
+                          onChange={this.handleChange}
+                          className="form-control"
+                        >
+                          <option value="default">Change Order Status</option>
+                          <option>Created</option>
+                          <option>Processing</option>
+                          <option>Cancelled</option>
+                          <option>Completed</option>
+                          <option>Delivered</option>
+                        </select>
                     )
                   }
-                </ul>
-              </li>
-            )
-          })}
-          <li>Order Total: ${total.toFixed(2)}</li>
-        </ul>
-        {
-          (order.status === 'processing' || order.status === 'created') &&
-          (
-            <button onClick={this.cancelOrder}>Cancel This Order</button>
-          )
-        }
+                  <p class="card-text">Ship to:</p>
+                  <p class="card-text">{order.email}</p>
+                  <p class="card-text">{order.address}</p>
+                  <p class="card-text">{order.city}, {order.state} {order.zip} </p>
+                </div>
+                  {products.map(product => {
+                    return (
+                    <div key={product.id} className="card mb-3">
+                      <img className="card-img-top" src={product.imageUrl} alt="phone image cap" />
+                      <div className="card-block">
+                        <Link
+                          className="media-body"
+                          activeClassName="active"
+                          to={`/phones/${product.id}`}><h4 className="card-title">{product.name}</h4></Link>
+                        <p className="card-text">{product.description}</p>
+                        <p className="card-text">${product.price}</p>
+                        <p className="card-text">Quantity: {product.productOrders.quantity}</p>
+                        <p className="card-text"><small className="text-muted">Quantity Available: {product.quantityAvailable}</small></p>
+                        {
+                            (order.status === 'completed' || order.status === 'delivered') &&
+                            (
+                              <li>
+                                <Link to={`/products/${product.id}/review-product`}>
+                                  <button>Review This Product</button>
+                                </Link>
+                              </li>
+                            )
+                          }
+                      </div>
+                    </div>
+                    )
+                  })}
+                  <li>Order Total: ${total.toFixed(2)}</li>
+
+                {
+                  (order.status === 'processing' || order.status === 'created') &&
+                  (
+                    <button onClick={this.cancelOrder}>Cancel This Order</button>
+                  )
+                }
+              </div>
+
+      </div>
+      </div>
+      <div className="col-sm-8" />
+      </div>
       </div>
     )
   }
